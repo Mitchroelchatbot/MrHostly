@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mr. Hostly — Uw Digitale Gastheer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown: #1E1410;
+    --orange: #E8894A;
+    --orange-light: #F0A96E;
+    --cream: #F5EDE0;
+    --cream-light: #FBF7F2;
+    --sand: #C49A72;
+    --sand-light: #E2C9A8;
+    --white: #FFFDF9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--brown);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(30,20,16,0.96);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    cursor: pointer;
+  }
+
+  .nav-logo-mr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--orange);
+  }
+
+  .nav-logo-hostly {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sand-light);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: var(--brown) !important;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 500 !important;
+    transition: background 0.3s !important;
+  }
+
+  .nav-cta:hover { background: var(--orange-light) !important; color: var(--brown) !important; }
+
+  /* PAGES */
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+
+  .page.active { display: block; }
+
+  /* =================== PAGE 1: HOME =================== */
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 60px 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,137,74,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,137,74,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 0.5px solid rgba(232,137,74,0.4);
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 32px;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .hero-title span {
+    color: var(--orange);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--sand);
+    letter-spacing: 3px;
+    margin-bottom: 28px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--sand-light);
+    max-width: 460px;
+    margin-bottom: 44px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--brown);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 0.5px solid rgba(245,237,224,0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* LOGO CIRKEL IN HERO */
+  .hero-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-logo-circle {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: var(--brown);
+    border: 2px solid var(--orange);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 60px rgba(232,137,74,0.15), inset 0 0 60px rgba(232,137,74,0.05);
+  }
+
+  .hero-logo-circle::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(232,137,74,0.35);
+  }
+
+  .logo-mr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 10px;
+    color: var(--orange);
+    margin-bottom: 4px;
+  }
+
+  .logo-line {
+    width: 120px;
+    height: 0.8px;
+    background: rgba(232,137,74,0.4);
+    margin: 6px auto;
+  }
+
+  .logo-hostly {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 58px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .logo-slogan {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 3px;
+    color: var(--sand);
+    margin-top: 4px;
+  }
+
+  /* DIENSTEN GRID */
+  .diensten {
+    padding: 120px 60px;
+    background: var(--cream-light);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: #6B5242;
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 64px;
+  }
+
+  .diensten-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .dienst-card {
+    background: var(--white);
+    border: 0.5px solid var(--sand-light);
+    border-radius: 20px;
+    padding: 40px 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dienst-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .dienst-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(30,20,16,0.08); }
+  .dienst-card:hover::before { transform: scaleX(1); }
+
+  .dienst-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(232,137,74,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 22px;
+  }
+
+  .dienst-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 12px;
+  }
+
+  .dienst-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6B5242;
+    line-height: 1.7;
+  }
+
+  /* WAAROM */
+  .waarom {
+    padding: 120px 60px;
+    background: var(--brown);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .waarom::before {
+    content: '';
+    position: absolute;
+    top: 50%; right: -150px;
+    transform: translateY(-50%);
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,137,74,0.1);
+  }
+
+  .waarom-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .waarom .section-title { color: var(--cream); }
+  .waarom .section-label { color: var(--orange); }
+  .waarom .section-desc { color: var(--sand-light); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(232,137,74,0.2);
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--orange);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--sand-light);
+    line-height: 1.5;
+  }
+
+  /* CTA BAND */
+  .cta-band {
+    padding: 100px 60px;
+    background: var(--orange);
+    text-align: center;
+  }
+
+  .cta-band h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 16px;
+  }
+
+  .cta-band p {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(30,20,16,0.7);
+    margin-bottom: 36px;
+  }
+
+  .btn-dark {
+    background: var(--brown);
+    color: var(--cream);
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-dark:hover { background: #2C1F18; transform: translateY(-2px); }
+
+  /* =================== PAGE 2: WEBSITES =================== */
+
+  .websites-hero {
+    background: var(--brown);
+    padding: 120px 60px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .websites-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,137,74,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .websites-hero .section-label { margin-bottom: 20px; }
+
+  .websites-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.05;
+    position: relative;
+  }
+
+  .websites-hero p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--sand-light);
+    max-width: 560px;
+    margin: 0 auto 44px;
+    line-height: 1.8;
+  }
+
+  /* PROCESS */
+  .process {
+    padding: 120px 60px;
+    background: var(--cream-light);
+    max-width: 100%;
+  }
+
+  .process-inner { max-width: 1100px; margin: 0 auto; }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 64px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 14%;
+    width: 72%;
+    height: 1px;
+    background: var(--sand-light);
+    z-index: 0;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--brown);
+    color: var(--orange);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    border: 2px solid var(--orange);
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: #6B5242;
+    line-height: 1.7;
+  }
+
+  /* SOORTEN WEBSITES */
+  .soorten {
+    padding: 120px 60px;
+    background: var(--white);
+  }
+
+  .soorten-inner { max-width: 1100px; margin: 0 auto; }
+
+  .soorten-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .soort-card {
+    border: 0.5px solid var(--sand-light);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    transition: all 0.3s;
+    background: var(--white);
+  }
+
+  .soort-card:hover { background: var(--cream-light); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(30,20,16,0.06); }
+
+  .soort-icon {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 14px;
+    background: rgba(232,137,74,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .soort-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 10px;
+  }
+
+  .soort-content p {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6B5242;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .soort-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--orange);
+    background: rgba(232,137,74,0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 0.5px solid rgba(232,137,74,0.25);
+  }
+
+  /* =================== PAGE 3: CHATBOT =================== */
+
+  .chatbot-hero {
+    background: var(--brown);
+    padding: 120px 60px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chatbot-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,137,74,0.08) 0%, transparent 65%);
+  }
+
+  .chatbot-hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .chatbot-hero .section-title { color: var(--cream); font-size: 60px; }
+  .chatbot-hero .section-desc { color: var(--sand-light); }
+
+  /* CHAT DEMO */
+  .chat-demo {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(232,137,74,0.25);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .chat-header {
+    background: rgba(232,137,74,0.12);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 0.5px solid rgba(232,137,74,0.2);
+  }
+
+  .chat-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brown);
+  }
+
+  .chat-header-info h4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  .chat-header-info span {
+    font-size: 11px;
+    color: var(--sand);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .online-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4CAF50;
+    display: inline-block;
+  }
+
+  .chat-messages {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 260px;
+  }
+
+  .msg {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .msg-bot {
+    background: rgba(255,255,255,0.07);
+    color: var(--cream);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    border: 0.5px solid rgba(232,137,74,0.15);
+  }
+
+  .msg-user {
+    background: var(--orange);
+    color: var(--brown);
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+    font-weight: 500;
+  }
+
+  .chat-input {
+    padding: 16px 20px;
+    border-top: 0.5px solid rgba(232,137,74,0.15);
+    display: flex;
+    gap: 10px;
+  }
+
+  .chat-input input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 0.5px solid rgba(232,137,74,0.2);
+    border-radius: 50px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--cream);
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chat-input input::placeholder { color: var(--sand); }
+
+  .chat-send {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--orange);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--brown);
+    transition: background 0.3s;
+  }
+
+  .chat-send:hover { background: var(--orange-light); }
+
+  /* VOORDELEN CHATBOT */
+  .chatbot-voordelen {
+    padding: 120px 60px;
+    background: var(--cream-light);
+  }
+
+  .voordelen-inner { max-width: 1100px; margin: 0 auto; }
+
+  .voordelen-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .voordeel-card {
+    background: var(--white);
+    border: 0.5px solid var(--sand-light);
+    border-radius: 20px;
+    padding: 36px 28px;
+    transition: all 0.3s;
+  }
+
+  .voordeel-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(30,20,16,0.07); }
+
+  .voordeel-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: rgba(232,137,74,0.2);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .voordeel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 10px;
+  }
+
+  .voordeel-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: #6B5242;
+    line-height: 1.7;
+  }
+
+  /* MR CHATBOT BANNER */
+  .mrchatbot-banner {
+    padding: 100px 60px;
+    background: var(--brown);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mrchatbot-banner::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,137,74,0.07) 0%, transparent 65%);
+  }
+
+  .mrchatbot-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 0.5px solid rgba(232,137,74,0.4);
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 32px;
+  }
+
+  .mrchatbot-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .mrchatbot-banner p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--sand-light);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #120D09;
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-logo { display: flex; flex-direction: column; gap: 2px; }
+
+  .footer-logo-mr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--orange);
+  }
+
+  .footer-logo-hostly {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--cream);
+  }
+
+  .footer-slogan {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--sand);
+    letter-spacing: 2px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--sand);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .footer-links a:hover { color: var(--orange); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(196,154,114,0.5);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page.active .hero-text,
+  .page.active .hero-logo-wrap,
+  .page.active .websites-hero h1,
+  .page.active .websites-hero p,
+  .page.active .chatbot-hero-inner {
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .page.active .hero-logo-wrap { animation-delay: 0.15s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">
+    <span class="nav-logo-mr">MR.</span>
+    <span class="nav-logo-hostly">Hostly</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('websites')" id="nav-websites">Websites</a></li>
+    <li><a href="#" onclick="showPage('chatbot')" id="nav-chatbot">Chatbots</a></li>
+    <li><a href="#" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- =================== PAGE 1: HOME =================== -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="hero-tag">Uw digitale partner voor alles</span>
+        <h1 class="hero-title">Wij regelen<br><span>het digitale,</span><br>jij het echte.</h1>
+        <p class="hero-sub">uw digitale gastheer</p>
+        <p class="hero-desc">Van een strakke website tot een slimme chatbot — en alles wat daartussen en daarna komt. Mr. Hostly is de vaste digitale partner voor MKB en horeca die verder denkt dan vandaag.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary" onclick="showPage('websites')">Onze diensten</button>
+          <button class="btn-secondary">Neem contact op</button>
+        </div>
+      </div>
+      <div class="hero-logo-wrap">
+        <div class="hero-logo-circle">
+          <span class="logo-mr">MR.</span>
+          <div class="logo-line"></div>
+          <span class="logo-hostly">Hostly</span>
+          <div class="logo-line"></div>
+          <span class="logo-slogan">uw digitale gastheer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diensten">
+    <div style="max-width:1100px;margin:0 auto;">
+      <p class="section-label">Wat wij doen</p>
+      <h2 class="section-title">Eén partner.<br>Oneindig mogelijk.</h2>
+      <p class="section-desc">Of je nu net begint of al jaren draait — Mr. Hostly denkt met je mee en zorgt dat jouw bedrijf digitaal sterk staat, nu en in de toekomst.</p>
+      <div class="diensten-grid">
+        <div class="dienst-card">
+          <div class="dienst-icon">🌐</div>
+          <h3 class="dienst-title">Websites</h3>
+          <p class="dienst-desc">Strak, snel en op maat gebouwde websites die jouw bedrijf perfect vertegenwoordigen. Van visitekaartje tot webshop.</p>
+        </div>
+        <div class="dienst-card">
+          <div class="dienst-icon">🤖</div>
+          <h3 class="dienst-title">Chatbots & AI</h3>
+          <p class="dienst-desc">Slimme chatbots die 24/7 klanten te woord staan, reserveringen aannemen en vragen beantwoorden — via Mr. Chatbot.</p>
+        </div>
+        <div class="dienst-card">
+          <div class="dienst-icon">📱</div>
+          <h3 class="dienst-title">Digitale strategie</h3>
+          <p class="dienst-desc">We denken verder dan een website. Samen bouwen we aan jouw complete digitale aanwezigheid en groeistrategie.</p>
+        </div>
+        <div class="dienst-card">
+          <div class="dienst-icon">🛡️</div>
+          <h3 class="dienst-title">Hosting & beheer</h3>
+          <p class="dienst-desc">Zorgeloos online. Wij regelen hosting, updates, beveiliging en onderhoud zodat jij je nergens druk over hoeft te maken.</p>
+        </div>
+        <div class="dienst-card">
+          <div class="dienst-icon">📊</div>
+          <h3 class="dienst-title">SEO & vindbaarheid</h3>
+          <p class="dienst-desc">Gevonden worden door de juiste mensen. We optimaliseren jouw online aanwezigheid zodat klanten jou vinden.</p>
+        </div>
+        <div class="dienst-card">
+          <div class="dienst-icon">⚡</div>
+          <h3 class="dienst-title">IT-oplossingen</h3>
+          <p class="dienst-desc">Van maatwerk software tot slimme integraties. Mr. Hostly groeit met je mee naar elke digitale uitdaging die komt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="waarom">
+    <div class="waarom-inner">
+      <div>
+        <p class="section-label">Waarom Mr. Hostly</p>
+        <h2 class="section-title">Persoonlijk.<br>Betrokken.<br>Resultaat.</h2>
+        <p class="section-desc">Geen groot anoniem bureau, maar een vaste partner die jouw bedrijf kent. We zijn er voor de lange termijn — van eerste website tot volledige digitale transformatie.</p>
+        <button class="btn-primary" style="margin-top:16px;" onclick="showPage('chatbot')">Ontdek onze chatbots</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Uw chatbot altijd online, ook als u slaapt</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Maatwerk, geen templates van de plank</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">MKB</div>
+          <div class="stat-label">Specialist in horeca en kleinbedrijf</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Schaalbaarheid als uw bedrijf groeit</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>Klaar om te beginnen?</h2>
+    <p>Plan een vrijblijvend gesprek en ontdek wat Mr. Hostly voor jouw bedrijf kan betekenen.</p>
+    <button class="btn-dark">Neem contact op</button>
+  </section>
+
+  <footer>
+    <div class="footer-logo">
+      <span class="footer-logo-mr">MR.</span>
+      <span class="footer-logo-hostly">Hostly</span>
+      <span class="footer-slogan">uw digitale gastheer</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('websites')">Websites</a></li>
+      <li><a href="#" onclick="showPage('chatbot')">Chatbots</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Mr. Hostly</span>
+  </footer>
+
+</div>
+
+<!-- =================== PAGE 2: WEBSITES =================== -->
+<div class="page" id="page-websites">
+
+  <section class="websites-hero">
+    <p class="section-label">Websites op maat</p>
+    <h1>Jouw bedrijf,<br><em style="color:var(--orange);font-style:italic;">perfect online.</em></h1>
+    <p>Een website is meer dan een digitaal visitekaartje. Het is de eerste indruk die telt. Wij bouwen websites die jouw verhaal vertellen, klanten aantrekken en resultaat opleveren.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary">Vraag een offerte aan</button>
+      <button class="btn-secondary">Bekijk voorbeelden</button>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="process-inner">
+      <p class="section-label">Hoe werkt het</p>
+      <h2 class="section-title">Van idee tot<br>live website.</h2>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <h3 class="step-title">Kennismaken</h3>
+          <p class="step-desc">We leren jouw bedrijf kennen. Wat zijn je doelen, je klanten en je wensen?</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <h3 class="step-title">Ontwerp</h3>
+          <p class="step-desc">We maken een ontwerp op maat dat past bij jouw merk en doelgroep.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <h3 class="step-title">Bouwen</h3>
+          <p class="step-desc">We bouwen je website strak, snel en mobielvriendelijk.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <h3 class="step-title">Live & verder</h3>
+          <p class="step-desc">Je website gaat live. Wij blijven beschikbaar voor beheer en doorontwikkeling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="soorten">
+    <div class="soorten-inner">
+      <p class="section-label">Wat we bouwen</p>
+      <h2 class="section-title">Voor elk bedrijf<br>de juiste website.</h2>
+      <div class="soorten-grid">
+        <div class="soort-card">
+          <div class="soort-icon">🍽️</div>
+          <div class="soort-content">
+            <h3>Horecawebsites</h3>
+            <p>Van restaurant tot hotel. Menukaarten, reserveringssystemen, sfeervolle galerijen en alles wat een horecaondernemer nodig heeft.</p>
+            <div class="soort-tags">
+              <span class="tag">Menukaart</span>
+              <span class="tag">Reserveringen</span>
+              <span class="tag">Galerij</span>
+              <span class="tag">Google Maps</span>
+            </div>
+          </div>
+        </div>
+        <div class="soort-card">
+          <div class="soort-icon">🏪</div>
+          <div class="soort-content">
+            <h3>MKB websites</h3>
+            <p>Professionele websites voor het midden- en kleinbedrijf. Snel, betrouwbaar en altijd vindbaar voor jouw klanten.</p>
+            <div class="soort-tags">
+              <span class="tag">Professioneel</span>
+              <span class="tag">SEO-proof</span>
+              <span class="tag">Snel</span>
+              <span class="tag">Mobiel</span>
+            </div>
+          </div>
+        </div>
+        <div class="soort-card">
+          <div class="soort-icon">🛒</div>
+          <div class="soort-content">
+            <h3>Webshops</h3>
+            <p>Verkoop online met een strakke, gebruiksvriendelijke webshop. Eenvoudig te beheren en klaar om te groeien.</p>
+            <div class="soort-tags">
+              <span class="tag">Betaalmethodes</span>
+              <span class="tag">Voorraadbeheer</span>
+              <span class="tag">Bestellingen</span>
+            </div>
+          </div>
+        </div>
+        <div class="soort-card">
+          <div class="soort-icon">📄</div>
+          <div class="soort-content">
+            <h3>Landingspagina's</h3>
+            <p>Gerichte pagina's voor campagnes, acties of nieuwe producten. Snel online en volledig op conversie gericht.</p>
+            <div class="soort-tags">
+              <span class="tag">Snel live</span>
+              <span class="tag">Conversie</span>
+              <span class="tag">A/B Testing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>Klaar voor een nieuwe website?</h2>
+    <p>Plan een vrijblijvend gesprek en ontdek wat wij voor jouw bedrijf kunnen bouwen.</p>
+    <button class="btn-dark">Start jouw project</button>
+  </section>
+
+  <footer>
+    <div class="footer-logo">
+      <span class="footer-logo-mr">MR.</span>
+      <span class="footer-logo-hostly">Hostly</span>
+      <span class="footer-slogan">uw digitale gastheer</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('websites')">Websites</a></li>
+      <li><a href="#" onclick="showPage('chatbot')">Chatbots</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Mr. Hostly</span>
+  </footer>
+
+</div>
+
+<!-- =================== PAGE 3: CHATBOT =================== -->
+<div class="page" id="page-chatbot">
+
+  <section class="chatbot-hero">
+    <div class="chatbot-hero-inner">
+      <div>
+        <p class="section-label">Slimme chatbots voor jouw bedrijf</p>
+        <h2 class="section-title">Altijd beschikbaar.<br><em style="color:var(--orange);font-style:italic;">Altijd voor je klant.</em></h2>
+        <p class="section-desc">Via Mr. Chatbot — onderdeel van Mr. Hostly — bouwen we AI-gestuurde chatbots die jouw klanten 24/7 te woord staan. Geen gemiste reserveringen, geen onbeantwoorde vragen.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:36px;">
+          <button class="btn-primary">Bekijk Mr. Chatbot</button>
+          <button class="btn-secondary">Demo aanvragen</button>
+        </div>
+      </div>
+      <div>
+        <div class="chat-demo">
+          <div class="chat-header">
+            <div class="chat-avatar">MH</div>
+            <div class="chat-header-info">
+              <h4>Mr. Hostly Assistent</h4>
+              <span><span class="online-dot"></span> Online — altijd beschikbaar</span>
+            </div>
+          </div>
+          <div class="chat-messages">
+            <div class="msg msg-bot">Welkom bij Restaurant De Gouden Lepel! 🍽️ Hoe kan ik u helpen vandaag?</div>
+            <div class="msg msg-user">Ik wil graag een tafel reserveren voor vrijdag</div>
+            <div class="msg msg-bot">Natuurlijk! Voor hoeveel personen mag ik een tafel reserveren, en heeft u een voorkeur voor een tijdstip?</div>
+            <div class="msg msg-user">Met 4 personen, rond 19:00 uur</div>
+            <div class="msg msg-bot">Ik heb een mooie tafel voor 4 personen beschikbaar op vrijdag om 19:00 uur. Zal ik deze voor u vastleggen? ✓</div>
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Stel een vraag...">
+            <button class="chat-send">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chatbot-voordelen">
+    <div class="voordelen-inner">
+      <p class="section-label">Voordelen</p>
+      <h2 class="section-title">Waarom een<br>chatbot van Mr. Hostly?</h2>
+      <div class="voordelen-grid">
+        <div class="voordeel-card">
+          <div class="voordeel-num">01</div>
+          <h3 class="voordeel-title">24/7 beschikbaar</h3>
+          <p class="voordeel-desc">Jouw chatbot slaapt nooit. Ook buiten openingstijden worden klanten geholpen, reserveringen aangenomen en vragen beantwoord.</p>
+        </div>
+        <div class="voordeel-card">
+          <div class="voordeel-num">02</div>
+          <h3 class="voordeel-title">Volledig op maat</h3>
+          <p class="voordeel-desc">We trainen de chatbot op jouw bedrijf, jouw menu, jouw diensten. Hij klinkt als jij — persoonlijk en herkenbaar.</p>
+        </div>
+        <div class="voordeel-card">
+          <div class="voordeel-num">03</div>
+          <h3 class="voordeel-title">Minder werkdruk</h3>
+          <p class="voordeel-desc">Routinevragen worden automatisch afgehandeld. Jij en je team focussen op wat écht belangrijk is: de gasten aan tafel.</p>
+        </div>
+        <div class="voordeel-card">
+          <div class="voordeel-num">04</div>
+          <h3 class="voordeel-title">Naadloze integratie</h3>
+          <p class="voordeel-desc">De chatbot werkt op je website, via WhatsApp of Instagram. Overal waar jouw klanten zijn, is Mr. Chatbot erbij.</p>
+        </div>
+        <div class="voordeel-card">
+          <div class="voordeel-num">05</div>
+          <h3 class="voordeel-title">Slim & lerend</h3>
+          <p class="voordeel-desc">Onze chatbots worden aangedreven door de nieuwste AI. Ze worden slimmer naarmate ze meer gesprekken voeren.</p>
+        </div>
+        <div class="voordeel-card">
+          <div class="voordeel-num">06</div>
+          <h3 class="voordeel-title">Betaalbaar voor MKB</h3>
+          <p class="voordeel-desc">Geen grote investeringen. Onze chatbots zijn speciaal geprijsd voor het midden- en kleinbedrijf en horeca.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mrchatbot-banner">
+    <div class="mrchatbot-badge">Onderdeel van Mr. Hostly</div>
+    <h2>Ontdek <em style="color:var(--orange);">Mr. Chatbot</em></h2>
+    <p>Mr. Chatbot is ons gespecialiseerde chatbot-platform, speciaal gebouwd voor de horeca. Bezoek mrchatbot.nl voor meer informatie en een gratis demo.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="window.open('https://mrchatbot.nl','_blank')">Ga naar mrchatbot.nl</button>
+      <button class="btn-secondary">Demo aanvragen</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">
+      <span class="footer-logo-mr">MR.</span>
+      <span class="footer-logo-hostly">Hostly</span>
+      <span class="footer-slogan">uw digitale gastheer</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('websites')">Websites</a></li>
+      <li><a href="#" onclick="showPage('chatbot')">Chatbots</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Mr. Hostly</span>
+  </footer>
+
+</div>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('nav-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
