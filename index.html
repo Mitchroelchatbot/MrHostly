@@ -43,6 +43,10 @@
 
 <!-- ════════ HERO ════════ -->
 <section class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-glow-3"></div>
+
   <div class="hero-inner">
 
     <!-- Slogan groot bovenaan -->
@@ -52,17 +56,17 @@
       <span class="gold">Digitaler.</span>
     </div>
 
-    <div class="hero-content-grid">
+    <div class="hero-grid">
       <div class="hero-text">
         <div class="hero-badge">
           <span class="dot"></span>
-          <span>Pakketten vanaf <strong>€695</strong> · Geen abonnement verplicht</span>
+          <span>Pakketten vanaf <strong>€695</strong></span>
         </div>
 
         <h1 class="hero-title">Slimmer ondernemen in een <em>digitale</em> wereld.</h1>
 
         <p class="hero-desc">
-          Wij komen uit de zaak — niet uit een kantoor. We weten precies waar jouw tijd, geld en frustratie zit. En we hebben de oplossingen gebouwd om die <strong>weg te nemen</strong>.
+          Wij komen uit de zaak — niet uit een kantoor. We weten precies waar jouw tijd, geld en <strong>frustratie</strong> zit. En we hebben de oplossingen gebouwd om die weg te nemen.
         </p>
 
         <div class="hero-btns">
@@ -81,58 +85,69 @@
         </div>
       </div>
 
-      <!-- HERO VISUAL: mockup placeholder met visuele tool teaser -->
-      <div class="hero-visual">
-        <div class="mockup-placeholder">
-          <div class="mockup-browser">
-            <div class="mockup-browser-bar">
-              <span class="mockup-dot r"></span>
-              <span class="mockup-dot y"></span>
-              <span class="mockup-dot g"></span>
-              <div class="mockup-url">mrhostly.nl</div>
+      <!-- HERO SHOWCASE: browser + chatbot + kalender -->
+      <div class="hero-showcase">
+        <div class="sc-browser-wrap">
+          <div class="sc-browser">
+            <div class="sc-browser-bar">
+              <div class="ctrl r"></div><div class="ctrl y"></div><div class="ctrl g"></div>
+              <div class="url">mrhostly.nl</div>
             </div>
-            <div class="mockup-content">
-              <div class="mockup-nav">
-                <div class="mockup-logo"><span class="mr">Mr</span><span class="hostly">Hostly</span></div>
-                <div class="mockup-nav-items">
-                  <span class="act">Home</span>
-                  <span>Websites</span>
-                  <span>Chatbots</span>
-                  <span>Reserveren</span>
+            <div class="sc-browser-content">
+              <div class="sc-web-nav">
+                <div class="sc-web-logo"><span class="mr">Mr</span><span class="h">Hostly</span></div>
+                <div class="sc-web-nav-items"><span class="act">Home</span><span>Websites</span><span>Chatbots</span><span>Reserveren</span></div>
+              </div>
+              <div class="sc-web-hero">
+                <div class="sc-web-text">
+                  <div class="sc-web-h">Slimmer ondernemen in een <em>digitale</em> wereld.</div>
+                  <div class="sc-web-sub">Wij regelen het digitale, jij focust op je gasten.</div>
+                  <div class="sc-web-btn-row">
+                    <span class="sc-web-btn">Vind jouw oplossing →</span>
+                  </div>
                 </div>
-              </div>
-
-              <div>
-                <div class="mockup-hero-text">Slimmer ondernemen<br>in een <em>digitale</em> wereld.</div>
-                <div class="mockup-hero-sub">Wij regelen het digitale, jij focust op je gasten.</div>
-              </div>
-
-              <div class="mockup-tool-teaser">
-                <div class="mockup-tool-teaser-label">Wat past bij jou?</div>
-                <div class="mockup-tool-teaser-q">In welke sector zit je?</div>
-                <div class="mockup-tool-opts">
-                  <div class="mockup-tool-opt"><span class="mockup-tool-opt-icon">🍽️</span><div class="mockup-tool-opt-text">Horeca</div></div>
-                  <div class="mockup-tool-opt"><span class="mockup-tool-opt-icon">🏪</span><div class="mockup-tool-opt-text">Retail</div></div>
-                  <div class="mockup-tool-opt"><span class="mockup-tool-opt-icon">🎾</span><div class="mockup-tool-opt-text">Leisure</div></div>
-                  <div class="mockup-tool-opt"><span class="mockup-tool-opt-icon">💼</span><div class="mockup-tool-opt-text">Anders</div></div>
+                <div class="sc-web-vis-grid">
+                  <div class="sc-web-vis-card"><div class="ic">🌐</div><div class="t">Websites</div><div class="p">€695</div></div>
+                  <div class="sc-web-vis-card"><div class="ic">🤖</div><div class="t">Chatbots</div><div class="p">€249</div></div>
+                  <div class="sc-web-vis-card"><div class="ic">📅</div><div class="t">Reserveren</div><div class="p">€299</div></div>
+                  <div class="sc-web-vis-card"><div class="ic">✨</div><div class="t">Maatwerk</div><div class="p">€--</div></div>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="hero-float-card hero-float-1">
+          <div class="sc-float sc-float-1">
             <div class="icon">📈</div>
             <div>
               <strong>+38%</strong>
               <span>meer aanvragen</span>
             </div>
           </div>
+        </div>
 
-          <div class="hero-float-card hero-float-2">
-            <div class="pulse"></div>
-            <div>
-              <strong>Chatbot actief</strong>
-              <span>24/7 beschikbaar</span>
+        <div class="sc-row">
+          <div class="sc-card">
+            <div class="sc-card-label"><span class="icon">🤖</span>AI Chatbot</div>
+            <div class="sc-chat-body" id="heroChatBody">
+              <div class="sc-msg bot">Hallo! Hoe kan ik helpen?</div>
+              <div class="sc-msg usr">Tafel voor vrijdag?</div>
+              <div class="sc-typing"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+
+          <div class="sc-card">
+            <div class="sc-card-label"><span class="icon">📅</span>Reserveringen</div>
+            <div class="sc-cal-header">
+              <div class="sc-cal-month">Nov 2026</div>
+              <div class="sc-cal-count">24 boekingen</div>
+            </div>
+            <div class="sc-cal-grid">
+              <div class="sc-cal-d s">3</div>
+              <div class="sc-cal-d b">4</div>
+              <div class="sc-cal-d t">5</div>
+              <div class="sc-cal-d s">6</div>
+              <div class="sc-cal-d b">7</div>
+              <div class="sc-cal-d b">8</div>
+              <div class="sc-cal-d s">9</div>
             </div>
           </div>
         </div>
@@ -141,101 +156,274 @@
   </div>
 </section>
 
-<!-- ════════ INTERACTIEVE TOOL ════════ -->
+<!-- ════════ INTERACTIEVE TOOL (twee-koloms) ════════ -->
 <section class="tool-section" id="tool">
   <div class="tool-inner">
     <div class="tool-header">
       <span class="section-eyebrow">Vind je perfecte pakket</span>
       <h2 class="tool-title">Wat past bij <em>jouw bedrijf</em>?</h2>
-      <p class="tool-subtitle">Beantwoord 3 korte vragen en we tonen direct welk pakket bij je past — inclusief eerlijke prijsindicatie.</p>
+      <p class="tool-subtitle">Beantwoord 3 korte vragen — minder dan een minuut, en je weet direct waar je aan toe bent.</p>
     </div>
 
     <div class="tool-progress">
-      <div class="tool-progress-step active"></div>
-      <div class="tool-progress-step"></div>
-      <div class="tool-progress-step"></div>
+      <div class="tool-progress-step active" id="ps1"></div>
+      <div class="tool-progress-step" id="ps2"></div>
+      <div class="tool-progress-step" id="ps3"></div>
     </div>
 
-    <div class="tool-step active" data-step="1">
-      <div class="tool-question">In welke sector zit je?</div>
-      <div class="tool-options grid-2">
-        <button class="tool-option" data-val="horeca">
-          <span class="tool-option-icon">🍽️</span>
-          <div class="tool-option-title">Horeca</div>
-          <div class="tool-option-desc">Restaurant, café, hotel of lunchroom</div>
-        </button>
-        <button class="tool-option" data-val="retail">
-          <span class="tool-option-icon">🏪</span>
-          <div class="tool-option-title">Retail</div>
-          <div class="tool-option-desc">Winkel, salon of dienstverlening</div>
-        </button>
-        <button class="tool-option" data-val="leisure">
-          <span class="tool-option-icon">🎾</span>
-          <div class="tool-option-title">Leisure</div>
-          <div class="tool-option-desc">Sport, wellness, vrije tijd</div>
-        </button>
-        <button class="tool-option" data-val="anders">
-          <span class="tool-option-icon">💼</span>
-          <div class="tool-option-title">Anders</div>
-          <div class="tool-option-desc">Iets specifiekers — vertel het ons</div>
-        </button>
+    <div class="tool-grid">
+      <div class="tool-left">
+
+        <div class="tool-step active" data-step="1">
+          <div class="tool-question">In welke sector zit je?</div>
+          <div class="tool-options grid-2">
+            <button class="tool-option" data-val="horeca">
+              <span class="tool-option-icon">🍽️</span>
+              <div class="tool-option-title">Horeca</div>
+              <div class="tool-option-desc">Restaurant, café, hotel</div>
+            </button>
+            <button class="tool-option" data-val="retail">
+              <span class="tool-option-icon">🏪</span>
+              <div class="tool-option-title">Retail</div>
+              <div class="tool-option-desc">Winkel, salon, dienst</div>
+            </button>
+            <button class="tool-option" data-val="leisure">
+              <span class="tool-option-icon">🎾</span>
+              <div class="tool-option-title">Leisure</div>
+              <div class="tool-option-desc">Sport, wellness, vrije tijd</div>
+            </button>
+            <button class="tool-option" data-val="anders">
+              <span class="tool-option-icon">💼</span>
+              <div class="tool-option-title">Anders</div>
+              <div class="tool-option-desc">Iets specifiekers</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="tool-step" data-step="2">
+          <div class="tool-question">Wat heb je nu het hardst nodig?</div>
+          <div class="tool-options grid-1">
+            <button class="tool-option" data-val="website">
+              <span class="tool-option-icon">🌐</span>
+              <div class="tool-option-title">Een nieuwe website</div>
+              <div class="tool-option-desc">Mijn online uitstraling kan een upgrade gebruiken</div>
+            </button>
+            <button class="tool-option" data-val="chatbot">
+              <span class="tool-option-icon">🤖</span>
+              <div class="tool-option-title">Een AI-chatbot</div>
+              <div class="tool-option-desc">Mijn klanten moeten 24/7 antwoord krijgen</div>
+            </button>
+            <button class="tool-option" data-val="reserveringen">
+              <span class="tool-option-icon">📅</span>
+              <div class="tool-option-title">Reserveringssysteem</div>
+              <div class="tool-option-desc">Reserveringen automatiseren en stroomlijnen</div>
+            </button>
+            <button class="tool-option" data-val="alles">
+              <span class="tool-option-icon">✨</span>
+              <div class="tool-option-title">Eigenlijk alles</div>
+              <div class="tool-option-desc">Ik wil compleet digitaal sterk staan</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="tool-step" data-step="3">
+          <div class="tool-question">Wat is je budget ongeveer?</div>
+          <div class="tool-options grid-1">
+            <button class="tool-option" data-val="laag">
+              <span class="tool-option-icon">💸</span>
+              <div class="tool-option-title">Tot €1.000</div>
+              <div class="tool-option-desc">Starten met een goede basis</div>
+            </button>
+            <button class="tool-option" data-val="midden">
+              <span class="tool-option-icon">💰</span>
+              <div class="tool-option-title">€1.000 — €3.000</div>
+              <div class="tool-option-desc">Iets professioneels neerzetten</div>
+            </button>
+            <button class="tool-option" data-val="hoog">
+              <span class="tool-option-icon">💎</span>
+              <div class="tool-option-title">€3.000+</div>
+              <div class="tool-option-desc">Investeren in kwaliteit en maatwerk</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="tool-step" data-step="result">
+          <div class="tool-result-card" id="toolResult"></div>
+        </div>
+
+        <div class="tool-nav">
+          <button class="tool-back hidden" id="toolBack">← Vorige</button>
+          <div class="tool-counter" id="toolCounter">Stap 1 van 3</div>
+        </div>
       </div>
-    </div>
 
-    <div class="tool-step" data-step="2">
-      <div class="tool-question">Wat heb je nu het hardst nodig?</div>
-      <div class="tool-options grid-1">
-        <button class="tool-option" data-val="website">
-          <span class="tool-option-icon">🌐</span>
-          <div class="tool-option-title">Een nieuwe website</div>
-          <div class="tool-option-desc">Mijn online uitstraling kan een upgrade gebruiken</div>
-        </button>
-        <button class="tool-option" data-val="chatbot">
-          <span class="tool-option-icon">🤖</span>
-          <div class="tool-option-title">Een AI-chatbot</div>
-          <div class="tool-option-desc">Mijn klanten moeten 24/7 antwoord krijgen</div>
-        </button>
-        <button class="tool-option" data-val="reserveringen">
-          <span class="tool-option-icon">📅</span>
-          <div class="tool-option-title">Reserveringssysteem</div>
-          <div class="tool-option-desc">Reserveringen automatiseren en stroomlijnen</div>
-        </button>
-        <button class="tool-option" data-val="alles">
-          <span class="tool-option-icon">✨</span>
-          <div class="tool-option-title">Eigenlijk alles</div>
-          <div class="tool-option-desc">Ik wil compleet digitaal sterk staan</div>
-        </button>
+      <!-- RECHTERKOLOM van tool -->
+      <div class="tool-right">
+        <!-- Default -->
+        <div class="tool-ctx active" data-ctx="empty">
+          <div class="tool-empty">
+            <div class="tool-empty-icon">👈</div>
+            <div class="tool-empty-text">Kies een sector om te beginnen</div>
+            <div class="tool-empty-sub">Je krijgt direct relevante inzichten</div>
+          </div>
+        </div>
+
+        <!-- Sector contexten -->
+        <div class="tool-ctx" data-ctx="horeca">
+          <div class="tool-visual"><div class="tool-visual-tag">Horeca</div><div class="tool-visual-icon">🍽️</div></div>
+          <div class="tool-fact"><div class="tool-fact-label">Wist je dat...</div><div class="tool-fact-text"><strong>70% van horecaklanten</strong> verwacht 24/7 bereikbaarheid voor reserveringen en vragen.</div></div>
+          <div class="tool-stats">
+            <div class="tool-stat-mini"><div class="tool-stat-num">23%</div><div class="tool-stat-lbl">Gemiste reserveringen buiten openingstijden</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">12u</div><div class="tool-stat-lbl">Tijdwinst per week mogelijk</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">+38%</div><div class="tool-stat-lbl">Meer online aanvragen</div></div>
+          </div>
+          <div class="tool-trust">✓ <strong>Wij komen zelf uit de horeca</strong> — we weten waar het schuurt</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="retail">
+          <div class="tool-visual blue"><div class="tool-visual-tag">Retail</div><div class="tool-visual-icon">🏪</div></div>
+          <div class="tool-fact"><div class="tool-fact-label">Wist je dat...</div><div class="tool-fact-text"><strong>81% van consumenten</strong> checkt eerst online voordat ze fysiek langskomen bij een winkel of salon.</div></div>
+          <div class="tool-stats">
+            <div class="tool-stat-mini"><div class="tool-stat-num">81%</div><div class="tool-stat-lbl">Checkt eerst online</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">3×</div><div class="tool-stat-lbl">Meer kans gevonden te worden</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">+27%</div><div class="tool-stat-lbl">Meer afspraken online</div></div>
+          </div>
+          <div class="tool-trust">✓ <strong>Sterk online aanwezig zijn</strong> = nieuwe klanten zonder advertenties</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="leisure">
+          <div class="tool-visual"><div class="tool-visual-tag">Leisure</div><div class="tool-visual-icon">🎾</div></div>
+          <div class="tool-fact"><div class="tool-fact-label">Wist je dat...</div><div class="tool-fact-text">Sport- en leisurebedrijven met een <strong>eigen reserveringssysteem</strong> hebben gemiddeld 40% meer terugkerende klanten.</div></div>
+          <div class="tool-stats">
+            <div class="tool-stat-mini"><div class="tool-stat-num">40%</div><div class="tool-stat-lbl">Meer terugkerende klanten</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">24/7</div><div class="tool-stat-lbl">Online boekbaar</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">0%</div><div class="tool-stat-lbl">Commissie per boeking</div></div>
+          </div>
+          <div class="tool-trust">✓ <strong>Eigen systeem</strong> = geen commissies aan derde partijen</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="anders">
+          <div class="tool-visual gray"><div class="tool-visual-tag">Maatwerk</div><div class="tool-visual-icon">💼</div></div>
+          <div class="tool-fact"><div class="tool-fact-label">Geen probleem</div><div class="tool-fact-text">Onze oplossingen werken voor <strong>elk MKB-bedrijf</strong>. We luisteren eerst, bouwen dan op maat.</div></div>
+          <div class="tool-stats">
+            <div class="tool-stat-mini"><div class="tool-stat-num">100%</div><div class="tool-stat-lbl">Op maat geleverd</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">1-3</div><div class="tool-stat-lbl">Weken tot live</div></div>
+            <div class="tool-stat-mini"><div class="tool-stat-num">0</div><div class="tool-stat-lbl">Verborgen kosten</div></div>
+          </div>
+          <div class="tool-trust">✓ <strong>Geen jargon, geen verrassingen</strong> — gewoon helder</div>
+        </div>
+
+        <!-- Behoefte contexten -->
+        <div class="tool-ctx" data-ctx="website">
+          <div class="tool-mini-browser">
+            <div class="tool-mini-bar"><span></span><span></span><span></span><div class="url">jouw-bedrijf.nl</div></div>
+            <div class="tool-mini-content">
+              <div class="tool-mini-h">Welkom bij <em>jouw bedrijf</em></div>
+              <div class="tool-mini-s">Mobielvriendelijk · SEO-klaar · Snel</div>
+              <div class="tool-mini-row"><span class="tool-mini-btn">Contact →</span><div class="tool-mini-ln"></div></div>
+            </div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Wat dit voor jou doet</div><div class="tool-fact-text">Een professionele website is je <strong>24/7 verkoper</strong>. Hij werkt door wanneer jij slaapt.</div></div>
+          <div class="tool-features">
+            <div class="tool-feat">Strak ontwerp dat klanten overtuigt</div>
+            <div class="tool-feat">Mobiel-eerst gebouwd (60% van bezoek)</div>
+            <div class="tool-feat">SEO-basis voor vindbaarheid in Google</div>
+          </div>
+          <div class="tool-trust">⏱ <strong>Gemiddeld live in 1-2 weken</strong></div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="chatbot">
+          <div class="tool-mini-chat">
+            <div class="tool-mini-chat-h">
+              <div class="tool-mini-chat-av">MH</div>
+              <div>
+                <div class="tool-mini-chat-name">AI Chatbot</div>
+                <div class="tool-mini-chat-status">● 24/7 online</div>
+              </div>
+            </div>
+            <div class="tool-mini-chat-msg bot">Welkom! Hoe kan ik helpen?</div>
+            <div class="tool-mini-chat-msg usr">Tafel voor vrijdag?</div>
+            <div class="tool-mini-chat-msg bot">Voor hoeveel personen?</div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Wat dit voor jou doet</div><div class="tool-fact-text">Een AI-chatbot beantwoordt klantvragen <strong>24/7</strong> — zelfs als jij slaapt of in een meeting zit.</div></div>
+          <div class="tool-features">
+            <div class="tool-feat">Begrijpt context, niet alleen trefwoorden</div>
+            <div class="tool-feat">Getraind op jouw bedrijf en menu</div>
+            <div class="tool-feat">Bespaart gemiddeld 8-12 uur per week</div>
+          </div>
+          <div class="tool-trust">🤖 <strong>Vanaf €249</strong> setup + €59/mnd</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="reserveringen">
+          <div class="tool-mini-cal">
+            <div class="tool-mini-cal-h"><div class="tool-mini-cal-month">November 2026</div><div class="tool-mini-cal-count">● 24 boekingen</div></div>
+            <div class="tool-mini-cal-grid">
+              <div class="tool-mini-cal-d">M</div><div class="tool-mini-cal-d">D</div><div class="tool-mini-cal-d">W</div><div class="tool-mini-cal-d">D</div><div class="tool-mini-cal-d">V</div><div class="tool-mini-cal-d">Z</div><div class="tool-mini-cal-d">Z</div>
+              <div class="tool-mini-cal-d">3</div><div class="tool-mini-cal-d b">4</div><div class="tool-mini-cal-d s">5</div><div class="tool-mini-cal-d">6</div><div class="tool-mini-cal-d b">7</div><div class="tool-mini-cal-d b">8</div><div class="tool-mini-cal-d s">9</div>
+            </div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Wat dit voor jou doet</div><div class="tool-fact-text">Klanten boeken zelf direct — <strong>geen telefoontjes</strong>, geen dubbele boekingen, geen gedoe.</div></div>
+          <div class="tool-features">
+            <div class="tool-feat">Volledig op maat voor jouw bedrijf</div>
+            <div class="tool-feat">Automatische bevestigingen & herinneringen</div>
+            <div class="tool-feat">Online betaling vooraf mogelijk</div>
+          </div>
+          <div class="tool-trust">📅 <strong>Eigen systeem</strong> — geen commissies aan derden</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="alles">
+          <div class="tool-visual"><div class="tool-visual-tag">Compleet</div><div class="tool-visual-icon">✨</div></div>
+          <div class="tool-fact"><div class="tool-fact-label">Slim gekozen</div><div class="tool-fact-text">Combineer diensten en je krijgt een <strong>geïntegreerd systeem</strong> dat samenwerkt. Plus aantrekkelijke combikorting.</div></div>
+          <div class="tool-features">
+            <div class="tool-feat">Website + chatbot + reserveringen in één</div>
+            <div class="tool-feat">Alle systemen praten met elkaar</div>
+            <div class="tool-feat">Tot 20% korting bij combinatie</div>
+          </div>
+          <div class="tool-trust">✨ <strong>De volledige digitale partner</strong></div>
+        </div>
+
+        <!-- Budget contexten -->
+        <div class="tool-ctx" data-ctx="laag">
+          <div class="tool-pkg-list">
+            <div class="tool-pkg-row highlight"><div class="tool-pkg-name">Online<span>One-pager, geen abonnement</span></div><div class="tool-pkg-price">€695</div></div>
+            <div class="tool-pkg-row"><div class="tool-pkg-name">Groei<span>3-6 pagina's + hosting</span></div><div class="tool-pkg-price">€1.495</div></div>
+            <div class="tool-pkg-row"><div class="tool-pkg-name">Slim<span>Volledig maatwerk</span></div><div class="tool-pkg-price">€2.495</div></div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Slimme keuze</div><div class="tool-fact-text">Het <strong>Online pakket</strong> is perfect om mee te starten — strak en professioneel zonder maandelijkse verplichting.</div></div>
+          <div class="tool-trust">💡 <strong>Later upgraden</strong> is altijd mogelijk</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="midden">
+          <div class="tool-pkg-list">
+            <div class="tool-pkg-row"><div class="tool-pkg-name">Online<span>One-pager, geen abonnement</span></div><div class="tool-pkg-price">€695</div></div>
+            <div class="tool-pkg-row highlight"><div class="tool-pkg-name">Groei<span>3-6 pagina's + hosting</span></div><div class="tool-pkg-price">€1.495</div></div>
+            <div class="tool-pkg-row"><div class="tool-pkg-name">Slim<span>Volledig maatwerk</span></div><div class="tool-pkg-price">€2.495</div></div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Meest gekozen</div><div class="tool-fact-text">Het <strong>Groei pakket</strong> geeft je een complete bedrijfssite met hosting — alles wat je nodig hebt om serieus te groeien.</div></div>
+          <div class="tool-trust">⭐ <strong>Beste prijs-kwaliteit</strong> voor MKB</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="hoog">
+          <div class="tool-pkg-list">
+            <div class="tool-pkg-row"><div class="tool-pkg-name">Online<span>One-pager, geen abonnement</span></div><div class="tool-pkg-price">€695</div></div>
+            <div class="tool-pkg-row"><div class="tool-pkg-name">Groei<span>3-6 pagina's + hosting</span></div><div class="tool-pkg-price">€1.495</div></div>
+            <div class="tool-pkg-row highlight"><div class="tool-pkg-name">Slim<span>Volledig maatwerk</span></div><div class="tool-pkg-price">€2.495</div></div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Premium keuze</div><div class="tool-fact-text">Het <strong>Slim pakket</strong> geeft je volledig maatwerk, uitgebreide SEO en chatbot-integratie — voor wie écht wil opvallen.</div></div>
+          <div class="tool-trust">💎 <strong>Volledig op maat</strong> — voor wie het beste wil</div>
+        </div>
+
+        <div class="tool-ctx" data-ctx="result">
+          <div class="tool-features">
+            <div class="tool-feat">Persoonlijke begeleiding van A tot Z</div>
+            <div class="tool-feat">Eén vast contactpersoon</div>
+            <div class="tool-feat">Geen technische jargon, gewoon helder</div>
+            <div class="tool-feat">Live binnen 1-3 weken</div>
+          </div>
+          <div class="tool-fact"><div class="tool-fact-label">Wat nu?</div><div class="tool-fact-text">Plan een <strong>gratis kennismakingsgesprek</strong>. Geen verkooppraatje — gewoon kijken of we een match zijn.</div></div>
+          <div class="tool-trust">☕ <strong>Vrijblijvend</strong> · geen verplichtingen</div>
+        </div>
       </div>
-    </div>
-
-    <div class="tool-step" data-step="3">
-      <div class="tool-question">Wat is je budget ongeveer?</div>
-      <div class="tool-options grid-1">
-        <button class="tool-option" data-val="laag">
-          <span class="tool-option-icon">💸</span>
-          <div class="tool-option-title">Tot €1.000</div>
-          <div class="tool-option-desc">Ik wil starten met een goede basis</div>
-        </button>
-        <button class="tool-option" data-val="midden">
-          <span class="tool-option-icon">💰</span>
-          <div class="tool-option-title">€1.000 — €3.000</div>
-          <div class="tool-option-desc">Ik wil iets professioneels neerzetten</div>
-        </button>
-        <button class="tool-option" data-val="hoog">
-          <span class="tool-option-icon">💎</span>
-          <div class="tool-option-title">€3.000+</div>
-          <div class="tool-option-desc">Ik investeer graag in kwaliteit en maatwerk</div>
-        </button>
-      </div>
-    </div>
-
-    <div class="tool-step" data-step="result">
-      <div class="tool-result-card" id="toolResult"></div>
-    </div>
-
-    <div class="tool-nav">
-      <button class="tool-back hidden" id="toolBack">← Vorige</button>
-      <div class="tool-counter" id="toolCounter">Stap 1 van 3</div>
     </div>
   </div>
 </section>
@@ -254,22 +442,34 @@
     </div>
 
     <div class="diensten-grid">
-      <a href="websites.html" class="dienst">
+      <a href="websites.html" class="dienst" data-tilt>
         <div class="dienst-icon">🌐</div>
         <h3>Websites</h3>
-        <p>Van strakke one-pager tot complete bedrijfssite of webshop. Snel, mobielvriendelijk en gemaakt om klanten te overtuigen.</p>
+        <p>Van strakke one-pager tot complete bedrijfssite. Snel, mobielvriendelijk en gemaakt om klanten te overtuigen.</p>
+        <div class="dienst-prices">
+          <span class="dienst-price-label">vanaf</span>
+          <span class="dienst-price">€695</span>
+        </div>
         <span class="dienst-link">Ontdek onze pakketten</span>
       </a>
-      <a href="chatbots.html" class="dienst">
+      <a href="chatbots.html" class="dienst" data-tilt>
         <div class="dienst-icon">🤖</div>
         <h3>Chatbots & AI</h3>
         <p>Slimme chatbots die 24/7 vragen beantwoorden, leads opvolgen en reserveringen aannemen. Aangedreven door de nieuwste AI.</p>
+        <div class="dienst-prices">
+          <span class="dienst-price-label">vanaf</span>
+          <span class="dienst-price">€249</span>
+        </div>
         <span class="dienst-link">Ontdek onze pakketten</span>
       </a>
-      <a href="reserveringen.html" class="dienst">
+      <a href="reserveringen.html" class="dienst" data-tilt>
         <div class="dienst-icon">📅</div>
         <h3>Reserveringssystemen</h3>
-        <p>Reserveringen, afspraken en boekingen — volledig geautomatiseerd en op maat gebouwd. Inclusief admin en online betaling.</p>
+        <p>Reserveringen, afspraken en boekingen — volledig geautomatiseerd en op maat gebouwd. Geen commissies aan derden.</p>
+        <div class="dienst-prices">
+          <span class="dienst-price-label">vanaf</span>
+          <span class="dienst-price">€299</span>
+        </div>
         <span class="dienst-link">Ontdek onze pakketten</span>
       </a>
     </div>
@@ -290,6 +490,40 @@
         <span class="extra-pill">Google Ads</span>
         <span class="extra-pill">CRM-koppelingen</span>
         <span class="extra-pill">Content creatie</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STATS BAND (cijfers die meetellen) ════════ -->
+<section class="stats-band">
+  <div class="stats-band-inner">
+    <div class="stat-block">
+      <div class="stat-num" data-count="25" data-suffix="+">0</div>
+      <div class="stat-label">
+        <strong>Jaar ervaring</strong>
+        Op de werkvloer in horeca
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num" data-count="24" data-suffix="/7">0</div>
+      <div class="stat-label">
+        <strong>Altijd bereikbaar</strong>
+        Voor je klanten en gasten
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num" data-count="695" data-prefix="€">0</div>
+      <div class="stat-label">
+        <strong>Vanaf</strong>
+        Lage instapprijs websites
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num" data-count="0" data-suffix="%">0</div>
+      <div class="stat-label">
+        <strong>Commissie</strong>
+        Op reserveringen, ooit
       </div>
     </div>
   </div>
