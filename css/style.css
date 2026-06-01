@@ -218,9 +218,46 @@ footer.main-footer::before {
 .reveal.delay-3 { transition-delay: 0.3s; }
 .reveal.delay-4 { transition-delay: 0.4s; }
 
+/* ═══════════ FOCUS (toetsenbord-toegankelijkheid) ═══════════ */
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+/* Knoppen/links krijgen een zachtere ring die bij het merk past */
+.btn:focus-visible,
+.nav-links a:focus-visible,
+.nav-mobile a:focus-visible,
+.tool-option:focus-visible,
+.dienst:focus-visible,
+.footer-col ul a:focus-visible,
+.footer-social a:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(232,160,48,0.18);
+}
+/* Op donkere secties een lichte ring voor contrast */
+.tool-option:focus-visible,
+.footer-col ul a:focus-visible,
+.footer-social a:focus-visible {
+  outline-color: #FFB955;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .cursor-glow { display: none; }
+  /* Schakel decoratieve beweging uit, behoud opacity-fades kort */
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Hover-verschuivingen platleggen */
+  .btn:hover,
+  .dienst:hover,
+  .tool-eff:hover,
+  .btn-outline:hover { transform: none !important; }
 }
 
 /* ── MOBIEL ── */

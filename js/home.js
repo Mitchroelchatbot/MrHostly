@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Respecteer voorkeur voor minder beweging (toegankelijkheid + performance)
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ────────────────────────────────────────
   // 1. HERO CHATBOT — typing animation loop
   // ────────────────────────────────────────
@@ -244,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ────────────────────────────────────────
   // 4. SPELL 2: Hover-tilt op dienst-cards
   // ────────────────────────────────────────
-  const tiltCards = document.querySelectorAll('[data-tilt]');
+  const tiltCards = reduceMotion ? [] : document.querySelectorAll('[data-tilt]');
 
   tiltCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
@@ -267,6 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. SPELL 3: Confetti bij tool-resultaat
   // ────────────────────────────────────────
   function fireConfetti() {
+    if (reduceMotion) return;
     const colors = ['#E8A030', '#1B2D5E', '#FFB955', '#2A4080', '#FFF1DD'];
     const count = 80;
     const toolSection = document.getElementById('tool');
@@ -306,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ────────────────────────────────────────
   // 6. CURSOR-GLOW (volgt muis op donkere secties)
   // ────────────────────────────────────────
+  if (!reduceMotion) {
   const glow = document.createElement('div');
   glow.className = 'cursor-glow';
   document.body.appendChild(glow);
@@ -334,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(glowLoop);
   }
   glowLoop();
+  } // einde cursor-glow (overgeslagen bij reduceMotion)
 
   // ────────────────────────────────────────
   // 7. SCROLL-REVEAL
@@ -353,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 8. PARALLAX op hero-showcase
   // ────────────────────────────────────────
   const heroShowcase = document.querySelector('.hero-showcase');
-  if (heroShowcase && window.innerWidth > 900) {
+  if (heroShowcase && window.innerWidth > 900 && !reduceMotion) {
     window.addEventListener('scroll', () => {
       const scrolled = window.scrollY;
       if (scrolled < 800) {
@@ -365,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ────────────────────────────────────────
   // 9. MAGNETISCHE hoofdknop
   // ────────────────────────────────────────
-  const magneticBtns = document.querySelectorAll('.btn-prominent');
+  const magneticBtns = reduceMotion ? [] : document.querySelectorAll('.btn-prominent');
   magneticBtns.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const r = btn.getBoundingClientRect();
