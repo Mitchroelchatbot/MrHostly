@@ -29,4 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  // Scroll-voortgangsbalk bovenaan (oriëntatie / premium gevoel)
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  bar.innerHTML = '<span></span>';
+  document.body.appendChild(bar);
+  const fill = bar.firstElementChild;
+  const updateProgress = () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = h > 0 ? Math.min(window.scrollY / h, 1) : 0;
+    fill.style.transform = 'scaleX(' + p + ')';
+  };
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+
 });

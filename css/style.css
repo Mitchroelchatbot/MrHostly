@@ -109,6 +109,18 @@ nav.main-nav.scrolled {
   border-bottom: none !important; font-weight: 600 !important;
 }
 
+/* ── SCROLL-VOORTGANGSBALK (oriëntatie tijdens scrollen) ── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 3px; z-index: 101;
+  background: transparent; pointer-events: none;
+}
+.scroll-progress span {
+  display: block; height: 100%; width: 100%;
+  transform: scaleX(0); transform-origin: left;
+  background: linear-gradient(90deg, var(--orange), var(--orange-deep));
+}
+
 /* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; gap: 8px;

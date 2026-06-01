@@ -137,6 +137,14 @@
 .hero-desc strong { color: var(--navy); font-weight: 600; }
 
 .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.hero-btns-note {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px;
+  font-size: 13px; color: var(--muted);
+}
+.hero-btns-note .check {
+  color: var(--orange); font-weight: 700;
+}
 
 .hero-trust {
   margin-top: 36px;

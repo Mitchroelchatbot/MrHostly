@@ -168,7 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function showStep(step) {
     steps.forEach(s => s.classList.remove('active'));
     const target = document.querySelector(`.tool-step[data-step="${step}"]`);
-    if (target) target.classList.add('active');
+    if (target) {
+      target.classList.add('active');
+      // Toegankelijkheid: verplaats focus naar de nieuwe vraag/het resultaat,
+      // zodat toetsenbord- en screenreader-gebruikers de plek niet kwijtraken
+      const focusEl = target.querySelector('.tool-question') || target.querySelector('h3') || target;
+      if (focusEl) {
+        focusEl.setAttribute('tabindex', '-1');
+        focusEl.focus({ preventScroll: true });
+      }
+    }
 
     const total = step === 'result' ? 3 : step;
     progress.forEach((p, i) => {
