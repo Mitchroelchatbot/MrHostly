@@ -99,251 +99,327 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ────────────────────────────────────────
-  // 2. INTERACTIEVE TOOL
+  // 2. KEUZETOOL — "Bouw jouw oplossing" (gesprek + live opbouw)
+  //    Inhoud (vragen, opties, sector-cijfers, pakketten) identiek aan voorheen.
   // ────────────────────────────────────────
-  const answers = {};
-  let currentStep = 1;
+  (function buildSolutionTool() {
+    const scroll     = document.getElementById('toolChatScroll');
+    const solution   = document.getElementById('toolSolution');
+    if (!scroll || !solution) return;
 
-  const steps = document.querySelectorAll('.tool-step');
-  const progress = [
-    document.getElementById('ps1'),
-    document.getElementById('ps2'),
-    document.getElementById('ps3')
-  ];
-  const counter = document.getElementById('toolCounter');
-  const backBtn = document.getElementById('toolBack');
-  const ctxPanels = document.querySelectorAll('.tool-ctx');
-  const toolLeft = document.querySelector('.tool-left');
-  const recapEl = document.getElementById('toolRecap');
-  const labels = {};   // gekozen antwoord-labels → recap-chips (geen logica-wijziging)
+    const backBtn    = document.getElementById('toolBack');
+    const restartBtn = document.getElementById('toolRestart');
+    const solStatus  = document.getElementById('toolSolStatus');
+    const solCta     = document.getElementById('toolSolCta');
+    const RM         = reduceMotion;
 
-  // Pakket aanbevelingen
-  const packages = {
-    laag: {
-      name: 'Online pakket',
-      price: '€695',
-      extra: 'eenmalig · geen abonnement',
-      features: [
-        'Professionele one-pager op maat',
-        'Mobielvriendelijk & responsive',
-        'Contactformulier inbegrepen',
-        'Live in 5-10 werkdagen'
-      ]
-    },
-    midden: {
-      name: 'Groei pakket',
-      price: '€1.495',
-      extra: '+ vanaf €59/mnd · inclusief hosting',
-      features: [
-        '3-6 pagina\'s op maat',
-        'Hosting & SSL inbegrepen',
-        'Kleine aanpassingen het hele jaar',
-        '1× per kwartaal frisse blik'
-      ]
-    },
-    hoog: {
-      name: 'Slim pakket',
-      price: 'vanaf €2.495',
-      extra: '+ vanaf €99/mnd · volledig maatwerk',
-      features: [
-        'Onbeperkt aantal pagina\'s',
-        'Volledig maatwerk design',
-        'Uitgebreide SEO + Analytics',
-        'WhatsApp support'
-      ]
-    }
-  };
+    // ── Data (1-op-1 dezelfde inhoud) ──
+    const packages = {
+      laag:   { name: 'Online pakket', price: '€695', extra: 'eenmalig · geen abonnement',
+        features: ['Professionele one-pager op maat', 'Mobielvriendelijk & responsive', 'Contactformulier inbegrepen', 'Live in 5-10 werkdagen'] },
+      midden: { name: 'Groei pakket', price: '€1.495', extra: '+ vanaf €59/mnd · inclusief hosting',
+        features: ['3-6 pagina\'s op maat', 'Hosting & SSL inbegrepen', 'Kleine aanpassingen het hele jaar', '1× per kwartaal frisse blik'] },
+      hoog:   { name: 'Slim pakket', price: 'vanaf €2.495', extra: '+ vanaf €99/mnd · volledig maatwerk',
+        features: ['Onbeperkt aantal pagina\'s', 'Volledig maatwerk design', 'Uitgebreide SEO + Analytics', 'WhatsApp support'] }
+    };
 
-  function showCtx(key) {
-    ctxPanels.forEach(p => p.classList.remove('active'));
-    const target = document.querySelector(`[data-ctx="${key}"]`);
-    if (target) {
-      target.classList.add('active');
-      // Laat effect-cijfers in deze context tellen
-      target.querySelectorAll('[data-count]').forEach(el => {
-        counted.delete(el);
-        animateCount(el);
-        counted.add(el);
+    const questions = [
+      null,
+      { key: 'sector', bot: 'In welke sector ben je actief?', cols: 2, opts: [
+        { v: 'horeca',  icon: 'utensils-crossed',     t: 'Horeca',             d: 'Restaurant, café, hotel' },
+        { v: 'retail',  icon: 'store',                 t: 'Retail',             d: 'Winkel, salon, dienst' },
+        { v: 'leisure', icon: 'activity',              t: 'Leisure',            d: 'Sport, wellness, vrije tijd' },
+        { v: 'anders',  icon: 'briefcase',             t: 'Anders',             d: 'Iets specifiekers' }
+      ]},
+      { key: 'behoefte', bot: 'Top! Waar kan ik je het beste mee helpen?', cols: 1, opts: [
+        { v: 'website',       icon: 'globe',              t: 'Een nieuwe website',     d: 'Mijn online uitstraling kan een upgrade gebruiken' },
+        { v: 'chatbot',       icon: 'message-square-text', t: 'Een AI-chatbot',        d: 'Mijn klanten moeten 24/7 antwoord krijgen' },
+        { v: 'reserveringen', icon: 'calendar-check',     t: 'Reserveringssysteem',    d: 'Reserveringen automatiseren en stroomlijnen' },
+        { v: 'alles',         icon: 'sparkles',           t: 'Eigenlijk alles',        d: 'Ik wil compleet digitaal sterk staan' }
+      ]},
+      { key: 'budget', bot: 'Helder. En wat is ongeveer je budget?', cols: 1, opts: [
+        { v: 'laag',   icon: 'piggy-bank', t: 'Tot €1.000',       d: 'Starten met een goede basis' },
+        { v: 'midden', icon: 'wallet',     t: '€1.000 — €3.000',  d: 'Iets professioneels neerzetten' },
+        { v: 'hoog',   icon: 'gem',        t: '€3.000+',          d: 'Investeren in kwaliteit en maatwerk' }
+      ]}
+    ];
+
+    const sectorData = {
+      horeca:  { name: 'Horeca', effects: [
+        { icon: 'calendar-check', count: 30, prefix: '+', suffix: '%', txt: 'Meer boekingen met online reserveren' },
+        { icon: 'bell-ring',      count: 40, prefix: '-', suffix: '%', txt: 'Minder no-shows door herinneringen' } ] },
+      retail:  { name: 'Retail', effects: [
+        { icon: 'calendar-check', count: 27, prefix: '+', suffix: '%', txt: 'Meer afspraken via je website' },
+        { icon: 'search',         count: 81,             suffix: '%', txt: 'Checkt eerst online voor het bezoek' } ] },
+      leisure: { name: 'Leisure', effects: [
+        { icon: 'refresh-cw',     count: 40, prefix: '+', suffix: '%', txt: 'Meer terugkerende klanten' },
+        { icon: 'percent',        count: 0,              suffix: '%', txt: 'Commissie aan derde partijen' } ] },
+      anders:  { name: 'Anders', effects: [
+        { icon: 'ruler',          count: 100,            suffix: '%', txt: 'Op maat geleverd voor jou' },
+        { icon: 'eye',            count: 0,                           txt: 'Verborgen kosten — gewoon helder' } ] }
+    };
+
+    const serviceData = {
+      website:       { icon: 'globe',               name: 'Nieuwe website',       line: 'Je 24/7 verkoper — strak, mobiel-eerst & SEO-klaar' },
+      chatbot:       { icon: 'message-square-text', name: 'AI-chatbot',           line: 'Beantwoordt klantvragen 24/7, getraind op jouw bedrijf' },
+      reserveringen: { icon: 'calendar-check',      name: 'Reserveringssysteem',  line: 'Klanten boeken zelf — geen telefoontjes of dubbele boekingen' },
+      alles:         { icon: 'sparkles',            name: 'Compleet pakket',      line: 'Website + chatbot + reserveringen, geïntegreerd' }
+    };
+
+    // ── State ──
+    const answers = {};
+    const nodes   = [null, null, null, null];   // per stap: { q, chips, user }
+    let answered  = 0;
+    let started   = false;
+    let busy      = false;
+    let finalNode = null;
+
+    const placeholders = {};
+    solution.querySelectorAll('.tool-sol-slot').forEach(s => { placeholders[s.dataset.slot] = s.innerHTML; });
+
+    // ── Lucide-iconen voor dynamisch toegevoegde elementen ──
+    function paintIcons(root) {
+      if (!window.lucide || !window.lucide.icons) { setTimeout(() => paintIcons(root), 100); return; }
+      root.querySelectorAll('[data-icon]').forEach(el => {
+        if (el.dataset.iconDone === '1') return;
+        const name = el.getAttribute('data-icon');
+        const pascal = name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
+        const data = window.lucide.icons[pascal];
+        if (!data) return;
+        try {
+          const svg = window.lucide.createElement(data);
+          svg.setAttribute('width', '1em'); svg.setAttribute('height', '1em');
+          svg.style.width = '100%'; svg.style.height = '100%';
+          svg.style.maxWidth = '1.2em'; svg.style.maxHeight = '1.2em';
+          el.appendChild(svg); el.dataset.iconDone = '1';
+        } catch (e) { /* stil */ }
       });
-      // Meevullende balkjes naast de effect-cijfers
-      decorateEffects(target);
     }
-  }
 
-  // Voegt per effect een meevullende balk toe (alleen bij zinvolle, positieve waarde)
-  function decorateEffects(ctxEl) {
-    if (!ctxEl) return;
-    ctxEl.querySelectorAll('.tool-eff').forEach(eff => {
+    // ── Chat-helpers ──
+    function scrollToEnd() { scroll.scrollTop = scroll.scrollHeight; }
+    function bubble(side, text) {
+      const b = document.createElement('div');
+      b.className = 'tool-msg ' + side + ' msg-in';
+      b.textContent = text;
+      return b;
+    }
+    function addBot(text, cb) {
+      busy = true;
+      if (RM) {
+        const b = bubble('bot', text); scroll.appendChild(b); scrollToEnd();
+        busy = false; if (cb) cb(b); return;
+      }
+      const typing = document.createElement('div');
+      typing.className = 'tool-msg bot tool-typing';
+      typing.innerHTML = '<span></span><span></span><span></span>';
+      scroll.appendChild(typing); scrollToEnd();
+      setTimeout(() => {
+        typing.remove();
+        const b = bubble('bot', text); scroll.appendChild(b); scrollToEnd();
+        busy = false; if (cb) cb(b);
+      }, 850);
+    }
+
+    function showChips(n) {
+      const q = questions[n];
+      const wrap = document.createElement('div');
+      wrap.className = 'tool-choices' + (q.cols === 2 ? ' cols-2' : '');
+      q.opts.forEach((o, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-choice';
+        btn.style.setProperty('--i', idx);
+        btn.innerHTML =
+          '<span class="tool-choice-ic" data-icon="' + o.icon + '"></span>' +
+          '<span class="tool-choice-tx"><span class="tool-choice-t">' + o.t + '</span>' +
+          '<span class="tool-choice-d">' + o.d + '</span></span>';
+        btn.addEventListener('click', () => { if (!busy) choose(n, o); });
+        wrap.appendChild(btn);
+      });
+      scroll.appendChild(wrap);
+      paintIcons(wrap);
+      scrollToEnd();
+      const first = wrap.querySelector('.tool-choice');
+      if (first) first.focus({ preventScroll: true });
+      nodes[n] = nodes[n] || {};
+      nodes[n].chips = wrap;
+    }
+
+    function ask(n) {
+      addBot(questions[n].bot, (qEl) => {
+        nodes[n] = nodes[n] || {};
+        nodes[n].q = qEl;
+        showChips(n);
+      });
+    }
+
+    function choose(n, o) {
+      answers[questions[n].key] = o.v;
+      const u = bubble('user', o.t);
+      scroll.appendChild(u);
+      nodes[n].user = u;
+      if (nodes[n].chips) { nodes[n].chips.remove(); nodes[n].chips = null; }
+      scrollToEnd();
+      answered = n;
+      fillSlot(n, o.v);
+      updateFoot();
+      if (n < 3) { ask(n + 1); } else { finish(); }
+    }
+
+    // ── Oplossing-kaart ──
+    function slotEl(name) { return solution.querySelector('.tool-sol-slot[data-slot="' + name + '"]'); }
+    function fillNode(el, html) {
+      el.classList.add('filled');
+      el.innerHTML = html;
+      paintIcons(el);
+      if (!RM) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+    }
+    function addBar(eff) {
       const num = eff.querySelector('.tool-eff-num');
       if (!num) return;
       const target = parseInt(num.dataset.count, 10) || 0;
-      let bar = eff.querySelector('.tool-eff-bar');
-      if (target <= 0) { if (bar) bar.remove(); return; }
-      if (!bar) {
-        bar = document.createElement('div');
-        bar.className = 'tool-eff-bar';
-        bar.innerHTML = '<span></span>';
-        num.insertAdjacentElement('afterend', bar);
-      }
+      if (target <= 0) return;
+      const bar = document.createElement('div');
+      bar.className = 'tool-eff-bar'; bar.innerHTML = '<span></span>';
+      num.insertAdjacentElement('afterend', bar);
       const pct = Math.max(8, Math.min(100, target));
-      const fill = bar.firstElementChild;
-      fill.style.width = '0%';
-      if (reduceMotion) {
-        fill.style.width = pct + '%';
-      } else {
-        requestAnimationFrame(() => { fill.style.width = pct + '%'; });
-      }
-    });
-  }
-
-  // Bouwt de recap-chips op uit de gekozen antwoorden (Sector → Behoefte → Budget)
-  function renderRecap() {
-    if (!recapEl) return;
-    const order = ['sector', 'behoefte', 'budget'];
-    recapEl.innerHTML = '';
-    order.forEach(k => {
-      if (labels[k]) {
-        const chip = document.createElement('span');
-        chip.className = 'tool-chip';
-        chip.innerHTML = '<span class="tool-chip-k">' + labels[k].k + '</span> ' + labels[k].v;
-        recapEl.appendChild(chip);
-      }
-    });
-  }
-
-  function showStep(step) {
-    steps.forEach(s => s.classList.remove('active'));
-    const target = document.querySelector(`.tool-step[data-step="${step}"]`);
-    if (target) {
-      target.classList.add('active');
-      // Toegankelijkheid: verplaats focus naar de nieuwe vraag/het resultaat,
-      // zodat toetsenbord- en screenreader-gebruikers de plek niet kwijtraken
-      const focusEl = target.querySelector('.tool-question') || target.querySelector('h3') || target;
-      if (focusEl) {
-        focusEl.setAttribute('tabindex', '-1');
-        focusEl.focus({ preventScroll: true });
+      const f = bar.firstElementChild; f.style.width = '0%';
+      if (RM) { f.style.width = pct + '%'; }
+      else { requestAnimationFrame(() => { f.style.width = pct + '%'; }); }
+    }
+    function fillSlot(n, val) {
+      if (n === 1) {
+        const d = sectorData[val];
+        let h = '<div class="tool-sol-k">Sector</div><div class="tool-sol-v">' + d.name + '</div>';
+        h += '<div class="tool-sol-effs">';
+        d.effects.forEach(e => {
+          h += '<div class="tool-eff">';
+          h += '<div class="tool-eff-ic" data-icon="' + e.icon + '"></div>';
+          h += '<div class="tool-eff-num" data-count="' + e.count + '"' +
+               (e.prefix ? ' data-prefix="' + e.prefix + '"' : '') +
+               (e.suffix ? ' data-suffix="' + e.suffix + '"' : '') + '>' +
+               (e.prefix || '') + '0' + (e.suffix || '') + '</div>';
+          h += '<div class="tool-eff-txt">' + e.txt + '</div>';
+          h += '</div>';
+        });
+        h += '</div>';
+        const el = slotEl('sector'); fillNode(el, h);
+        el.querySelectorAll('.tool-eff-num').forEach(animateCount);
+        el.querySelectorAll('.tool-eff').forEach(addBar);
+      } else if (n === 2) {
+        const d = serviceData[val];
+        let h = '<div class="tool-sol-k">Oplossing</div>';
+        h += '<div class="tool-sol-svc"><span class="tool-sol-svc-ic" data-icon="' + d.icon + '"></span>';
+        h += '<span class="tool-sol-svc-tx"><span class="tool-sol-v">' + d.name + '</span>';
+        h += '<span class="tool-sol-line">' + d.line + '</span></span></div>';
+        fillNode(slotEl('service'), h);
+      } else if (n === 3) {
+        const p = packages[val] || packages.midden;
+        let h = '<div class="tool-sol-k">Aanbevolen pakket</div>';
+        h += '<div class="tool-sol-pkg-top"><span class="tool-sol-pkg-name">' + p.name + '</span>';
+        h += '<span class="tool-sol-pkg-price">' + p.price + '</span></div>';
+        h += '<div class="tool-sol-pkg-extra">' + p.extra + '</div>';
+        h += '<ul class="tool-sol-pkg-list">';
+        p.features.forEach(f => { h += '<li>' + f + '</li>'; });
+        h += '</ul>';
+        fillNode(slotEl('package'), h);
       }
     }
-
-    const total = step === 'result' ? 3 : step;
-    progress.forEach((p, i) => {
-      if (p) p.classList.toggle('active', i < total);
-    });
-    // Huidige stap markeren (voltooide stappen tonen ✓, huidige toont het nummer + puls)
-    const currentIdx = step === 'result' ? -1 : (step - 1);
-    progress.forEach((p, i) => { if (p) p.classList.toggle('current', i === currentIdx); });
-
-    if (step === 'result') {
-      counter.textContent = 'Jouw aanbeveling';
-      backBtn.classList.remove('hidden');
-    } else {
-      counter.textContent = `Stap ${step} van 3`;
-      backBtn.classList.toggle('hidden', step === 1);
+    function clearSlot(name) {
+      const el = slotEl(name);
+      el.classList.remove('filled', 'pop');
+      el.innerHTML = placeholders[name];
+      paintIcons(el);
     }
 
-    currentStep = step;
-  }
+    function showCta() {
+      if (!solCta) return;
+      solCta.innerHTML = '<a href="contact.html" class="btn btn-orange btn-arrow btn-prominent">Plan een gratis kennismaking</a>';
+      solCta.classList.remove('hidden');
+    }
+    function hideCta() { if (solCta) { solCta.classList.add('hidden'); solCta.innerHTML = ''; } }
 
-  function buildResult() {
-    const pkg = packages[answers.budget] || packages.midden;
-
-    let html = '<span class="section-eyebrow">Jouw aanbeveling</span>';
-    html += '<h3>Dit past bij jou</h3>';
-    html += '<p class="tool-result-tagline">Op basis van je antwoorden raden we dit aan</p>';
-    html += '<div class="tool-result-pkg">';
-    html += '<div class="tool-result-pkg-label">Aanbevolen pakket</div>';
-    html += '<div class="tool-result-pkg-name">' + pkg.name + '</div>';
-    html += '<div class="tool-result-pkg-price">' + pkg.price + '</div>';
-    html += '<div class="tool-result-pkg-extra">' + pkg.extra + '</div>';
-    html += '<ul class="tool-result-list">';
-    pkg.features.forEach(f => { html += '<li>' + f + '</li>'; });
-    html += '</ul></div>';
-    html += '<a href="contact.html" class="btn btn-orange btn-arrow btn-prominent">Plan een gratis kennismaking</a>';
-    html += '<div><button class="tool-result-restart" id="restartTool">↻ Opnieuw doen</button></div>';
-
-    const resultBox = document.getElementById('toolResult');
-    if (resultBox) {
-      resultBox.innerHTML = html;
-      document.getElementById('restartTool').addEventListener('click', () => {
-        Object.keys(answers).forEach(key => delete answers[key]);
-        Object.keys(labels).forEach(key => delete labels[key]);
-        renderRecap();
-        document.querySelectorAll('.tool-option').forEach(o => o.classList.remove('selected'));
-        if (toolLeft) { toolLeft.classList.remove('nav-forward'); toolLeft.classList.add('nav-back'); }
-        showStep(1);
-        showCtx('empty');
+    function finish() {
+      addBot('Klaar! Op basis van je antwoorden heb ik hiernaast jouw oplossing samengesteld. 🎉', (el) => {
+        finalNode = el;
+        if (solStatus) solStatus.textContent = 'Compleet ✓';
+        showCta();
+        if (!RM) fireConfetti();
       });
     }
-  }
 
-  // Klik op een optie
-  document.querySelectorAll('.tool-option').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const stepEl = this.closest('.tool-step');
-      const step = stepEl.dataset.step;
-      const val = this.dataset.val;
-      const titleEl = this.querySelector('.tool-option-title');
-      const title = titleEl ? titleEl.textContent : val;
-
-      // Visuele feedback
-      stepEl.querySelectorAll('.tool-option').forEach(o => o.classList.remove('selected'));
-      this.classList.add('selected');
-
-      // Rechter kolom direct updaten
-      showCtx(val);
-
-      if (step === '1') { answers.sector = val;   labels.sector   = { k: 'Sector',   v: title }; }
-      if (step === '2') { answers.behoefte = val; labels.behoefte = { k: 'Behoefte', v: title }; }
-      if (step === '3') { answers.budget = val;   labels.budget   = { k: 'Budget',   v: title }; }
-      renderRecap();
-
-      // Reisgevoel: volgende stap schuift vooruit binnen
-      if (toolLeft) { toolLeft.classList.remove('nav-back'); toolLeft.classList.add('nav-forward'); }
-
-      // Volgende stap na korte vertraging
-      setTimeout(() => {
-        if (step === '3') {
-          showStep('result');
-          showCtx('result');
-          revealResult();   // korte aanloop → pakket-reveal + confetti
-        } else {
-          showStep(parseInt(step) + 1);
-        }
-      }, 320);
-    });
-  });
-
-  // Eindscherm als beloning: korte "samenstellen"-aanloop, dan pakket + confetti
-  function revealResult() {
-    const box = document.getElementById('toolResult');
-    if (reduceMotion || !box) {
-      buildResult();
-      fireConfetti();
-      return;
-    }
-    box.innerHTML = '<div class="tool-result-loading"><div class="trl-spinner"></div>' +
-                    '<div class="trl-text">We stellen je advies samen…</div></div>';
-    setTimeout(() => {
-      buildResult();
-      fireConfetti();
-    }, 650);
-  }
-
-  // Terug knop
-  if (backBtn) {
-    backBtn.addEventListener('click', () => {
-      if (toolLeft) { toolLeft.classList.remove('nav-forward'); toolLeft.classList.add('nav-back'); }
-      if (currentStep === 'result') {
-        showStep(3);
-        if (answers.budget) showCtx(answers.budget);
-      } else if (typeof currentStep === 'number' && currentStep > 1) {
-        const prev = currentStep - 1;
-        showStep(prev);
-        if (prev === 1 && answers.sector) showCtx(answers.sector);
-        if (prev === 2 && answers.behoefte) showCtx(answers.behoefte);
+    // ── Navigatie ──
+    function back() {
+      if (busy) return;
+      if (answered === 3) {
+        hideCta();
+        if (solStatus) solStatus.textContent = 'Wordt samengesteld…';
+        if (finalNode) { finalNode.remove(); finalNode = null; }
+        if (nodes[3] && nodes[3].user) { nodes[3].user.remove(); nodes[3].user = null; }
+        clearSlot('package');
+        answered = 2;
+        showChips(3);
+        updateFoot();
+        scrollToEnd();
+        return;
       }
-    });
-  }
+      if (answered >= 1) {
+        const c = answered;
+        if (nodes[c + 1]) {
+          if (nodes[c + 1].chips) nodes[c + 1].chips.remove();
+          if (nodes[c + 1].q) nodes[c + 1].q.remove();
+          nodes[c + 1] = null;
+        }
+        if (nodes[c] && nodes[c].user) { nodes[c].user.remove(); nodes[c].user = null; }
+        clearSlot(c === 1 ? 'sector' : c === 2 ? 'service' : 'package');
+        delete answers[questions[c].key];
+        answered = c - 1;
+        showChips(c);
+        updateFoot();
+        scrollToEnd();
+      }
+    }
+
+    function restart() {
+      if (busy) return;
+      scroll.innerHTML = '';
+      ['sector', 'service', 'package'].forEach(clearSlot);
+      Object.keys(answers).forEach(k => delete answers[k]);
+      for (let i = 0; i < nodes.length; i++) nodes[i] = null;
+      answered = 0; finalNode = null; started = false;
+      hideCta();
+      if (solStatus) solStatus.textContent = 'Wordt samengesteld…';
+      updateFoot();
+      start();
+    }
+
+    function updateFoot() {
+      const canBack = answered >= 1;
+      if (backBtn)    backBtn.classList.toggle('hidden', !canBack);
+      if (restartBtn) restartBtn.classList.toggle('hidden', !canBack);
+    }
+
+    function start() {
+      if (started) return;
+      started = true;
+      addBot('Hoi! Vertel me kort over je bedrijf, dan stel ik jouw oplossing samen.', () => { ask(1); });
+    }
+
+    if (backBtn)    backBtn.addEventListener('click', back);
+    if (restartBtn) restartBtn.addEventListener('click', restart);
+
+    // Start het gesprek zodra de tool in beeld komt (of meteen bij reduced-motion)
+    if (RM) {
+      start();
+    } else {
+      const anchor = document.getElementById('tool') || solution;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { start(); io.disconnect(); } });
+      }, { threshold: 0.25 });
+      io.observe(anchor);
+    }
+  })();
 
   // ────────────────────────────────────────
   // 3. SPELL 1: Cijfers die meetellen bij scroll
@@ -417,8 +493,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (reduceMotion) return;
     const colors = ['#E8A030', '#1B2D5E', '#FFB955', '#2A4080', '#FFF1DD', '#C8851A'];
     const count = 72;
-    // Ontstaat vanuit de resultaat-kaart (valt terug op de tool-sectie)
-    const originEl = document.getElementById('toolResult') || document.getElementById('tool');
+    // Ontstaat vanuit de pakket-slot van de oplossing-kaart (valt terug op de tool-sectie)
+    const originEl = document.querySelector('.tool-sol-slot[data-slot="package"]') || document.getElementById('tool');
     if (!originEl) return;
     const rect = originEl.getBoundingClientRect();
     const originX = rect.left + rect.width / 2;
