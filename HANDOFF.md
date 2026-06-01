@@ -37,23 +37,35 @@
    eindstaat onder reduced-motion. CSS in "WOW"-blok onderaan `css/home.css`.
 6. **Tool polish**: vloeiendere stap-/context-overgangen (expo-out easing),
    gloed-ring op geselecteerde optie, verfijnde resultaat-reveal.
+7. **Homepage polish-ronde 1** (commit `6fcafa9`):
+   - `scroll-padding-top` op `html` → ankerlinks (#tool/#diensten) verdwijnen niet meer onder de vaste nav.
+   - Nav-elevatie: `.main-nav.scrolled` krijgt schaduw bij scrollen (toggle in `js/main.js`).
+   - `font-variant-numeric: tabular-nums` op tellende cijfers → geen breedte-jitter tijdens count-up.
+   - Reduced-motion fix: `animateCount` in `js/home.js` zet meteen de eindwaarde bij `prefers-reduced-motion`.
+8. **Homepage polish-ronde 2** (commit `09374cf`):
+   - **Scroll-voortgangsbalk** (`.scroll-progress`, 3px oranje) bovenaan, opgebouwd in `js/main.js` → werkt op alle pagina's.
+     (Klassieke nav-scroll-spy kon niet: de nav linkt naar aparte pagina's, niet naar secties.)
+   - **Focus-management** in de keuzetool: `showStep()` zet focus (`preventScroll`) op de nieuwe vraag/het resultaat.
+   - **Hero-microcopy**: geruststellingsregel onder de knoppen ("✓ Gratis & vrijblijvend · resultaat in 1 minuut").
+     Koppen/knoplabels bewust NIET aangepast (merkstem) — openstaand of de gebruiker dat alsnog wil.
 
 ## Bekende beperkingen van de web-sandbox
 - **Geen browser** om live te renderen; alles is statisch geverifieerd (JS-syntax, accolades, logica).
   Visuele check doet de gebruiker op **mrhostly.nl** na deploy.
-- **Netwerk-allowlist** blokkeert externe hosts. Daardoor:
-  - Lucide-CDN niet bereikbaar in de sandbox (werkt wel op productie).
-  - **Magic MCP (21st.dev) geblokkeerd** — fout "Host not in allowlist".
+- Lucide-CDN niet altijd bereikbaar in de sandbox (werkt wel op productie).
 
-## Magic MCP gebruiken (openstaand)
-- Server is toegevoegd (user scope) met API-key; tools: `mcp__magic__*`.
-- Vereist dat de **network policy** van de omgeving deze hosts toestaat:
-  - `magic.21st.dev` (verplicht), `api.svgl.app` (voor logo-search, optioneel).
-- Policy aanpassen → **nieuwe sessie starten** (policy wordt bij containerstart vastgezet).
-- Let op: Magic levert **React + Tailwind**; deze site is vanilla → output met de hand porten.
+## Magic MCP — STATUS: geconfigureerd, wacht op sessie-herstart
+- ✅ **Netwerk is nu open**: `magic.21st.dev` geeft een echt HTTP-antwoord (geen "Host not in allowlist" meer).
+- ✅ **Server geconfigureerd** op user scope in `/root/.claude.json` en **verbindt** (`claude mcp list` → magic ✓ Connected).
+  Toegevoegd met: `claude mcp add magic --scope user --env API_KEY="<key>" -- npx -y @21st-dev/magic@latest`
+- ⚠️ **Maar**: midden in een sessie toegevoegd → de `mcp__magic__*` tools laden pas bij **sessie-start**.
+  **Actie voor de nieuwe sessie:** Magic is dan automatisch geladen; check met ToolSearch `+magic` of de tools er zijn.
+- ⚠️ Magic levert **React + Tailwind**; deze site is vanilla → output met de hand porten.
+- Optioneel: `api.svgl.app` voor logo-search.
 
 ## Openstaande TODO's / ideeën
-- [ ] Magic MCP echt inzetten zodra `magic.21st.dev` ge-allowlist is.
+- [ ] Magic MCP echt inzetten (na herstart de `mcp__magic__*` tools gebruiken voor nieuwe componenten).
+- [ ] Hero koppen/knoplabels eventueel aanscherpen (merkstem — alleen op verzoek gebruiker).
 - [ ] **Ontbrekende pagina's** bouwen — nav/footer linken ernaar maar ze bestaan niet (404):
       `websites.html`, `chatbots.html`, `reserveringen.html`, `over-ons.html`, `blog.html`, `contact.html`.
 - [ ] **SEO/social meta**: Open Graph/Twitter-tags, favicon, canonical, JSON-LD bedrijfsschema.
