@@ -422,6 +422,104 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // ────────────────────────────────────────
+  // 2c. ROI / BESPARINGSCALCULATOR
+  //     Live euro's & uren; conservatieve branchegemiddelden.
+  //     Pakketprijzen uit de site (chatbot vanaf €249, reserveren vanaf €299).
+  // ────────────────────────────────────────
+  (function roiCalculator() {
+    if (!document.getElementById('roi')) return;
+    const $ = id => document.getElementById(id);
+    const reserv = $('roiReserv'), noshow = $('roiNoshow'), hours = $('roiHours'), spend = $('roiSpend');
+    if (!reserv || !noshow || !hours || !spend) return;
+
+    const WEEKS = 4.33, NOSHOW_RED = 0.30, TIME_SAVED = 0.65, HOURLY = 25;
+    const eur = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+
+    const elLoss = $('roiLoss'), elRec = $('roiRecovered'), elHrs = $('roiHoursSaved');
+    const target = { loss: 0, recovered: 0, hoursSaved: 0 };
+    const shown  = { loss: 0, recovered: 0, hoursSaved: 0 };
+    let looping = false, first = true;
+
+    function render() {
+      elLoss.textContent = eur.format(Math.round(shown.loss));
+      elRec.textContent  = eur.format(Math.round(shown.recovered));
+      elHrs.textContent  = Math.round(shown.hoursSaved) + ' u';
+    }
+    function loop() {
+      let active = false;
+      for (const k of ['loss', 'recovered', 'hoursSaved']) {
+        const d = target[k] - shown[k];
+        if (Math.abs(d) > 0.5) { shown[k] += d * 0.2; active = true; } else { shown[k] = target[k]; }
+      }
+      render();
+      if (active) requestAnimationFrame(loop); else looping = false;
+    }
+    function kick() { if (!looping) { looping = true; requestAnimationFrame(loop); } }
+
+    function setFill(el) {
+      const mn = +el.min, mx = +el.max, v = +el.value;
+      el.style.setProperty('--pct', ((v - mn) / (mx - mn) * 100) + '%');
+    }
+
+    function update() {
+      const R = +reserv.value, N = +noshow.value, U = +hours.value, S = +spend.value;
+      $('roiReservOut').textContent = R;
+      $('roiNoshowOut').textContent = N + '%';
+      $('roiHoursOut').textContent  = U + ' u';
+      $('roiSpendOut').textContent  = eur.format(S);
+      [reserv, noshow, hours, spend].forEach(setFill);
+
+      const loss       = Math.round(R * WEEKS * (N / 100) * S);
+      const hoursSaved = Math.round(U * TIME_SAVED * WEEKS);
+      const recovered  = Math.round(loss * NOSHOW_RED);
+      const timeValue  = Math.round(hoursSaved * HOURLY);
+      const monthly    = recovered + timeValue;
+
+      target.loss = loss; target.recovered = recovered; target.hoursSaved = hoursSaved;
+      $('roiHoursValue').textContent = hoursSaved > 0 ? '≈ ' + eur.format(timeValue) + ' aan tijd' : '';
+
+      // Aanbeveling op basis van de drijvende factoren
+      const phoneHigh = U >= 8, noshowHigh = N >= 10;
+      let name, sub, price;
+      if (phoneHigh && noshowHigh)      { name = 'Chatbot + Reserveringssysteem'; sub = 'vanaf €249 + €299'; price = 249 + 299; }
+      else if (phoneHigh)               { name = 'Chatbots & AI';        sub = 'vanaf €249'; price = 249; }
+      else if (noshowHigh)              { name = 'Reserveringssysteem';   sub = 'vanaf €299'; price = 299; }
+      else if (timeValue >= recovered)  { name = 'Chatbots & AI';        sub = 'vanaf €249'; price = 249; }
+      else                              { name = 'Reserveringssysteem';   sub = 'vanaf €299'; price = 299; }
+      $('roiRecoName').textContent  = name;
+      $('roiRecoPrice').textContent = sub;
+
+      const payEl = $('roiPayback');
+      if (monthly <= 0) {
+        payEl.innerHTML = 'Stel je situatie in om je terugverdientijd te zien.';
+      } else if (monthly >= price) {
+        payEl.innerHTML = '<span class="roi-pb-check">✓</span> Verdient zichzelf <strong>al in de eerste maand</strong> terug.';
+      } else {
+        const m = Math.ceil(price / monthly);
+        payEl.innerHTML = '<span class="roi-pb-check">✓</span> Verdient zichzelf terug in <strong>± ' + m + ' ' + (m > 1 ? 'maanden' : 'maand') + '</strong>.';
+      }
+
+      if (reduceMotion || first) {
+        shown.loss = loss; shown.recovered = recovered; shown.hoursSaved = hoursSaved;
+        render(); first = false;
+      } else {
+        kick();
+      }
+    }
+
+    function pulse() {
+      if (reduceMotion) return;
+      elRec.classList.remove('pulse'); void elRec.offsetWidth; elRec.classList.add('pulse');
+    }
+
+    [reserv, noshow, hours, spend].forEach(el => {
+      el.addEventListener('input', update);
+      el.addEventListener('change', pulse);
+    });
+    update();
+  })();
+
+  // ────────────────────────────────────────
   // 3. SPELL 1: Cijfers die meetellen bij scroll
   // ────────────────────────────────────────
   const countElements = document.querySelectorAll('[data-count]');

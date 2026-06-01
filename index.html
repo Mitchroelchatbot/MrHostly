@@ -379,43 +379,89 @@
 </section>
 
 <!-- ════════ AANPAK ════════ -->
-<section class="aanpak">
-  <div class="aanpak-inner">
-    <div class="aanpak-header reveal">
-      <span class="section-eyebrow">Onze aanpak</span>
-      <h2>Van eerste gesprek tot <em>live website</em>.</h2>
-      <p>We werken met een vast proces zodat je altijd weet waar je aan toe bent. Korte lijnen, duidelijke afspraken en geen technische jargon — gewoon helder en transparant.</p>
+<section class="roi" id="roi">
+  <div class="roi-inner">
+    <div class="roi-header reveal">
+      <span class="section-eyebrow">Wat levert het op?</span>
+      <h2>Reken uit wat een <em>slimme oplossing</em> je oplevert.</h2>
+      <p>Schuif aan de knoppen en zie direct — in euro's en uren — wat je per maand kunt besparen en terugwinnen.</p>
     </div>
 
-    <div class="timeline">
-      <div class="timeline-step reveal">
-        <div class="timeline-circle" data-icon="coffee"></div>
-        <span class="timeline-num">Stap 01</span>
-        <h3 class="timeline-title">Kennismaken</h3>
-        <p class="timeline-desc">We luisteren naar je verhaal, doelen en wensen. Geen verkooppraatje, gewoon een goed gesprek.</p>
-      </div>
-      <div class="timeline-step reveal delay-1">
-        <div class="timeline-circle" data-icon="pencil-ruler"></div>
-        <span class="timeline-num">Stap 02</span>
-        <h3 class="timeline-title">Ontwerp</h3>
-        <p class="timeline-desc">Een ontwerp op maat dat past bij jouw merk, met ruimte voor jouw input en feedback.</p>
-      </div>
-      <div class="timeline-step reveal delay-2">
-        <div class="timeline-circle" data-icon="settings-2"></div>
-        <span class="timeline-num">Stap 03</span>
-        <h3 class="timeline-title">Bouwen</h3>
-        <p class="timeline-desc">Strak en snel gebouwd, mobielvriendelijk en SEO-klaar. Jij blijft op de hoogte.</p>
-      </div>
-      <div class="timeline-step reveal delay-3">
-        <div class="timeline-circle" data-icon="rocket"></div>
-        <span class="timeline-num">Stap 04</span>
-        <h3 class="timeline-title">Live & verder</h3>
-        <p class="timeline-desc">We zetten 'm live en blijven beschikbaar voor beheer, updates en doorontwikkeling.</p>
-      </div>
-    </div>
+    <div class="roi-grid">
+      <!-- INPUTS -->
+      <div class="roi-inputs reveal">
+        <div class="roi-field">
+          <label class="roi-label" for="roiReserv">
+            <span><span class="roi-ic" data-icon="calendar-check"></span> Reserveringen of klanten per week</span>
+            <output class="roi-out" id="roiReservOut" for="roiReserv">80</output>
+          </label>
+          <input class="roi-range" type="range" id="roiReserv" min="10" max="500" step="5" value="80" aria-label="Reserveringen of klanten per week">
+        </div>
 
-    <div class="aanpak-cta">
-      <a href="contact.html" class="btn btn-navy btn-arrow">Plan een kennismaking</a>
+        <div class="roi-field">
+          <label class="roi-label" for="roiNoshow">
+            <span><span class="roi-ic" data-icon="user-x"></span> No-shows</span>
+            <output class="roi-out" id="roiNoshowOut" for="roiNoshow">12%</output>
+          </label>
+          <input class="roi-range" type="range" id="roiNoshow" min="0" max="30" step="1" value="12" aria-label="No-show percentage">
+        </div>
+
+        <div class="roi-field">
+          <label class="roi-label" for="roiHours">
+            <span><span class="roi-ic" data-icon="phone"></span> Uren per week aan de telefoon</span>
+            <output class="roi-out" id="roiHoursOut" for="roiHours">10 u</output>
+          </label>
+          <input class="roi-range" type="range" id="roiHours" min="0" max="40" step="1" value="10" aria-label="Uren per week aan de telefoon">
+        </div>
+
+        <div class="roi-field">
+          <label class="roi-label" for="roiSpend">
+            <span><span class="roi-ic" data-icon="wallet"></span> Gemiddelde besteding per klant</span>
+            <output class="roi-out" id="roiSpendOut" for="roiSpend">€45</output>
+          </label>
+          <input class="roi-range" type="range" id="roiSpend" min="15" max="100" step="5" value="45" aria-label="Gemiddelde besteding per klant">
+        </div>
+
+        <p class="roi-note">Schattingen op basis van branchegemiddelden (no-show-reductie 30%, telefoontijd −65%). Geen harde beloftes — werkelijke resultaten verschillen per bedrijf.</p>
+      </div>
+
+      <!-- RESULTAAT -->
+      <div class="roi-results reveal">
+        <div class="roi-res-head">
+          <span class="roi-res-eyebrow">Jouw geschatte resultaat</span>
+          <span class="roi-res-sub">per maand</span>
+        </div>
+
+        <div class="roi-headline">
+          <span class="roi-headline-k">Tot</span>
+          <span class="roi-big" id="roiRecovered">€0</span>
+          <span class="roi-headline-d">teruggewonnen omzet per maand</span>
+        </div>
+
+        <div class="roi-metrics">
+          <div class="roi-metric">
+            <span class="roi-metric-ic" data-icon="trending-down"></span>
+            <span class="roi-metric-num" id="roiLoss">€0</span>
+            <span class="roi-metric-lbl">omzetverlies door no-shows</span>
+          </div>
+          <div class="roi-metric">
+            <span class="roi-metric-ic" data-icon="clock"></span>
+            <span class="roi-metric-num" id="roiHoursSaved">0 u</span>
+            <span class="roi-metric-lbl">bespaarde uren <span class="roi-metric-extra" id="roiHoursValue"></span></span>
+          </div>
+        </div>
+
+        <div class="roi-reco">
+          <div class="roi-reco-head"><span class="roi-reco-ic" data-icon="sparkles"></span> Past bij jou</div>
+          <div class="roi-reco-name" id="roiRecoName">Reserveringssysteem</div>
+          <div class="roi-reco-price" id="roiRecoPrice">vanaf €299</div>
+          <div class="roi-reco-payback" id="roiPayback"></div>
+        </div>
+
+        <div class="roi-cta">
+          <a href="contact.html" class="btn btn-orange btn-arrow btn-prominent">Plan een gratis kennismaking</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
