@@ -1973,3 +1973,104 @@
 @media (max-width: 900px) {
   .tool-effects { grid-template-columns: 1fr 1fr; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   WARM-LINEAR DONKER THEMA  (volledige pagina)
+   Gelaagde donkere surfaces (deep / base / elevated) + oranje glow,
+   met afwisselende diepte voor ritme en subtiele hairline-scheidingen.
+   Bewust LICHT gehouden: hero-showcase (.sc-*), tool-mockups
+   (.tool-mini-*, .tool-result-card) en de oranje .cta-band.
+   Alles hieronder is additief en makkelijk terug te draaien.
+════════════════════════════════════════════════════════════════ */
+
+/* ── Basislaag ── */
+body { background: var(--bg-deep); }
+
+/* ── NAV: donker glas ── */
+nav.main-nav { background: rgba(14,24,48,0.82); border-bottom-color: var(--hairline); }
+.nav-brand .mr { color: var(--text-hi); }
+.nav-links a { color: var(--text-on-dark); }
+.nav-links a:hover { background: var(--surface-2); color: var(--text-hi); }
+.nav-links a.active { color: var(--text-hi); }
+.nav-links a.nav-cta { background: var(--orange); color: var(--ink); }
+.nav-links a.nav-cta:hover { background: var(--orange-deep); color: var(--white); }
+.nav-mobile { background: var(--bg-base); border-bottom-color: var(--hairline); box-shadow: 0 12px 32px rgba(0,0,0,0.45); }
+.nav-mobile a { color: var(--text-on-dark); border-bottom-color: var(--hairline); }
+.nav-mobile a:hover, .nav-mobile a.active { color: var(--text-hi); }
+
+/* ── HERO + TOOL: één vloeiende donkere afdaling (geen lichte naad-band meer) ── */
+.hero { --hero-bg: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-base) 100%); }
+.tool-section {
+  background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-deep) 100%);
+  border-top: 1px solid var(--hairline);   /* bewuste, subtiele scheiding op de naad */
+}
+
+/* ── DIENSTEN: 'opgetilde' laag (elevated) ── */
+.diensten { background: var(--bg-elevated); border-top: 1px solid var(--hairline); }
+.section-title { color: var(--text-hi); }
+.section-intro { color: var(--text-on-dark); }
+.dienst { background: var(--surface); border-color: var(--hairline); }
+.dienst:hover { border-color: rgba(232,160,48,0.5); box-shadow: 0 18px 44px rgba(0,0,0,0.45); }
+.dienst h3 { color: var(--text-hi); }
+.dienst p { color: var(--text-on-dark); }
+.dienst-icon { background: var(--surface-2); }
+.dienst:hover .dienst-icon { background: rgba(232,160,48,0.18); }
+.dienst-icon[data-icon] svg { color: var(--orange); }
+.dienst-prices { border-top-color: var(--hairline); }
+.dienst-price-label { color: var(--text-faint); }
+.dienst-price { color: var(--text-hi); }
+.dienst-link { color: var(--text-on-dark); }
+.extra-diensten { background: var(--surface); border: 1px solid var(--hairline); }
+.extra-diensten-title { color: var(--text-hi); }
+.extra-diensten-title small { color: var(--text-on-dark); }
+.extra-pill { background: var(--surface-2); border-color: var(--hairline); color: var(--text-on-dark); }
+.extra-pill:hover { border-color: var(--orange); color: var(--orange); }
+
+/* ── STATS: basislaag ── */
+.stats-band {
+  background: var(--bg-base);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.stat-block:not(:last-child)::after { background: var(--hairline-2); }
+.stat-num { color: var(--text-hi); }
+.stat-label { color: var(--text-on-dark); }
+.stat-label strong { color: var(--text-hi); }
+
+/* ── DOELGROEP: diepe laag; kaart-bodies = surface (gekleurde headers blijven) ── */
+.doelgroep { background: var(--bg-deep); border-top: 1px solid var(--hairline); }
+.doelgroep-card { background: var(--surface); border-color: var(--hairline); }
+.doelgroep-card:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.doelgroep-body p { color: var(--text-on-dark); }
+.doelgroep-list li { color: var(--text-on-dark); }
+
+/* ── AANPAK: opgetilde laag ── */
+.aanpak { background: var(--bg-elevated); border-top: 1px solid var(--hairline); }
+.aanpak-header h2 { color: var(--text-hi); }
+.aanpak-header p { color: var(--text-on-dark); }
+.timeline::before { background: linear-gradient(90deg, var(--hairline-2) 0%, var(--orange) 50%, var(--hairline-2) 100%); }
+.timeline-circle { background: var(--surface-2); border-color: var(--hairline-2); }
+.timeline-circle[data-icon] svg { color: var(--orange); }
+.timeline-step:hover .timeline-circle { background: var(--orange); border-color: var(--orange); }
+.timeline-step:hover .timeline-circle[data-icon] svg { color: var(--ink); }
+.timeline-title { color: var(--text-hi); }
+.timeline-desc { color: var(--text-on-dark); }
+.aanpak .btn-navy { background: var(--orange); color: var(--ink); }
+.aanpak .btn-navy:hover { background: var(--orange-deep); color: var(--white); }
+
+/* ── OVER ONS: basislaag ── */
+.over-preview { background: var(--bg-base); border-top: 1px solid var(--hairline); }
+.over-preview-content h2 { color: var(--text-hi); }
+.over-preview-content p { color: var(--text-on-dark); }
+.over-preview-content p strong { color: var(--text-hi); }
+.over-proof { border-top-color: var(--hairline); }
+.over-proof-text strong { color: var(--text-hi); }
+.over-proof-desc { color: var(--text-on-dark); }
+.over-preview .btn-outline { color: var(--text-hi); border-color: var(--hairline-2); }
+.over-preview .btn-outline:hover { background: var(--orange); border-color: var(--orange); color: var(--ink); }
+.over-preview-visual { background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-deep) 100%); }
+
+/* ── FOOTER: diepste laag ── */
+footer.main-footer { background: var(--bg-deep); }
+
+/* CTA-band blijft bewust fel oranje (de enige warme climax vóór de footer). */
