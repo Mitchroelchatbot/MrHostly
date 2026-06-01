@@ -9,25 +9,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ────────────────────────────────────────
-  // 1. HERO CHATBOT — typing animation loop
+  // 1. HERO SHOWCASE — gechoreografeerde live demo
+  //    Chat → reservering verschijnt in de kalender → stat reageert
   // ────────────────────────────────────────
   const heroChatBody = document.getElementById('heroChatBody');
   if (heroChatBody) {
-    const sequence = [
-      { type: 'bot', text: 'Hallo! Hoe kan ik helpen?' },
-      { type: 'usr', text: 'Tafel voor vrijdag?' },
-      { type: 'typing' },
-      { type: 'bot', text: 'Voor hoeveel personen?' },
-      { type: 'usr', text: '4 personen, 19:00' },
-      { type: 'typing' },
-      { type: 'bot', text: 'Geboekt! ✓' }
+    const heroCalCount = document.getElementById('heroCalCount');
+    const heroCalSlot  = document.getElementById('heroCalSlot');
+    const heroFloat    = document.querySelector('.sc-float-1');
+
+    const M = {
+      greet: { type: 'bot', text: 'Hallo! Hoe kan ik helpen?' },
+      q1:    { type: 'usr', text: 'Tafel voor vrijdag?' },
+      a1:    { type: 'bot', text: 'Voor hoeveel personen?' },
+      q2:    { type: 'usr', text: '4 personen, 19:00' },
+      done:  { type: 'bot', text: 'Geboekt! ✓' }
+    };
+    const TYP = { type: 'typing' };
+
+    // Elke frame = de volledige zichtbare chat op dat moment (typing is tijdelijk)
+    const frames = [
+      { msgs: [M.greet] },
+      { msgs: [M.greet, M.q1] },
+      { msgs: [M.greet, M.q1, TYP] },
+      { msgs: [M.greet, M.q1, M.a1] },
+      { msgs: [M.greet, M.q1, M.a1, M.q2] },
+      { msgs: [M.greet, M.q1, M.a1, M.q2, TYP] },
+      { msgs: [M.greet, M.q1, M.a1, M.q2, M.done], booked: true }
     ];
 
-    let idx = 0;
-    function chatStep() {
+    function renderFrame(frame) {
       heroChatBody.innerHTML = '';
-      const visible = sequence.slice(0, idx + 1);
-      visible.forEach(m => {
+      frame.msgs.forEach(m => {
         const el = document.createElement('div');
         if (m.type === 'typing') {
           el.className = 'sc-typing';
@@ -38,9 +51,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         heroChatBody.appendChild(el);
       });
-      idx = (idx + 1) % sequence.length;
     }
-    setInterval(chatStep, 1500);
+
+    function fireBooking() {
+      if (heroCalSlot) heroCalSlot.classList.add('booked');
+      if (heroCalCount) {
+        heroCalCount.textContent = '25 boekingen';
+        heroCalCount.classList.add('bumped');
+        setTimeout(() => heroCalCount && heroCalCount.classList.remove('bumped'), 900);
+      }
+      if (heroFloat) {
+        heroFloat.classList.add('react');
+        setTimeout(() => heroFloat && heroFloat.classList.remove('react'), 1100);
+      }
+    }
+    function resetBooking() {
+      if (heroCalSlot) heroCalSlot.classList.remove('booked');
+      if (heroCalCount) heroCalCount.textContent = '24 boekingen';
+    }
+
+    if (reduceMotion) {
+      // Geen beweging: toon meteen het eindresultaat statisch
+      renderFrame(frames[frames.length - 1]);
+      fireBooking();
+    } else {
+      let timers = [];
+      const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+      function runLoop() {
+        timers.forEach(clearTimeout);
+        timers = [];
+        resetBooking();
+        renderFrame(frames[0]);
+        let t = 500;
+        const step = 1150;
+        for (let i = 1; i < frames.length; i++) {
+          const f = frames[i];
+          at(t, () => {
+            renderFrame(f);
+            if (f.booked) fireBooking();
+          });
+          t += step;
+        }
+        at(t + 2000, runLoop);   // resultaat even tonen, dan opnieuw
+      }
+      runLoop();
+    }
   }
 
   // ────────────────────────────────────────

@@ -1955,3 +1955,63 @@
 @media (max-width: 900px) {
   .tool-effects { grid-template-columns: 1fr 1fr; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   WOW — Hero live-demo choreografie + premium tool-transities
+════════════════════════════════════════════════════════════════ */
+
+/* ── Reservering verschijnt in de kalender ── */
+.sc-cal-d.booked {
+  background: var(--orange);
+  color: var(--white);
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(232,160,48,0.55);
+  animation: cal-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes cal-pop {
+  0%   { transform: scale(0.6); opacity: 0.4; }
+  60%  { transform: scale(1.18); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Boekingsteller telt door ── */
+.sc-cal-count.bumped { animation: count-bump 0.9s ease; }
+@keyframes count-bump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.18); color: var(--orange-deep); }
+  100% { transform: scale(1); }
+}
+
+/* ── Floating stat reageert mee ── */
+.sc-float-1.react { animation: float-react 1.1s ease; }
+@keyframes float-react {
+  0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 10px 28px rgba(20,35,72,0.18); }
+  30%      { transform: translateY(-10px) scale(1.06); box-shadow: 0 16px 38px rgba(232,160,48,0.42); }
+}
+
+/* ── Premium tool: vloeiendere stap- en context-overgangen (expo-out) ── */
+.tool-step.active,
+.tool-ctx.active {
+  animation: tool-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes tool-fade-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Geselecteerde optie krijgt een zachte gloed-ring ── */
+.tool-option.selected {
+  box-shadow: 0 0 0 1px var(--orange), 0 10px 26px rgba(232,160,48,0.28);
+}
+
+/* ── Verfijnde resultaat-reveal ── */
+.tool-step[data-step="result"].active .tool-result-card {
+  animation: tool-result-in 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tool-step[data-step="result"].active .tool-result-pkg {
+  animation: tool-result-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+@keyframes tool-result-in {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
