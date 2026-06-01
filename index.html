@@ -177,11 +177,22 @@
       <p class="tool-subtitle">Beantwoord 3 korte vragen — minder dan een minuut, en je weet direct waar je aan toe bent.</p>
     </div>
 
-    <div class="tool-progress">
-      <div class="tool-progress-step active" id="ps1"></div>
-      <div class="tool-progress-step" id="ps2"></div>
-      <div class="tool-progress-step" id="ps3"></div>
+    <div class="tool-progress" role="list" aria-label="Voortgang">
+      <div class="tool-progress-step active" id="ps1" role="listitem">
+        <span class="tps-node"><span class="tps-num">1</span></span>
+        <span class="tps-label">Sector</span>
+      </div>
+      <div class="tool-progress-step" id="ps2" role="listitem">
+        <span class="tps-node"><span class="tps-num">2</span></span>
+        <span class="tps-label">Behoefte</span>
+      </div>
+      <div class="tool-progress-step" id="ps3" role="listitem">
+        <span class="tps-node"><span class="tps-num">3</span></span>
+        <span class="tps-label">Budget</span>
+      </div>
     </div>
+
+    <div class="tool-recap" id="toolRecap" aria-live="polite"></div>
 
     <div class="tool-grid">
       <div class="tool-left">

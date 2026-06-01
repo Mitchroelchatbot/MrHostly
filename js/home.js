@@ -113,6 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const counter = document.getElementById('toolCounter');
   const backBtn = document.getElementById('toolBack');
   const ctxPanels = document.querySelectorAll('.tool-ctx');
+  const toolLeft = document.querySelector('.tool-left');
+  const recapEl = document.getElementById('toolRecap');
+  const labels = {};   // gekozen antwoord-labels → recap-chips (geen logica-wijziging)
 
   // Pakket aanbevelingen
   const packages = {
@@ -162,7 +165,50 @@ document.addEventListener('DOMContentLoaded', () => {
         animateCount(el);
         counted.add(el);
       });
+      // Meevullende balkjes naast de effect-cijfers
+      decorateEffects(target);
     }
+  }
+
+  // Voegt per effect een meevullende balk toe (alleen bij zinvolle, positieve waarde)
+  function decorateEffects(ctxEl) {
+    if (!ctxEl) return;
+    ctxEl.querySelectorAll('.tool-eff').forEach(eff => {
+      const num = eff.querySelector('.tool-eff-num');
+      if (!num) return;
+      const target = parseInt(num.dataset.count, 10) || 0;
+      let bar = eff.querySelector('.tool-eff-bar');
+      if (target <= 0) { if (bar) bar.remove(); return; }
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.className = 'tool-eff-bar';
+        bar.innerHTML = '<span></span>';
+        num.insertAdjacentElement('afterend', bar);
+      }
+      const pct = Math.max(8, Math.min(100, target));
+      const fill = bar.firstElementChild;
+      fill.style.width = '0%';
+      if (reduceMotion) {
+        fill.style.width = pct + '%';
+      } else {
+        requestAnimationFrame(() => { fill.style.width = pct + '%'; });
+      }
+    });
+  }
+
+  // Bouwt de recap-chips op uit de gekozen antwoorden (Sector → Behoefte → Budget)
+  function renderRecap() {
+    if (!recapEl) return;
+    const order = ['sector', 'behoefte', 'budget'];
+    recapEl.innerHTML = '';
+    order.forEach(k => {
+      if (labels[k]) {
+        const chip = document.createElement('span');
+        chip.className = 'tool-chip';
+        chip.innerHTML = '<span class="tool-chip-k">' + labels[k].k + '</span> ' + labels[k].v;
+        recapEl.appendChild(chip);
+      }
+    });
   }
 
   function showStep(step) {
@@ -183,6 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
     progress.forEach((p, i) => {
       if (p) p.classList.toggle('active', i < total);
     });
+    // Huidige stap markeren (voltooide stappen tonen ✓, huidige toont het nummer + puls)
+    const currentIdx = step === 'result' ? -1 : (step - 1);
+    progress.forEach((p, i) => { if (p) p.classList.toggle('current', i === currentIdx); });
 
     if (step === 'result') {
       counter.textContent = 'Jouw aanbeveling';
@@ -217,7 +266,10 @@ document.addEventListener('DOMContentLoaded', () => {
       resultBox.innerHTML = html;
       document.getElementById('restartTool').addEventListener('click', () => {
         Object.keys(answers).forEach(key => delete answers[key]);
+        Object.keys(labels).forEach(key => delete labels[key]);
+        renderRecap();
         document.querySelectorAll('.tool-option').forEach(o => o.classList.remove('selected'));
+        if (toolLeft) { toolLeft.classList.remove('nav-forward'); toolLeft.classList.add('nav-back'); }
         showStep(1);
         showCtx('empty');
       });
@@ -230,6 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const stepEl = this.closest('.tool-step');
       const step = stepEl.dataset.step;
       const val = this.dataset.val;
+      const titleEl = this.querySelector('.tool-option-title');
+      const title = titleEl ? titleEl.textContent : val;
 
       // Visuele feedback
       stepEl.querySelectorAll('.tool-option').forEach(o => o.classList.remove('selected'));
@@ -238,18 +292,20 @@ document.addEventListener('DOMContentLoaded', () => {
       // Rechter kolom direct updaten
       showCtx(val);
 
-      if (step === '1') answers.sector = val;
-      if (step === '2') answers.behoefte = val;
-      if (step === '3') answers.budget = val;
+      if (step === '1') { answers.sector = val;   labels.sector   = { k: 'Sector',   v: title }; }
+      if (step === '2') { answers.behoefte = val; labels.behoefte = { k: 'Behoefte', v: title }; }
+      if (step === '3') { answers.budget = val;   labels.budget   = { k: 'Budget',   v: title }; }
+      renderRecap();
+
+      // Reisgevoel: volgende stap schuift vooruit binnen
+      if (toolLeft) { toolLeft.classList.remove('nav-back'); toolLeft.classList.add('nav-forward'); }
 
       // Volgende stap na korte vertraging
       setTimeout(() => {
         if (step === '3') {
-          buildResult();
           showStep('result');
           showCtx('result');
-          // SPELL 3: Confetti bij resultaat
-          fireConfetti();
+          revealResult();   // korte aanloop → pakket-reveal + confetti
         } else {
           showStep(parseInt(step) + 1);
         }
@@ -257,9 +313,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Eindscherm als beloning: korte "samenstellen"-aanloop, dan pakket + confetti
+  function revealResult() {
+    const box = document.getElementById('toolResult');
+    if (reduceMotion || !box) {
+      buildResult();
+      fireConfetti();
+      return;
+    }
+    box.innerHTML = '<div class="tool-result-loading"><div class="trl-spinner"></div>' +
+                    '<div class="trl-text">We stellen je advies samen…</div></div>';
+    setTimeout(() => {
+      buildResult();
+      fireConfetti();
+    }, 650);
+  }
+
   // Terug knop
   if (backBtn) {
     backBtn.addEventListener('click', () => {
+      if (toolLeft) { toolLeft.classList.remove('nav-forward'); toolLeft.classList.add('nav-back'); }
       if (currentStep === 'result') {
         showStep(3);
         if (answers.budget) showCtx(answers.budget);
@@ -342,30 +415,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // ────────────────────────────────────────
   function fireConfetti() {
     if (reduceMotion) return;
-    const colors = ['#E8A030', '#1B2D5E', '#FFB955', '#2A4080', '#FFF1DD'];
-    const count = 80;
-    const toolSection = document.getElementById('tool');
-    if (!toolSection) return;
-    const rect = toolSection.getBoundingClientRect();
-    const originY = rect.top + window.scrollY + (rect.height / 2);
-    const originX = window.innerWidth / 2;
+    const colors = ['#E8A030', '#1B2D5E', '#FFB955', '#2A4080', '#FFF1DD', '#C8851A'];
+    const count = 72;
+    // Ontstaat vanuit de resultaat-kaart (valt terug op de tool-sectie)
+    const originEl = document.getElementById('toolResult') || document.getElementById('tool');
+    if (!originEl) return;
+    const rect = originEl.getBoundingClientRect();
+    const originX = rect.left + rect.width / 2;
+    const originY = rect.top + rect.height * 0.32;
 
     for (let i = 0; i < count; i++) {
       const piece = document.createElement('div');
       piece.className = 'confetti-piece';
+      const isCircle = Math.random() < 0.35;
+      const size = 7 + Math.random() * 7;
+      piece.style.width = size + 'px';
+      piece.style.height = (isCircle ? size : size * 1.4) + 'px';
+      piece.style.borderRadius = isCircle ? '50%' : '2px';
       piece.style.left = originX + 'px';
-      piece.style.top = (originY - window.scrollY) + 'px';
+      piece.style.top = originY + 'px';
       piece.style.background = colors[Math.floor(Math.random() * colors.length)];
       piece.style.opacity = '1';
 
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 200 + Math.random() * 400;
-      const tx = Math.cos(angle) * distance;
-      const ty = Math.sin(angle) * distance + 300;
-      const rot = (Math.random() * 720 - 360);
-      const dur = 1200 + Math.random() * 1000;
+      // Waaier voornamelijk omhoog, zwaartekracht trekt daarna omlaag
+      const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 0.95;
+      const power = 120 + Math.random() * 260;
+      const tx = Math.cos(angle) * power;
+      const ty = Math.sin(angle) * power + (180 + Math.random() * 220);
+      const rot = Math.random() * 720 - 360;
+      const dur = 1400 + Math.random() * 1100;
 
-      piece.style.transition = `transform ${dur}ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity ${dur}ms ease-out`;
+      piece.style.transition = `transform ${dur}ms cubic-bezier(0.2, 0.6, 0.35, 1), opacity ${dur}ms ease-out`;
 
       document.body.appendChild(piece);
 
