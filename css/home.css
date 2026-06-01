@@ -379,8 +379,10 @@
 .sc-chat-body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 5px;
-  min-height: 95px;
+  height: 192px;       /* Vaste hoogte: past de volledige opgebouwde reeks (7 berichten ≈ 182px) + marge, zodat de kaart niet meer verspringt */
+  overflow: hidden;
 }
 .sc-msg {
   font-size: 10px;
@@ -1842,6 +1844,11 @@
 @media (max-width: 540px) {
   .hero-slogan-top { font-size: 32px; gap: 10px; }
   .stats-band-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  /* Smalle showcase-kaarten: lange chatberichten kunnen over 2 regels lopen,
+     dus reserveren we hier extra hoogte zodat de kaart nooit verspringt of tekst afkapt */
+  .sc-chat-body { height: 240px; }
 }
 
 
