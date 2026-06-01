@@ -273,6 +273,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const target = parseInt(el.dataset.count, 10);
     const prefix = el.dataset.prefix || '';
     const suffix = el.dataset.suffix || '';
+
+    // Toegankelijkheid: bij minder-beweging meteen de eindwaarde tonen (geen animatie)
+    if (reduceMotion) {
+      el.textContent = prefix + target + suffix;
+      return;
+    }
+
     const duration = 1800;
     const startTime = performance.now();
 

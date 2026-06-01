@@ -26,7 +26,11 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Anker-links (#tool, #diensten) niet onder de vaste nav laten verdwijnen */
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+}
 body {
   font-family: var(--font-body);
   background: var(--white);
@@ -47,6 +51,12 @@ nav.main-nav {
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-soft);
   height: var(--nav-h);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+/* Subtiele elevatie zodra de gebruiker scrollt (Linear/Stripe-gevoel) */
+nav.main-nav.scrolled {
+  background: rgba(255,255,255,0.98);
+  box-shadow: 0 6px 28px rgba(20,35,72,0.07);
 }
 .nav-inner {
   max-width: var(--max); margin: 0 auto; height: 100%;

@@ -21,4 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Nav krijgt een subtiele schaduw zodra de pagina gescrold is
+  const nav = document.querySelector('.main-nav');
+  if (nav) {
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
 });

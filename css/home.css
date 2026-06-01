@@ -513,6 +513,17 @@
   50% { transform: translateY(-7px); }
 }
 
+/* Tellende/dynamische cijfers krijgen vaste cijferbreedte → geen breedte-jitter
+   tijdens de count-up animatie of bij het ophogen van de boekingsteller */
+.stat-num,
+.tool-eff-num,
+.over-eff-num,
+.sc-cal-count,
+.tool-stat-num,
+.tool-result-pkg-price {
+  font-variant-numeric: tabular-nums;
+}
+
 /* ═══════════ INTERACTIEVE TOOL (twee-koloms) ═══════════ */
 .tool-section {
   padding: 100px 32px;
