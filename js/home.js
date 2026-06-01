@@ -440,6 +440,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ────────────────────────────────────────
+  // 8b. 3D MOUSE-PARALLAX op de showcase
+  //     Groeps-rotatie op .sc-stage + translateZ-dieptes per laag.
+  //     Subtiel (max 6°), zachte lag via rAF + lerp; geen scroll-listener.
+  //     Alleen op desktop met fijne aanwijzer en zonder reduced-motion.
+  // ────────────────────────────────────────
+  const scStage = document.querySelector('.sc-stage');
+  const heroArea = document.querySelector('.hero');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (scStage && heroArea && finePointer && window.innerWidth > 900 && !reduceMotion) {
+    let tx = 0, ty = 0, cx = 0, cy = 0, running = false;
+    const clamp = v => (v < -1 ? -1 : v > 1 ? 1 : v);
+
+    function frame() {
+      cx += (tx - cx) * 0.08;   // lerp → zachte, vloeiende lag
+      cy += (ty - cy) * 0.08;
+      scStage.style.setProperty('--px', cx.toFixed(4));
+      scStage.style.setProperty('--py', cy.toFixed(4));
+      if (Math.abs(tx - cx) > 0.0006 || Math.abs(ty - cy) > 0.0006) {
+        requestAnimationFrame(frame);
+      } else {
+        // exact uitlijnen en stoppen → geen onnodige frames
+        scStage.style.setProperty('--px', tx.toFixed(4));
+        scStage.style.setProperty('--py', ty.toFixed(4));
+        running = false;
+      }
+    }
+    function kick() {
+      if (!running) { running = true; requestAnimationFrame(frame); }
+    }
+
+    heroArea.addEventListener('mousemove', (e) => {
+      const r = heroArea.getBoundingClientRect();
+      tx = clamp(((e.clientX - r.left) / r.width) * 2 - 1);
+      ty = clamp(((e.clientY - r.top) / r.height) * 2 - 1);
+      kick();
+    }, { passive: true });
+
+    heroArea.addEventListener('mouseleave', () => { tx = 0; ty = 0; kick(); });
+  }
+
+  // ────────────────────────────────────────
   // 9. MAGNETISCHE hoofdknop
   // ────────────────────────────────────────
   const magneticBtns = reduceMotion ? [] : document.querySelectorAll('.btn-prominent');
