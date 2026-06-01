@@ -2034,3 +2034,129 @@
   from { opacity: 0; transform: scale(0.96) translateY(12px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   PREMIUM SHOWCASE — diepte, gelaagdheid & zwevende kaarten
+   Hero blijft licht/warm. Vanilla, huisstijl-tokens, Lucide-iconen.
+   Continue beweging wordt globaal uitgeschakeld bij prefers-reduced-motion.
+════════════════════════════════════════════════════════════════ */
+
+/* Perspectief zodat de browser-mockup echt "indraait" (Linear/Stripe-gevoel) */
+.hero-showcase { perspective: 1600px; }
+.sc-browser-wrap { transform-style: preserve-3d; }
+
+/* Zachte oranje gloed-laag áchter de browser → diepte zonder donker te worden */
+.sc-glow {
+  position: absolute;
+  inset: -14% -10% -26% -10%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 55% at 70% 32%, rgba(232,160,48,0.22), transparent 70%),
+    radial-gradient(52% 50% at 24% 88%, rgba(27,45,94,0.10), transparent 72%);
+  filter: blur(10px);
+}
+
+/* Browser: lichte 3D-kanteling in rust, vlak + lift bij hover, rijkere gelaagde schaduw */
+.sc-browser {
+  position: relative;
+  z-index: 1;
+  transform: rotateY(-7deg) rotateX(3.5deg);
+  transform-origin: 62% 50%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 2px 4px rgba(20,35,72,0.04),
+    0 8px 16px rgba(20,35,72,0.08),
+    0 24px 48px rgba(20,35,72,0.14),
+    0 40px 80px rgba(20,35,72,0.10);
+}
+.hero-showcase:hover .sc-browser {
+  transform: rotateY(0deg) rotateX(0deg) translateY(-4px);
+  box-shadow:
+    0 4px 8px rgba(20,35,72,0.05),
+    0 12px 24px rgba(20,35,72,0.10),
+    0 32px 64px rgba(232,160,48,0.18),
+    0 48px 96px rgba(20,35,72,0.12);
+}
+/* Subtiele lichtreflectie langs de bovenrand van de browser */
+.sc-browser::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 16%);
+  mix-blend-mode: overlay;
+}
+
+/* Kaarten-rij ligt gelaagd boven de gloed; rijkere schaduw + warme hover-gloed */
+.sc-row { position: relative; z-index: 2; }
+.sc-card {
+  box-shadow:
+    0 2px 6px rgba(20,35,72,0.05),
+    0 12px 28px rgba(20,35,72,0.08);
+}
+.sc-card:hover {
+  box-shadow:
+    0 4px 10px rgba(20,35,72,0.06),
+    0 16px 36px rgba(232,160,48,0.16);
+}
+
+/* Tweede zwevende badge: social-proof linksonder (decoratief) */
+.sc-float-2 {
+  top: auto; right: auto;
+  bottom: -16px; left: -14px;
+  animation: float-slow 4.5s ease-in-out 1.2s infinite;
+}
+.sc-float-2 .icon {
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  background: rgba(232,160,48,0.14);
+  display: flex; align-items: center; justify-content: center;
+}
+.sc-float-2 .icon[data-icon] svg { width: 15px; height: 15px; color: var(--orange-deep); }
+.sc-float-2 strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.sc-float-2 span { font-size: 9px; color: var(--muted); }
+
+/* "Live"-indicator op de chatbot-kaart */
+.sc-live {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--orange-deep);
+}
+.sc-live::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #28c840;
+  box-shadow: 0 0 0 3px rgba(40,200,64,0.18);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Mobiel: tilt platleggen (geen tekstvervorming op klein scherm), badges netjes */
+@media (max-width: 900px) {
+  .sc-browser { transform: none; }
+  .hero-showcase:hover .sc-browser { transform: translateY(-4px); }
+  .sc-glow { inset: -8% -6% -16% -6%; }
+  .sc-float-2 { bottom: -10px; left: 0; padding: 8px 12px; }
+  .sc-float-2 strong { font-size: 12px; }
+}
+
+/* Reduced-motion: browser vlak en crisp (geen kanteling/beweging) */
+@media (prefers-reduced-motion: reduce) {
+  .sc-browser { transform: none; }
+}
