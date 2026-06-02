@@ -9,6 +9,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ────────────────────────────────────────
+  // 0. SMOOTH SCROLL (Lenis) + GSAP ScrollTrigger-koppeling
+  //    GSAP/Lenis worden via CDN geladen; bij netwerkfout vallen we
+  //    netjes terug op de native scroll + IntersectionObserver (sectie 7).
+  // ────────────────────────────────────────
+  const hasGSAP  = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  const hasLenis = typeof window.Lenis !== 'undefined';
+  if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
+
+  let lenis = null;
+  if (hasLenis && !reduceMotion) {
+    lenis = new Lenis({
+      duration: 1.05,
+      // zachte 'expo-out' easing → premium uitloop zonder zweverig te worden
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false   // op touch de native scroll behouden (voelt natuurlijker)
+    });
+
+    if (hasGSAP) {
+      // Eén rAF-loop voor zowel Lenis als GSAP → in sync, geen jitter
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+
+    // Anker-links (#tool, #diensten) via Lenis → smooth i.p.v. harde sprong.
+    // We houden rekening met de vaste nav-hoogte (scroll-padding-top).
+    const navH = parseFloat(getComputedStyle(document.documentElement)
+      .getPropertyValue('--nav-h')) || 0;
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      const id = a.getAttribute('href');
+      if (id.length <= 1) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -(navH + 20) });
+      });
+    });
+  }
+
+  // ────────────────────────────────────────
   // 1. HERO SHOWCASE — gechoreografeerde live demo
   //    Chat → reservering verschijnt in de kalender → stat reageert
   // ────────────────────────────────────────
@@ -667,30 +712,69 @@ document.addEventListener('DOMContentLoaded', () => {
   } // einde cursor-glow (overgeslagen bij reduceMotion)
 
   // ────────────────────────────────────────
-  // 7. SCROLL-REVEAL
+  // 7. SCROLL-REVEAL  (GSAP ScrollTrigger, met fallback)
+  //    De delay-* klassen blijven werken als subtiele stagger.
   // ────────────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        revealObserver.unobserve(entry.target);
-      }
+  const delayFor = (el) =>
+    el.classList.contains('delay-4') ? 0.40 :
+    el.classList.contains('delay-3') ? 0.30 :
+    el.classList.contains('delay-2') ? 0.20 :
+    el.classList.contains('delay-1') ? 0.10 : 0;
+
+  if (hasGSAP && !reduceMotion) {
+    // GSAP is de enige bron van waarheid → CSS-transitie uit (zie style.css)
+    document.documentElement.classList.add('gsap-reveals');
+    revealEls.forEach((el) => {
+      gsap.fromTo(el,
+        { autoAlpha: 0, y: 28 },
+        {
+          autoAlpha: 1, y: 0,
+          duration: 0.8,
+          delay: delayFor(el),
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        }
+      );
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    // Fallback: native IntersectionObserver (oude gedrag)
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  }
 
   // ────────────────────────────────────────
   // 8. PARALLAX op hero-showcase
   // ────────────────────────────────────────
   const heroShowcase = document.querySelector('.hero-showcase');
   if (heroShowcase && window.innerWidth > 900 && !reduceMotion) {
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY;
-      if (scrolled < 800) {
-        heroShowcase.style.transform = `translateY(${scrolled * 0.06}px)`;
-      }
-    }, { passive: true });
+    if (hasGSAP) {
+      // Vloeiende, gescrubde parallax gekoppeld aan ScrollTrigger
+      gsap.to(heroShowcase, {
+        y: 70,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    } else {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        if (scrolled < 800) {
+          heroShowcase.style.transform = `translateY(${scrolled * 0.06}px)`;
+        }
+      }, { passive: true });
+    }
   }
 
   // ────────────────────────────────────────

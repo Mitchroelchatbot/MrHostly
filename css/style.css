@@ -240,6 +240,18 @@ footer.main-footer::before {
 .reveal.delay-3 { transition-delay: 0.3s; }
 .reveal.delay-4 { transition-delay: 0.4s; }
 
+/* Zodra GSAP de reveals aanstuurt, zetten we de CSS-transitie uit zodat
+   GSAP per frame de enige bron van waarheid is (geen dubbele easing/lag). */
+html.gsap-reveals .reveal { transition: none; will-change: transform, opacity; }
+
+/* ═══════════ LENIS SMOOTH SCROLL (aanbevolen baseline) ═══════════ */
+html.lenis, html.lenis body { height: auto; }
+/* Lenis stuurt het scrollen aan → native smooth-behavior uitschakelen */
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
 /* ═══════════ FOCUS (toetsenbord-toegankelijkheid) ═══════════ */
 :focus-visible {
   outline: 3px solid var(--orange);
