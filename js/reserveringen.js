@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ppl = sel.people === '6+' ? '6 of meer' : sel.people;
       doneEl.innerHTML =
         '<div class="resv-confirm">' +
-          '<div class="ic" data-icon="check-circle"></div>' +
+          '<div class="ic" data-icon="check"></div>' +
           '<h4>Reservering bevestigd!</h4>' +
           '<p>We zien je graag op <span class="resv-detail">' + sel.day + ' om ' + sel.time + '</span>, ' +
           'voor <span class="resv-detail">' + ppl + ' personen</span>.<br>Je krijgt een bevestiging en een herinnering per mail.</p>' +
