@@ -756,15 +756,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroShowcase = document.querySelector('.hero-showcase');
   if (heroShowcase && window.innerWidth > 900 && !reduceMotion) {
     if (hasGSAP) {
-      // Vloeiende, gescrubde parallax gekoppeld aan ScrollTrigger
+      // Vloeiende, gescrubde parallax gekoppeld aan ScrollTrigger.
+      // De showcase drijft iets trager dan de (stilstaande) hero-tekst → diepte.
+      // scrub: 0.6 = lichte smoothing, sluit mooi aan op Lenis.
       gsap.to(heroShowcase, {
-        y: 70,
+        y: 50,
         ease: 'none',
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: true
+          scrub: 0.6
         }
       });
     } else {
@@ -779,43 +781,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ────────────────────────────────────────
   // 8b. 3D MOUSE-PARALLAX op de showcase
-  //     Groeps-rotatie op .sc-stage + translateZ-dieptes per laag.
-  //     Subtiel (max 6°), zachte lag via rAF + lerp; geen scroll-listener.
+  //     Groeps-rotatie op .sc-stage + translateZ-dieptes per laag (zie home.css).
+  //     De smooth-follow loopt via GSAP quickTo (power3.out → gewichtloze,
+  //     zachte uitloop). Eén bron van waarheid: --px/--py (-1..1), waar de CSS
+  //     zowel de rotatie als de dynamische schaduwen op baseert.
+  //     Valt terug op een rAF-lerp als GSAP niet geladen is.
   //     Alleen op desktop met fijne aanwijzer en zonder reduced-motion.
   // ────────────────────────────────────────
   const scStage = document.querySelector('.sc-stage');
   const heroArea = document.querySelector('.hero');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (scStage && heroArea && finePointer && window.innerWidth > 900 && !reduceMotion) {
-    let tx = 0, ty = 0, cx = 0, cy = 0, running = false;
     const clamp = v => (v < -1 ? -1 : v > 1 ? 1 : v);
 
-    function frame() {
-      cx += (tx - cx) * 0.08;   // lerp → zachte, vloeiende lag
-      cy += (ty - cy) * 0.08;
-      scStage.style.setProperty('--px', cx.toFixed(4));
-      scStage.style.setProperty('--py', cy.toFixed(4));
-      if (Math.abs(tx - cx) > 0.0006 || Math.abs(ty - cy) > 0.0006) {
-        requestAnimationFrame(frame);
-      } else {
-        // exact uitlijnen en stoppen → geen onnodige frames
-        scStage.style.setProperty('--px', tx.toFixed(4));
-        scStage.style.setProperty('--py', ty.toFixed(4));
-        running = false;
-      }
-    }
-    function kick() {
-      if (!running) { running = true; requestAnimationFrame(frame); }
+    let setX, setY;
+    if (hasGSAP) {
+      // quickTo = high-performance interpolator: zachte ease-out follow.
+      // Eerst expliciet op 0 zetten zodat quickTo een schone numerieke start leest.
+      gsap.set(scStage, { '--px': 0, '--py': 0 });
+      const opts = { duration: 0.7, ease: 'power3.out' };
+      setX = gsap.quickTo(scStage, '--px', opts);
+      setY = gsap.quickTo(scStage, '--py', opts);
+    } else {
+      // Fallback: handgerolde rAF-lerp (zoals voorheen)
+      let tx = 0, ty = 0, cx = 0, cy = 0, running = false;
+      const frame = () => {
+        cx += (tx - cx) * 0.08;
+        cy += (ty - cy) * 0.08;
+        scStage.style.setProperty('--px', cx.toFixed(4));
+        scStage.style.setProperty('--py', cy.toFixed(4));
+        if (Math.abs(tx - cx) > 0.0006 || Math.abs(ty - cy) > 0.0006) {
+          requestAnimationFrame(frame);
+        } else {
+          scStage.style.setProperty('--px', tx.toFixed(4));
+          scStage.style.setProperty('--py', ty.toFixed(4));
+          running = false;
+        }
+      };
+      const kick = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
+      setX = (v) => { tx = v; kick(); };
+      setY = (v) => { ty = v; kick(); };
     }
 
     heroArea.addEventListener('mousemove', (e) => {
       const r = heroArea.getBoundingClientRect();
-      tx = clamp(((e.clientX - r.left) / r.width) * 2 - 1);
-      ty = clamp(((e.clientY - r.top) / r.height) * 2 - 1);
-      kick();
+      setX(clamp(((e.clientX - r.left) / r.width) * 2 - 1));
+      setY(clamp(((e.clientY - r.top) / r.height) * 2 - 1));
     }, { passive: true });
 
-    heroArea.addEventListener('mouseleave', () => { tx = 0; ty = 0; kick(); });
+    heroArea.addEventListener('mouseleave', () => { setX(0); setY(0); });
   }
 
   // ────────────────────────────────────────

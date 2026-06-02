@@ -1299,19 +1299,19 @@
   flex-direction: column;
   gap: 14px;
   transform-style: preserve-3d;
-  transform: rotateX(calc(var(--py, 0) * -6deg)) rotateY(calc(var(--px, 0) * 6deg));
+  transform: rotateX(calc(var(--py, 0) * -7deg)) rotateY(calc(var(--px, 0) * 7deg));
   will-change: transform;
 }
 .sc-browser-wrap { transform-style: preserve-3d; }
 .sc-row { transform-style: preserve-3d; position: relative; z-index: 2; }
 
-/* Achtergrond-gloed ligt het verst naar achter (z -45) → diepte, blijft warm/licht */
+/* Achtergrond-gloed ligt het verst naar achter (z -60) → diepte, blijft warm/licht */
 .sc-glow {
   position: absolute;
   inset: -14% -10% -26% -10%;
   z-index: 0;
   pointer-events: none;
-  transform: translateZ(-45px);
+  transform: translateZ(-60px);
   background:
     radial-gradient(58% 55% at 70% 32%, rgba(232,160,48,0.22), transparent 70%),
     radial-gradient(52% 50% at 24% 88%, rgba(27,45,94,0.10), transparent 72%);
@@ -1338,16 +1338,17 @@
   mix-blend-mode: overlay;
 }
 
-/* Kaarten "zweven" ervoor (z 38) en bewegen iets sterker; hover-lift via translate */
+/* Kaarten "zweven" ervoor (z 44) en bewegen iets sterker; hover-lift via translate.
+   Schaduw schuift mee met de kanteling (--px/--py) → consistente diepte met de andere lagen. */
 .sc-row .sc-card {
-  transform: translateZ(38px);
+  transform: translateZ(44px);
   transition: box-shadow 0.3s, translate 0.3s;
   box-shadow:
-    0 2px 6px rgba(20,35,72,0.05),
-    0 14px 30px rgba(20,35,72,0.10);
+    calc(var(--px, 0) * -12px) calc(14px - var(--py, 0) * 9px) 30px rgba(20,35,72,0.12),
+    0 2px 6px rgba(20,35,72,0.05);
 }
 .sc-card:hover {
-  transform: translateZ(38px);
+  transform: translateZ(44px);
   translate: 0 -4px;
   box-shadow:
     0 4px 10px rgba(20,35,72,0.06),
@@ -1357,8 +1358,8 @@
 /* Badges liggen het dichtst bij (z 80): bewegen het meest, schaduw schuift mee,
    zachte idle-bob via de losse translate-property (botst niet met translateZ) */
 .sc-float-1, .sc-float-2 {
-  transform: translateZ(80px);
-  box-shadow: calc(var(--px, 0) * -14px) calc(16px - var(--py, 0) * 10px) 30px rgba(20,35,72,0.20);
+  transform: translateZ(96px);
+  box-shadow: calc(var(--px, 0) * -16px) calc(18px - var(--py, 0) * 11px) 34px rgba(20,35,72,0.20);
   animation: badge-bob 4s ease-in-out infinite;
 }
 @keyframes badge-bob {
