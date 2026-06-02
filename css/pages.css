@@ -1,0 +1,175 @@
+/* ════════════════════════════════════════════════════════════════
+   MR HOSTLY — PAGES
+   Gedeelde stijlen voor binnenpagina's (websites, chatbots,
+   reserveringen, over-ons, blog, contact). Zelfstandig: geen
+   afhankelijkheid van home.css. Huisstijl-tokens uit style.css.
+   Licht↔donker-afwisseling zoals de homepage. Respecteert
+   prefers-reduced-motion (globale regel in style.css).
+════════════════════════════════════════════════════════════════ */
+
+/* ═══════════ PAGE-HERO (donker — contrast met lichte content) ═══════════ */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding: calc(var(--nav-h) + 72px) 32px 72px;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: var(--white);
+  text-align: center;
+}
+.page-hero-glow {
+  position: absolute;
+  top: -160px; right: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,160,48,0.20), transparent 60%);
+  pointer-events: none;
+  animation: pg-glow 8s ease-in-out infinite;
+}
+.page-hero-glow.two {
+  top: auto; right: auto;
+  bottom: -180px; left: -120px;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(232,160,48,0.10), transparent 65%);
+  animation-delay: 4s;
+}
+@keyframes pg-glow {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.08); }
+}
+.page-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+
+.page-crumbs {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 18px;
+}
+.page-crumbs a { color: rgba(255,255,255,0.72); }
+.page-crumbs a:hover { color: var(--orange); }
+.page-crumbs .sep { opacity: 0.4; }
+
+.page-hero .section-eyebrow { justify-content: center; display: inline-flex; color: var(--orange); }
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin: 8px 0 18px;
+}
+.page-hero h1 em { color: var(--orange); font-style: normal; }
+.page-hero-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  color: rgba(255,255,255,0.78);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.page-hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+/* knoppen op de donkere hero */
+.page-hero .btn-ghost { color: var(--white); }
+.page-hero .btn-ghost:hover { color: var(--orange); }
+
+/* ═══════════ CONTENT-SECTIES (afwisseling licht / cream) ═══════════ */
+.page-section { padding: 84px 32px; background: var(--white); }
+.page-section.cream { background: var(--cream); }
+.page-section.offwhite { background: var(--off-white); }
+.page-section-inner { max-width: var(--max); margin: 0 auto; }
+.page-section-inner.narrow { max-width: 760px; }
+
+.page-head { max-width: 680px; margin: 0 auto 48px; text-align: center; }
+.page-head.left { margin-left: 0; margin-right: 0; text-align: left; }
+.page-head .section-eyebrow { justify-content: center; display: inline-flex; }
+.page-head.left .section-eyebrow { justify-content: flex-start; }
+.page-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 40px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  margin-bottom: 14px;
+}
+.page-head h2 em { color: var(--orange); font-style: normal; }
+.page-head p { font-size: 16px; color: var(--muted); line-height: 1.7; }
+
+/* ═══════════ PROSE (leesbare tekstblokken — over-ons, blog) ═══════════ */
+.prose { max-width: 720px; margin: 0 auto; }
+.prose > * + * { margin-top: 18px; }
+.prose p { font-size: 16px; line-height: 1.8; color: #374151; }
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 30px);
+  font-weight: 700; color: var(--navy);
+  letter-spacing: -0.025em; line-height: 1.2;
+  margin-top: 40px;
+}
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: 21px; font-weight: 700;
+  color: var(--navy); letter-spacing: -0.02em;
+  margin-top: 32px;
+}
+.prose ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.prose ul li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.7; color: #374151; }
+.prose ul li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--orange); font-weight: 700; }
+.prose a { color: var(--orange-deep); text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { color: var(--orange); }
+.prose strong { color: var(--navy); font-weight: 600; }
+
+/* ═══════════ KAARTEN-GRID (generiek) ═══════════ */
+.page-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.page-cards.two { grid-template-columns: repeat(2, 1fr); }
+.page-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(20,35,72,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.page-card:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(20,35,72,0.1); }
+.page-card-ic {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: rgba(232,160,48,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.page-card-ic[data-icon] svg { width: 24px; height: 24px; color: var(--orange-deep); }
+.page-card h3 {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 700;
+  color: var(--navy); letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.page-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* ═══════════ CTA-BAND (oranje climax) ═══════════ */
+.page-cta {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-deep) 100%);
+  text-align: center;
+  padding: 72px 32px;
+}
+.page-cta-inner { max-width: 640px; margin: 0 auto; }
+.page-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.4vw, 38px);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.page-cta h2 em { color: var(--white); font-style: normal; }
+.page-cta p { font-size: 16px; color: rgba(0,0,0,0.7); line-height: 1.6; margin-bottom: 26px; }
+
+/* ═══════════ MOBIEL ═══════════ */
+@media (max-width: 900px) {
+  .page-hero { padding: calc(var(--nav-h) + 48px) 20px 56px; }
+  .page-section { padding: 56px 20px; }
+  .page-cta { padding: 56px 20px; }
+  .page-cards, .page-cards.two { grid-template-columns: 1fr; }
+}

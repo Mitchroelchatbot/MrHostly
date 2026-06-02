@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ════════ SEO — PER PAGINA AANPASSEN ════════ -->
+<!-- Vervang PAGINATITEL, PAGINA-OMSCHRIJVING (±150-160 tekens) en PAGINA (het pad, bijv. websites) -->
+<title>PAGINATITEL — Mr Hostly</title>
+<meta name="description" content="PAGINA-OMSCHRIJVING.">
+<link rel="canonical" href="https://mrhostly.nl/PAGINA">
+
+<!-- Open Graph / sociale media -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="Mr Hostly">
+<meta property="og:title" content="PAGINATITEL — Mr Hostly">
+<meta property="og:description" content="PAGINA-OMSCHRIJVING.">
+<meta property="og:url" content="https://mrhostly.nl/PAGINA">
+<meta property="og:image" content="https://mrhostly.nl/images/og-default.jpg"><!-- TODO: og-afbeelding toevoegen -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PAGINATITEL — Mr Hostly">
+<meta name="twitter:description" content="PAGINA-OMSCHRIJVING.">
+<meta name="twitter:image" content="https://mrhostly.nl/images/og-default.jpg">
+
+<!-- Fonts + styles (identiek aan index.html) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<!-- ════════ NAVIGATIE — IDENTIEK op elke pagina (active-state zet js/pages.js automatisch) ════════ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand"><span class="mr">Mr</span><span class="hostly">Hostly</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="websites.html">Websites</a></li>
+      <li><a href="chatbots.html">Chatbots</a></li>
+      <li><a href="reserveringen.html">Reserveringen</a></li>
+      <li><a href="over-ons.html">Over ons</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="websites.html">Websites</a>
+    <a href="chatbots.html">Chatbots</a>
+    <a href="reserveringen.html">Reserveringen</a>
+    <a href="over-ons.html">Over ons</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html" class="mob-cta">Contact</a>
+  </div>
+</nav>
+
+<!-- ════════ PAGE-HERO (donker) — titel + ondertitel per pagina ════════ -->
+<section class="page-hero">
+  <div class="page-hero-glow" aria-hidden="true"></div>
+  <div class="page-hero-glow two" aria-hidden="true"></div>
+  <div class="page-hero-inner reveal">
+    <nav class="page-crumbs" aria-label="Kruimelpad">
+      <a href="index.html">Home</a><span class="sep">/</span><span>Paginatitel</span>
+    </nav>
+    <span class="section-eyebrow">Eyebrow</span>
+    <h1>Pagina<em>titel</em> hier.</h1>
+    <p class="page-hero-sub">Een korte, pakkende ondertitel die in één zin uitlegt waar deze pagina over gaat.</p>
+    <div class="page-hero-btns">
+      <a href="contact.html" class="btn btn-orange btn-arrow">Plan een kennismaking</a>
+      <a href="#inhoud" class="btn btn-ghost">Lees meer</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VOORBEELD-CONTENT (vervang per pagina) ════════ -->
+<!-- Kaarten-grid -->
+<section class="page-section" id="inhoud">
+  <div class="page-section-inner">
+    <div class="page-head reveal">
+      <span class="section-eyebrow">Sectie-eyebrow</span>
+      <h2>Een <em>sectiekop</em> als voorbeeld.</h2>
+      <p>Korte introtekst onder de sectiekop, om de bouwstenen te tonen.</p>
+    </div>
+    <div class="page-cards">
+      <div class="page-card reveal">
+        <div class="page-card-ic" data-icon="globe"></div>
+        <h3>Kaart één</h3>
+        <p>Voorbeeldtekst voor een kaart in de grid.</p>
+      </div>
+      <div class="page-card reveal delay-1">
+        <div class="page-card-ic" data-icon="message-square-text"></div>
+        <h3>Kaart twee</h3>
+        <p>Voorbeeldtekst voor een kaart in de grid.</p>
+      </div>
+      <div class="page-card reveal delay-2">
+        <div class="page-card-ic" data-icon="calendar-check"></div>
+        <h3>Kaart drie</h3>
+        <p>Voorbeeldtekst voor een kaart in de grid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prose-blok (cream) -->
+<section class="page-section cream">
+  <div class="page-section-inner narrow">
+    <div class="prose reveal">
+      <h2>Voorbeeld tekstblok</h2>
+      <p>Een leesbare paragraaf met comfortabele regelhoogte en regellengte voor langere teksten zoals op de over-ons- en blogpagina's. <strong>Belangrijke woorden</strong> krijgen accent en <a href="contact.html">links</a> zijn duidelijk herkenbaar.</p>
+      <ul>
+        <li>Een opsommingspunt met vinkje</li>
+        <li>Nog een punt ter illustratie</li>
+        <li>En een derde voor de volledigheid</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<section class="page-cta">
+  <div class="page-cta-inner reveal">
+    <h2>Klaar om <em>slimmer</em> te ondernemen?</h2>
+    <p>Plan een gratis kennismaking — vrijblijvend en zonder verkooppraatje.</p>
+    <a href="contact.html" class="btn btn-navy btn-arrow">Plan een kennismaking</a>
+  </div>
+</section>
+
+<!-- ════════ FOOTER — IDENTIEK op elke pagina ════════ -->
+<footer class="main-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span class="mr">Mr</span><span class="hostly">Hostly</span></div>
+        <p>Websites, chatbots en reserveringssystemen voor MKB. Vanuit Eindhoven, voor heel Nederland.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Diensten</h4>
+        <ul>
+          <li><a href="websites.html">Websites</a></li>
+          <li><a href="chatbots.html">Chatbots & AI</a></li>
+          <li><a href="reserveringen.html">Reserveringen</a></li>
+          <li><a href="contact.html">Maatwerk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Bedrijf</h4>
+        <ul>
+          <li><a href="over-ons.html">Over ons</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>Eindhoven, NL</li>
+          <li><a href="mailto:info@mrhostly.nl">info@mrhostly.nl</a></li>
+          <li><a href="contact.html">Contactformulier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Mr Hostly · KvK · BTW</span>
+      <div class="footer-social">
+        <a aria-label="LinkedIn">in</a>
+        <a aria-label="Instagram">ig</a>
+        <a aria-label="Facebook">fb</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts: lucide + icons + main (gedeeld) + pages (binnenpagina's). GEEN home.js. -->
+<script defer src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.min.js"></script>
+<script defer src="js/icons.js"></script>
+<script defer src="js/main.js"></script>
+<script defer src="js/pages.js"></script>
+</body>
+</html>
