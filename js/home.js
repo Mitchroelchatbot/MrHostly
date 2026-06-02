@@ -261,9 +261,28 @@ document.addEventListener('DOMContentLoaded', () => {
       scroll.appendChild(typing); scrollToEnd();
       setTimeout(() => {
         typing.remove();
-        const b = bubble('bot', text); scroll.appendChild(b); scrollToEnd();
-        busy = false; if (cb) cb(b);
-      }, 850);
+        // Lege bot-bubbel + typewriter-onthulling met knipperende cursor
+        const b = document.createElement('div');
+        b.className = 'tool-msg bot msg-in';
+        scroll.appendChild(b); scrollToEnd();
+        typeInto(b, text, () => { busy = false; if (cb) cb(b); });
+      }, 600);
+    }
+
+    // Letter-voor-letter typen met caret; totaal ~max 800ms, daarna caret weg.
+    function typeInto(el, text, done) {
+      const txt = document.createTextNode('');
+      const caret = document.createElement('span');
+      caret.className = 'tool-caret';
+      el.appendChild(txt); el.appendChild(caret);
+      const per = Math.max(10, Math.min(26, Math.round(750 / text.length)));
+      let i = 0;
+      (function step() {
+        txt.nodeValue = text.slice(0, ++i);
+        scrollToEnd();
+        if (i < text.length) setTimeout(step, per);
+        else setTimeout(() => { caret.remove(); done(); }, 320);
+      })();
     }
 
     function showChips(n) {
@@ -314,11 +333,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Oplossing-kaart ──
     function slotEl(name) { return solution.querySelector('.tool-sol-slot[data-slot="' + name + '"]'); }
+    // Korte energie-puls/lichtflits op het moment dat een onderdeel "inklikt"
+    function flashSlot(el) {
+      if (RM || !hasGSAP) return;
+      const fl = document.createElement('span');
+      fl.className = 'tool-sol-flash';
+      el.appendChild(fl);
+      gsap.fromTo(fl, { opacity: 0, scale: 0.6 }, {
+        opacity: 0.55, scale: 1.06, duration: 0.22, ease: 'power2.out',
+        onComplete: () => gsap.to(fl, {
+          opacity: 0, duration: 0.45, ease: 'power2.in',
+          onComplete: () => fl.remove()
+        })
+      });
+    }
     function fillNode(el, html) {
       el.classList.add('filled');
       el.innerHTML = html;
       paintIcons(el);
-      if (!RM) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+      if (RM) return;
+      if (hasGSAP) {
+        // GSAP-onthulling: onderdeel klikt op zijn plek + lichtflits
+        gsap.fromTo(el,
+          { y: 12, scale: 0.97, autoAlpha: 0.5 },
+          { y: 0, scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out(1.4)',
+            clearProps: 'transform,opacity,visibility' });
+        flashSlot(el);
+      } else {
+        el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+      }
     }
     function addBar(eff) {
       const num = eff.querySelector('.tool-eff-num');

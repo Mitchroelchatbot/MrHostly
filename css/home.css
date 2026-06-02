@@ -1448,7 +1448,7 @@
 .tool-chat {
   display: flex;
   flex-direction: column;
-  background: rgba(255,255,255,0.04);
+  background: linear-gradient(160deg, rgba(255,255,255,0.055), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 18px;
   padding: 8px;
@@ -1514,6 +1514,22 @@
   30%           { transform: translateY(-4px); opacity: 1; }
 }
 
+/* typende AI: knipperende cursor achter de tekst */
+.tool-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.14em;
+  background: var(--orange);
+  border-radius: 1px;
+  animation: tool-caret-blink 0.9s steps(1) infinite;
+}
+@keyframes tool-caret-blink {
+  0%, 50%      { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
 /* keuze-bubbels */
 .tool-choices {
   display: grid;
@@ -1525,16 +1541,17 @@
 .tool-choice {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
+  min-height: 46px;               /* blijft een comfortabel tikdoel (>=44px) */
   text-align: left;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 13px;
-  padding: 12px 14px;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 11px;
+  padding: 9px 12px;
   color: var(--white);
   font-family: var(--font-body);
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 @media (prefers-reduced-motion: no-preference) {
   .tool-choice {
@@ -1547,23 +1564,24 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 .tool-choice:hover {
-  background: rgba(232,160,48,0.12);
-  border-color: rgba(232,160,48,0.5);
-  transform: translateY(-2px);
+  background: rgba(232,160,48,0.10);
+  border-color: rgba(232,160,48,0.55);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(232,160,48,0.18), 0 0 0 1px rgba(232,160,48,0.12);
 }
 .tool-choice:active { transform: translateY(0) scale(0.985); }
 .tool-choice:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .tool-choice-ic {
   flex: none;
-  width: 34px; height: 34px;
-  border-radius: 9px;
+  width: 28px; height: 28px;
+  border-radius: 8px;
   background: rgba(232,160,48,0.14);
   display: flex; align-items: center; justify-content: center;
 }
-.tool-choice-ic[data-icon] svg { width: 18px; height: 18px; color: var(--orange); }
+.tool-choice-ic[data-icon] svg { width: 16px; height: 16px; color: var(--orange); }
 .tool-choice-tx { display: flex; flex-direction: column; gap: 1px; }
-.tool-choice-t { font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
-.tool-choice-d { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+.tool-choice-t { font-family: var(--font-display); font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; }
+.tool-choice-d { font-size: 11.5px; color: rgba(255,255,255,0.58); line-height: 1.35; }
 
 /* voettekst: terug / opnieuw */
 .tool-chat-foot {
@@ -1619,6 +1637,8 @@
 .tool-sol-slots { display: flex; flex-direction: column; gap: 12px; flex: 1; }
 
 .tool-sol-slot {
+  position: relative;
+  overflow: hidden;
   border: 1px dashed rgba(255,255,255,0.18);
   border-radius: 13px;
   padding: 16px;
@@ -1627,6 +1647,16 @@
   flex-direction: column;
   justify-content: center;
   transition: border-color 0.3s, background 0.3s;
+}
+/* energie-puls/lichtflits bij het inklikken (door GSAP aangestuurd) */
+.tool-sol-flash {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  transform-origin: 50% 45%;
+  background: radial-gradient(circle at 50% 45%, rgba(232,160,48,0.5), rgba(232,160,48,0) 65%);
 }
 .tool-sol-slot.filled {
   border-style: solid;
@@ -1709,6 +1739,30 @@
 .tool-sol-cta { margin-top: 4px; }
 .tool-sol-cta.hidden { display: none; }
 .tool-sol-cta .btn { width: 100%; justify-content: center; }
+
+/* ── Futuristische ambient-effecten (subtiel) ──
+   Alleen bij no-preference; bij reduced-motion blijft alles statisch. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Gesprek en oplossing delen dezelfde zachte, ademende glow → één geheel */
+  .tool-chat     { animation: tool-panel-glow 7s ease-in-out infinite; }
+  .tool-solution { animation: tool-panel-glow 7s ease-in-out infinite 0.6s; }
+
+  /* Trage drift/ademing van de achtergrond-orbs binnen de donkere sectie */
+  .tool-section::before { animation: tool-orb-a 20s ease-in-out infinite; }
+  .tool-section::after  { animation: tool-orb-b 24s ease-in-out infinite; }
+}
+@keyframes tool-panel-glow {
+  0%, 100% { box-shadow: 0 18px 50px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px rgba(232,160,48,0); }
+  50%      { box-shadow: 0 22px 58px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 26px rgba(232,160,48,0.10); }
+}
+@keyframes tool-orb-a {
+  0%, 100% { transform: translate(30%, -30%) scale(1);    opacity: 1; }
+  50%      { transform: translate(22%, -22%) scale(1.12); opacity: 0.78; }
+}
+@keyframes tool-orb-b {
+  0%, 100% { transform: translate(-30%, 30%) scale(1);   opacity: 1; }
+  50%      { transform: translate(-22%, 38%) scale(1.1); opacity: 0.85; }
+}
 
 /* ── Mobiel: gesprek boven, oplossing eronder ── */
 @media (max-width: 900px) {
