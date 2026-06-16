@@ -1,0 +1,14 @@
+# Netlify-configuratie voor Mr Hostly
+# Statische site (vanilla HTML/CSS/JS) — geen build-stap nodig.
+# Publiceert de repo-root zoals die is.
+
+[build]
+  publish = "."
+  command = ""
+
+# Beveiligings- en cache-headers (optioneel, nette defaults)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
