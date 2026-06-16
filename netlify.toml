@@ -6,6 +6,51 @@
   publish = "."
   command = ""
 
+# ── Schone URL's ──
+# Netlify serveert /pagina automatisch vanaf pagina.html.
+# Deze regels sturen de .html-variant 301 door naar de schone URL,
+# zodat er één canonieke versie is (matcht de canonical-tags).
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/websites.html"
+  to = "/websites"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/chatbots.html"
+  to = "/chatbots"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/reserveringen.html"
+  to = "/reserveringen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/over-ons.html"
+  to = "/over-ons"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog.html"
+  to = "/blog"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-no-shows.html"
+  to = "/blog-no-shows"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact"
+  status = 301
+  force = true
+
 # Beveiligings- en cache-headers (optioneel, nette defaults)
 [[headers]]
   for = "/*"
