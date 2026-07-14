@@ -566,25 +566,21 @@ document.addEventListener('DOMContentLoaded', () => {
       target.loss = loss; target.recovered = recovered; target.hoursSaved = hoursSaved;
       $('roiHoursValue').textContent = hoursSaved > 0 ? '≈ ' + eur.format(timeValue) + ' aan tijd' : '';
 
-      // Aanbeveling op basis van de drijvende factoren
+      // Aanbeveling op basis van de drijvende factoren (alleen onze twee diensten)
       const phoneHigh = U >= 8, noshowHigh = N >= 10;
       let name, sub, price;
-      if (phoneHigh && noshowHigh)      { name = 'Chatbot + Reserveringssysteem'; sub = 'vanaf €249 + €299'; price = 249 + 299; }
-      else if (phoneHigh)               { name = 'Chatbots & AI';        sub = 'vanaf €249'; price = 249; }
-      else if (noshowHigh)              { name = 'Reserveringssysteem';   sub = 'vanaf €299'; price = 299; }
-      else if (timeValue >= recovered)  { name = 'Chatbots & AI';        sub = 'vanaf €249'; price = 249; }
-      else                              { name = 'Reserveringssysteem';   sub = 'vanaf €299'; price = 299; }
+      if (phoneHigh && noshowHigh)      { name = 'Website + AI-chatbot'; sub = 'vanaf €695 + €399'; price = 695 + 399; }
+      else if (phoneHigh)               { name = 'AI-chatbot';           sub = 'vanaf €399 + €49/mnd'; price = 399; }
+      else                              { name = 'Website';              sub = 'vanaf €695 + €50/mnd'; price = 695; }
       $('roiRecoName').textContent  = name;
       $('roiRecoPrice').textContent = sub;
 
       const payEl = $('roiPayback');
       if (monthly <= 0) {
-        payEl.innerHTML = 'Stel je situatie in om je terugverdientijd te zien.';
-      } else if (monthly >= price) {
-        payEl.innerHTML = '<span class="roi-pb-check">✓</span> Verdient zichzelf <strong>al in de eerste maand</strong> terug.';
+        payEl.innerHTML = 'Vul je situatie in voor een indicatie.';
       } else {
-        const m = Math.ceil(price / monthly);
-        payEl.innerHTML = '<span class="roi-pb-check">✓</span> Verdient zichzelf terug in <strong>± ' + m + ' ' + (m > 1 ? 'maanden' : 'maand') + '</strong>.';
+        const m = Math.max(1, Math.ceil(price / monthly));
+        payEl.innerHTML = 'Indicatief terugverdiend in <strong>± ' + m + ' ' + (m > 1 ? 'maanden' : 'maand') + '</strong> — puur op basis van je eigen invoer.';
       }
 
       if (reduceMotion || first) {

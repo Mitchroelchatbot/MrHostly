@@ -5,6 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mr Hostly — Slimmer. Sterker. Digitaler.</title>
 <meta name="description" content="Mr Hostly bouwt websites en AI-chatbots voor de horeca. Wij komen uit de zaak, niet uit een kantoor.">
+<link rel="canonical" href="https://mrhostly.nl/">
+
+<!-- Structured data: LocalBusiness + aanbod (AI-vindbaarheid — onze eigen site geeft het voorbeeld) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Mr Hostly",
+  "description": "Websites en AI-chatbots voor de horeca, gebouwd op 25 jaar horeca-ervaring. Uit de zaak, niet uit een kantoor.",
+  "url": "https://mrhostly.nl",
+  "email": "info@mrhostly.nl",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Eindhoven",
+    "addressCountry": "NL"
+  },
+  "areaServed": "NL",
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Website",
+      "priceCurrency": "EUR",
+      "price": "695",
+      "description": "Professionele website vanaf €695 eenmalig + €50/mnd (excl. btw)."
+    },
+    {
+      "@type": "Offer",
+      "name": "AI-chatbot",
+      "priceCurrency": "EUR",
+      "price": "399",
+      "description": "AI-chatbot getraind op je menukaart en huisregels, vanaf €399 + €49/mnd (excl. btw)."
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -192,6 +228,16 @@
   </div>
 </section>
 
+<!-- ════════ ZELFBEHEER ════════ -->
+<section class="zelfbeheer">
+  <div class="zelfbeheer-inner reveal">
+    <div class="zelfbeheer-ic" data-icon="pencil"></div>
+    <h2>Nieuwe kaart? <em>Pas 'm zelf aan.</em></h2>
+    <p>Zit gewoon in je maandbedrag — geen factuur per wijziging. Jij houdt de regie over je eigen site, wij zorgen dat het altijd werkt, veilig en up-to-date. Dát is het verschil met een budgetbouwer.</p>
+    <a href="/contact" class="btn btn-orange btn-arrow btn-prominent">Plan een kennismaking</a>
+  </div>
+</section>
+
 <!-- ════════ STATS BAND (cijfers die meetellen) ════════ -->
 <section class="stats-band">
   <div class="stats-band-inner">
@@ -271,7 +317,7 @@
           <input class="roi-range" type="range" id="roiSpend" min="15" max="100" step="5" value="45" aria-label="Gemiddelde besteding per klant">
         </div>
 
-        <p class="roi-note">Schattingen op basis van branchegemiddelden (no-show-reductie 30%, telefoontijd −65%). Geen harde beloftes — werkelijke resultaten verschillen per bedrijf.</p>
+        <p class="roi-note"><strong>Schatting op basis van jouw eigen invoer — geen belofte, een rekensom.</strong> Gebaseerd op branchegemiddelden (no-show-reductie 30%, telefoontijd −65%). Werkelijke resultaten verschillen per bedrijf.</p>
       </div>
 
       <!-- RESULTAAT -->
@@ -302,8 +348,8 @@
 
         <div class="roi-reco">
           <div class="roi-reco-head"><span class="roi-reco-ic" data-icon="sparkles"></span> Past bij jou</div>
-          <div class="roi-reco-name" id="roiRecoName">Reserveringssysteem</div>
-          <div class="roi-reco-price" id="roiRecoPrice">vanaf €299</div>
+          <div class="roi-reco-name" id="roiRecoName">Website</div>
+          <div class="roi-reco-price" id="roiRecoPrice">vanaf €695 + €50/mnd</div>
           <div class="roi-reco-payback" id="roiPayback"></div>
         </div>
 
@@ -348,7 +394,7 @@
       <div class="over-effect-inner">
         <span class="over-effect-label">Wat het oplevert</span>
         <h3 class="over-effect-title">Digitaal werkt — <em>meetbaar</em>.</h3>
-        <p class="over-effect-sub">Een goede website, chatbot of reserveringssysteem is geen kostenpost. Het verdient zichzelf terug.</p>
+        <p class="over-effect-sub">Een goede website of AI-chatbot is geen kostenpost. Het verdient zichzelf terug.</p>
 
         <div class="over-effects">
           <div class="over-eff">
@@ -370,6 +416,42 @@
           <a href="/contact" class="btn btn-orange btn-arrow">Plan een gratis kennismaking</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FAQ ════════ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-head reveal">
+      <span class="section-eyebrow">Veelgestelde vragen</span>
+      <h2>Duidelijk, <em>zonder kleine lettertjes</em>.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>Wat zit er in het maandbedrag van €50?</summary>
+        <div class="faq-a">Hosting, updates, beveiliging, je zelfbeheer-admin én aanpassingen tot 1 uur per maand. Je site blijft draaien, veilig en up-to-date — zonder losse facturen.</div>
+      </details>
+      <details class="faq-item">
+        <summary>En als ik meer wil dan dat uurtje per maand?</summary>
+        <div class="faq-a">Technisch onderhoud zit in je maandbedrag. Groter werk of nieuwe content boven dat uur doen we voor €55/uur — altijd vooraf afgesproken, nooit een verrassing achteraf.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Zit ik ergens aan vast?</summary>
+        <div class="faq-a">De looptijd is 12 maanden, daarna maandelijks opzegbaar. Alle prijzen zijn exclusief btw.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Hoe snel staat mijn website live?</summary>
+        <div class="faq-a">Een Simpel-website staat live binnen 10 werkdagen nadat je alles compleet hebt aangeleverd (teksten, foto's, logo).</div>
+      </details>
+      <details class="faq-item">
+        <summary>Kan de chatbot ook op mijn bestaande website?</summary>
+        <div class="faq-a">Ja. Onze AI-chatbot plaatsen we net zo goed op je huidige site — je hoeft daarvoor geen nieuwe website bij ons te nemen.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Bouwen jullie ook een reserveringssysteem?</summary>
+        <div class="faq-a">Nee, we bouwen geen eigen reserveringssysteem. We integreren jouw systeem (Zenchef, Playtomic, Meet &amp; Play) netjes in je website, zodat gasten soepel boeken.</div>
+      </details>
     </div>
   </div>
 </section>

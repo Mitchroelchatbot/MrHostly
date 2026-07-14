@@ -732,6 +732,31 @@
   color: var(--muted);
 }
 
+/* ═══════════ ZELFBEHEER (differentiator) ═══════════ */
+.zelfbeheer { padding: 80px 32px; background: var(--cream); text-align: center; }
+.zelfbeheer-inner { max-width: 640px; margin: 0 auto; }
+.zelfbeheer-ic { width: 60px; height: 60px; margin: 0 auto 20px; border-radius: 16px; background: rgba(232,149,58,0.14); display: flex; align-items: center; justify-content: center; }
+.zelfbeheer-ic[data-icon] svg { width: 30px; height: 30px; color: var(--orange-deep); }
+.zelfbeheer h2 { font-family: var(--font-display); font-size: clamp(28px,3.6vw,40px); font-weight: 700; color: var(--navy); letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 14px; }
+.zelfbeheer h2 em { color: var(--orange); font-style: normal; }
+.zelfbeheer p { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 26px; }
+
+/* ═══════════ FAQ ═══════════ */
+.faq { padding: 90px 32px; background: var(--white); }
+.faq-inner { max-width: 760px; margin: 0 auto; }
+.faq-head { text-align: center; margin-bottom: 40px; }
+.faq-head .section-eyebrow { justify-content: center; display: inline-flex; }
+.faq-head h2 { font-family: var(--font-display); font-size: clamp(28px,3.6vw,40px); font-weight: 700; color: var(--navy); letter-spacing: -0.03em; line-height: 1.12; }
+.faq-head h2 em { color: var(--orange); font-style: normal; }
+.faq-item { border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; overflow: hidden; background: var(--white); }
+.faq-item summary { list-style: none; cursor: pointer; padding: 18px 22px; font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--navy); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: '+'; font-size: 22px; line-height: 1; color: var(--orange); font-weight: 400; flex: none; }
+.faq-item[open] summary::after { content: '−'; }
+.faq-item[open] summary { color: var(--orange-deep); }
+.faq-a { padding: 0 22px 20px; font-size: 15px; color: var(--muted); line-height: 1.7; }
+@media (max-width: 900px) { .zelfbeheer { padding: 56px 20px; } .faq { padding: 64px 20px; } }
+
 /* ═══════════ STATS BAND (cijfers die meetellen) ═══════════ */
 .stats-band {
   padding: 72px 32px;
