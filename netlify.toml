@@ -25,9 +25,15 @@
   to = "/chatbots"
   status = 301
   force = true
+# Reserveringen bestaat niet meer als los product → stuur door naar contact
+[[redirects]]
+  from = "/reserveringen"
+  to = "/contact"
+  status = 301
+  force = true
 [[redirects]]
   from = "/reserveringen.html"
-  to = "/reserveringen"
+  to = "/contact"
   status = 301
   force = true
 [[redirects]]
