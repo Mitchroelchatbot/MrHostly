@@ -144,9 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function recommend(total) {
-      if (total < 300)  return { name: 'Online pakket', price: 'vanaf €249', oneoff: 249, monthly: 0 };
-      if (total < 800)  return { name: 'Groei pakket',  price: 'vanaf €249 + €59/mnd', oneoff: 249, monthly: 59 };
-      return { name: 'Slim pakket', price: 'vanaf €499 + €129/mnd', oneoff: 499, monthly: 129 };
+      if (total < 250) return { name: 'FAQ-bot', price: '€149 eenmalig', oneoff: 149, monthly: 0 };
+      return { name: 'AI-chatbot', price: 'vanaf €399 + €49/mnd', oneoff: 399, monthly: 49 };
     }
 
     function update() {

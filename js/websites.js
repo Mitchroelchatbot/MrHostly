@@ -57,9 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function recommend(monthlyRevenue) {
     // Koppel verlies aan een passend website-pakket
-    if (monthlyRevenue < 600)  return { name: 'Online pakket', price: 'vanaf €695',   cost: 695 };
-    if (monthlyRevenue < 1800) return { name: 'Groei pakket',  price: 'vanaf €1.495', cost: 1495 };
-    return { name: 'Slim pakket', price: 'vanaf €2.495', cost: 2495 };
+    if (monthlyRevenue < 900) return { name: 'Simpel', price: '€695 + €50/mnd', cost: 695 };
+    return { name: 'Maatwerk', price: 'vanaf €1.295 + €50/mnd', cost: 1295 };
   }
 
   function update() {
