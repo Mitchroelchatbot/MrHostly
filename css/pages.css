@@ -343,6 +343,7 @@
 .blog-soon-tag { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); color: var(--navy); font-size: 10px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 50px; }
 
 /* ═══════════ TEAM (over-ons) ═══════════ */
+.team.solo { grid-template-columns: 1fr; max-width: 420px; }
 .team { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 720px; margin: 0 auto; }
 .tmember {
   background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 28px; text-align: center;
