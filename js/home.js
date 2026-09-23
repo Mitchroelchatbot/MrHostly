@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
   glow.className = 'cursor-glow';
   document.body.appendChild(glow);
 
-  const darkSections = document.querySelectorAll('.tool-section, .steps, .cta-band');
+  const darkSections = document.querySelectorAll('.hero-photo, .tool-section, .steps, .cta-band');
   let glowX = 0, glowY = 0, curX = 0, curY = 0, glowActive = false;
 
   document.addEventListener('mousemove', (e) => {

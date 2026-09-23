@@ -147,7 +147,7 @@
 
 .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .hero-btns-note {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: block; line-height: 1.9;
   margin-top: 14px;
   font-size: 13px; color: var(--muted);
 }
@@ -182,6 +182,34 @@
   margin-bottom: 2px;
   font-size: 14px;
   letter-spacing: -0.01em;
+}
+
+/* ── HERO met filmische sfeerfoto (donker) ── */
+.hero-photo { background: var(--navy-deep); }
+.hero-photo .hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-photo .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 60% center; }
+.hero-photo .hero-bg::after { content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10,23,48,0.94) 0%, rgba(10,23,48,0.82) 42%, rgba(10,23,48,0.55) 100%),
+    linear-gradient(0deg, rgba(10,23,48,0.75) 0%, transparent 35%); }
+.hero-photo .hero-glow-2, .hero-photo .hero-glow-3 { display: none; }
+.hero-photo .hero-glow-1 { opacity: 0.55; }
+.hero-photo .hero-slogan-top .blue { color: var(--white); }
+.hero-photo .hero-slogan-top .gold::after, .hero-photo .hero-title em::after { background: rgba(232,149,58,0.28); }
+.hero-photo .hero-badge { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); box-shadow: none; backdrop-filter: blur(6px); }
+.hero-photo .hero-badge strong { color: var(--white); }
+.hero-photo .hero-title { color: var(--white); }
+.hero-photo .hero-desc { color: rgba(255,255,255,0.8); }
+.hero-photo .hero-desc strong { color: var(--white); }
+.hero-photo .hero-btns-note { color: rgba(255,255,255,0.72); }
+.hero-photo .btn-wa { color: var(--white); border-color: rgba(255,255,255,0.35); }
+.hero-photo .btn-wa:hover { color: var(--white); border-color: #25D366; }
+.hero-photo .hero-trust { border-top-color: rgba(255,255,255,0.14); }
+.hero-photo .hero-trust-icons span { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.18); color: var(--orange); box-shadow: none; }
+.hero-photo .hero-trust-text { color: rgba(255,255,255,0.7); }
+.hero-photo .hero-trust-text strong { color: var(--white); }
+@media (max-width: 900px) {
+  .hero-photo .hero-bg::after { background: linear-gradient(180deg, rgba(10,23,48,0.9) 0%, rgba(10,23,48,0.84) 55%, rgba(10,23,48,0.92) 100%); }
 }
 
 /* ── HERO SHOWCASE rechts ── */
@@ -749,6 +777,13 @@
 .zelfbeheer h2 { font-family: var(--font-display); font-size: clamp(28px,3.6vw,40px); font-weight: 700; color: var(--navy); letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 14px; }
 .zelfbeheer h2 em { color: var(--orange); font-style: normal; }
 .zelfbeheer p { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 26px; }
+
+/* Categoriekaarten met sfeerfoto bovenin */
+.dienst-photo { margin: -32px -28px 0; height: 180px; overflow: hidden; position: relative; }
+.dienst-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.dienst-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10,23,48,0.35)); }
+.dienst:hover .dienst-photo img { transform: scale(1.05); }
+.dienst-photo + .dienst-icon { position: relative; z-index: 1; margin-top: -27px; background: var(--white); box-shadow: 0 6px 18px rgba(10,23,48,0.14); }
 
 /* ═══════════ WAT WE DOEN — 3 categorieën ═══════════ */
 .diensten-grid.three { grid-template-columns: repeat(3, 1fr); max-width: none; }
