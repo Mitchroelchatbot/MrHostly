@@ -78,6 +78,10 @@ nav.main-nav.scrolled {
   transition: all 0.2s; cursor: pointer;
 }
 .nav-links a:hover { background: var(--cream); color: var(--navy); }
+/* Langere categorielabels: tussen tablet en breed scherm iets compacter */
+@media (max-width: 1120px) and (min-width: 901px) {
+  .nav-links a { padding: 8px 10px; font-size: 13.5px; }
+}
 .nav-links a.active { color: var(--navy); font-weight: 600; }
 .nav-links a.nav-cta {
   background: var(--navy); color: var(--white);
@@ -142,6 +146,14 @@ nav.main-nav.scrolled {
 .btn-outline:hover { background: var(--navy); color: var(--white); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--navy); padding: 14px 20px; font-weight: 500; }
 .btn-ghost:hover { color: var(--orange); }
+/* WhatsApp — laagdrempelige tweede knop naast de hoofd-CTA */
+.btn-wa { background: transparent; color: var(--navy); border: 1.5px solid rgba(15,32,68,0.22); padding: 12.5px 22px; }
+.btn-wa:hover { border-color: #25D366; color: var(--navy); transform: translateY(-2px); }
+.btn-wa [data-icon] { display: inline-flex; width: 18px; height: 18px; color: #25D366; }
+.btn-wa [data-icon] svg { width: 18px; height: 18px; }
+.page-hero .btn-wa, .hero-dark .btn-wa { color: var(--white); border-color: rgba(255,255,255,0.35); }
+.page-hero .btn-wa:hover { color: var(--white); border-color: #25D366; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; }
 .btn-arrow::after { content: '→'; transition: transform 0.25s; }
 .btn-arrow:hover::after { transform: translateX(4px); }
 .btn-prominent {

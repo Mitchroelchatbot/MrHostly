@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const AUTOMATION = 0.65, HOURLY = 25, CAPTURE = 0.5, WEEKS = 4.33;
     const BRANCHES = {
       horeca:  { hours: 12, after: 30, value: 85 },
-      retail:  { hours: 8,  after: 20, value: 60 },
       leisure: { hours: 10, after: 25, value: 55 }
     };
     let branch = 'horeca';

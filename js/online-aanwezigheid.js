@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Conservatieve conversiefactor per branche (deel van de afhakers dat klant was geworden)
   const BRANCHES = {
     horeca:  { conv: 0.18, search: 600, drop: 35, spend: 45 },
-    retail:  { conv: 0.16, search: 800, drop: 30, spend: 60 },
     leisure: { conv: 0.20, search: 400, drop: 30, spend: 40 }
   };
   let branch = 'horeca';

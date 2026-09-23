@@ -16,24 +16,51 @@
   status = 301
   force = true
 [[redirects]]
+  from = "/online-aanwezigheid.html"
+  to = "/online-aanwezigheid"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ai-automatisering.html"
+  to = "/ai-automatisering"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/maatwerk.html"
+  to = "/maatwerk"
+  status = 301
+  force = true
+
+# Oude dienst-URL's → nieuwe categoriepagina's (behoud van links en SEO)
+[[redirects]]
+  from = "/websites"
+  to = "/online-aanwezigheid"
+  status = 301
+  force = true
+[[redirects]]
   from = "/websites.html"
-  to = "/websites"
+  to = "/online-aanwezigheid"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/chatbots"
+  to = "/ai-automatisering"
   status = 301
   force = true
 [[redirects]]
   from = "/chatbots.html"
-  to = "/chatbots"
+  to = "/ai-automatisering"
   status = 301
   force = true
-# Reserveringen bestaat niet meer als los product → stuur door naar contact
+# Reserverings- en bestelpagina's vallen onder Online aanwezigheid
 [[redirects]]
   from = "/reserveringen"
-  to = "/contact"
+  to = "/online-aanwezigheid"
   status = 301
   force = true
 [[redirects]]
   from = "/reserveringen.html"
-  to = "/contact"
+  to = "/online-aanwezigheid"
   status = 301
   force = true
 [[redirects]]
