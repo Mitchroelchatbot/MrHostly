@@ -79,6 +79,56 @@
   status = 301
   force = true
 [[redirects]]
+  from = "/blog-chatgpt-restaurant.html"
+  to = "/blog-chatgpt-restaurant"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-foute-openingstijden.html"
+  to = "/blog-foute-openingstijden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-menukaart-pdf.html"
+  to = "/blog-menukaart-pdf"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-personeelstekort-telefoon.html"
+  to = "/blog-personeelstekort-telefoon"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-whatsapp-horeca.html"
+  to = "/blog-whatsapp-horeca"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-reviews-online-reserveren.html"
+  to = "/blog-reviews-online-reserveren"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-cadeaubonnen-online.html"
+  to = "/blog-cadeaubonnen-online"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-allergenen-online.html"
+  to = "/blog-allergenen-online"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-engelstalige-gasten-eindhoven.html"
+  to = "/blog-engelstalige-gasten-eindhoven"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog-trage-website.html"
+  to = "/blog-trage-website"
+  status = 301
+  force = true
+[[redirects]]
   from = "/contact.html"
   to = "/contact"
   status = 301
