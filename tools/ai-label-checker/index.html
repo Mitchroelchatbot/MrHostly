@@ -48,6 +48,7 @@
 .tool-page .drop-icon svg{width:26px;height:26px;stroke:var(--orange)}
 .tool-page #drop strong{display:block;font-size:18px;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em}
 .tool-page #drop span{font-size:14px;color:var(--muted)}
+.tool-page .drop-msg{margin-top:14px;font-size:14px;font-weight:600;color:var(--orange-deep)}
 .tool-page .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font:600 15px var(--font);border:0;cursor:pointer;transition:all .25s ease;white-space:nowrap}
 .tool-page .btn-orange{background:var(--orange);color:var(--ink);margin-top:18px}
 .tool-page .btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);padding:9px 18px;font-size:14px}
@@ -179,6 +180,7 @@
       <span>JPG, PNG, WebP of HEIC · meerdere tegelijk = één post</span><br>
       <span class="btn btn-orange">Kies afbeeldingen</span>
       <input id="file" type="file" accept="image/*,.heic,.heif" multiple hidden>
+      <p class="drop-msg" id="dropMsg" role="status" hidden></p>
     </label>
   </div>
 </header>
@@ -480,9 +482,39 @@ const drop=$("drop"), input=$("file");
 input.addEventListener("change",e=>{ handle([...e.target.files]); input.value=""; });
 ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));
 ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
-drop.addEventListener("drop",e=>handle([...e.dataTransfer.files]));
-document.addEventListener("dragover",e=>e.preventDefault());
-document.addEventListener("drop",e=>{ e.preventDefault(); if(!drop.contains(e.target)) handle([...e.dataTransfer.files]); });
+/* Slepen vanuit Verkenner/Finder: losse bestanden én hele mappen.
+   De lijst uit dataTransfer moet direct in het drop-event gelezen worden; daarna is hij leeg. */
+async function droppedFiles(dt){
+  const loose=[...(dt.files||[])], entries=[], out=[];
+  for(const it of [...(dt.items||[])]){
+    if(it.kind!=="file") continue;
+    const en=it.webkitGetAsEntry ? it.webkitGetAsEntry() : null;
+    if(en) entries.push(en); else { const f=it.getAsFile(); if(f) out.push(f); }
+  }
+  const walk=async en=>{
+    if(en.isFile){ try{ out.push(await new Promise((ok,fail)=>en.file(ok,fail))); }catch(e){} }
+    else if(en.isDirectory){
+      const reader=en.createReader(); let batch;
+      do{ batch=await new Promise((ok,fail)=>reader.readEntries(ok,fail)).catch(()=>[]); for(const c of batch) await walk(c); }while(batch.length);
+    }
+  };
+  for(const en of entries) await walk(en);
+  return out.length ? out : loose;
+}
+const isImage=f=>f.type.startsWith("image/")||/\.(heic|heif|avif|webp|jpe?g|png|gif)$/i.test(f.name);
+const dropMsg=t=>{ const m=$("dropMsg"); m.textContent=t||""; m.hidden=!t; };
+document.addEventListener("dragover",e=>{ e.preventDefault(); if(e.dataTransfer) e.dataTransfer.dropEffect="copy"; });
+document.addEventListener("drop",async e=>{
+  e.preventDefault(); drop.classList.remove("over");
+  const files=await droppedFiles(e.dataTransfer), imgs=files.filter(isImage);
+  if(!imgs.length){
+    dropMsg(files.length ? "Daar zat geen afbeelding tussen. Sleep JPG-, PNG-, WebP- of HEIC-bestanden."
+                         : "Je computer gaf de bestanden niet door aan de browser. Klik op ‘Kies afbeeldingen’, dat werkt altijd.");
+    return;
+  }
+  dropMsg(""); handle(imgs);
+});
+input.addEventListener("change",()=>dropMsg(""));
 $("clear").addEventListener("click",()=>{ items.forEach(i=>URL.revokeObjectURL(i.url)); items.length=0; render(); window.scrollTo({top:0,behavior:"smooth"}); });
 </script>
 <script>
