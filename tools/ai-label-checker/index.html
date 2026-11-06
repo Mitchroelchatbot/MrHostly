@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Label Checker: krijgt je Instagram-post een AI-label? — Mr Hostly</title>
+<meta name="description" content="Krijgt je Instagram- of Facebook-post een AI info-label van Meta? Check gratis vóór je post welke beelden gelabeld worden. Niets wordt geüpload.">
+<link rel="canonical" href="https://mrhostly.nl/tools/ai-label-checker/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="Mr Hostly">
+<meta property="og:title" content="Gratis AI Label Checker voor Instagram en Facebook">
+<meta property="og:description" content="Check vóór je post of Meta er een AI info-label op zet. Gratis, niets wordt geüpload.">
+<meta property="og:url" content="https://mrhostly.nl/tools/ai-label-checker/">
+<meta property="og:image" content="https://mrhostly.nl/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gratis AI Label Checker voor Instagram en Facebook">
+<meta name="twitter:description" content="Check vóór je post of Meta er een AI info-label op zet. Gratis, niets wordt geüpload.">
+<meta name="twitter:image" content="https://mrhostly.nl/images/og-default.jpg">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-96x96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0F2044">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/tools.css">
+<style>
+.tool-page .hero-inner{max-width:1100px;margin:0 auto;padding:56px 24px 48px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.tool-page .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--orange-deep);background:var(--orange-soft);padding:6px 14px;border-radius:50px;margin-bottom:18px}
+.tool-page h1{font-size:clamp(32px,4.4vw,50px);font-weight:700;line-height:1.05;letter-spacing:-.038em;color:var(--navy);margin-bottom:18px}
+.tool-page .hero p{font-size:17px;color:var(--muted);max-width:520px}
+.tool-page .hero p strong{color:var(--navy)}
+.tool-page .trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;list-style:none}
+.tool-page .trust li{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:50px;padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--navy)}
+.tool-page .trust li::before{content:'✓';color:var(--orange);font-weight:800}
+.tool-page #drop{display:block;background:var(--cream);border:2px dashed #CBD2DE;border-radius:20px;padding:40px 24px;text-align:center;cursor:pointer;transition:all .25s ease}
+.tool-page #drop:hover,.tool-page #drop.over{border-color:var(--orange);background:var(--orange-soft)}
+.tool-page .drop-icon{width:56px;height:56px;border-radius:16px;background:var(--navy);display:grid;place-items:center;margin:0 auto 16px}
+.tool-page .drop-icon svg{width:26px;height:26px;stroke:var(--orange)}
+.tool-page #drop strong{display:block;font-size:18px;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em}
+.tool-page #drop span{font-size:14px;color:var(--muted)}
+.tool-page .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font:600 15px var(--font);border:0;cursor:pointer;transition:all .25s ease;white-space:nowrap}
+.tool-page .btn-orange{background:var(--orange);color:var(--ink);margin-top:18px}
+.tool-page .btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);padding:9px 18px;font-size:14px}
+.tool-page .wrap{max-width:1100px;margin:0 auto;padding:40px 24px 64px}
+.tool-page #results{display:none}
+.tool-page .summary{border-radius:20px;padding:26px 28px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;margin-bottom:28px;background:var(--navy);color:var(--white);position:relative;overflow:hidden}
+.tool-page .summary::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--orange)}
+.tool-page .summary.ok::before{background:#32D583}
+.tool-page .summary .dot{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;font-weight:800}
+.tool-page .summary.bad .dot{background:var(--orange);color:var(--navy)}
+.tool-page .summary.warn .dot{background:var(--orange-soft);color:var(--orange-deep)}
+.tool-page .summary.ok .dot{background:#32D583;color:var(--navy)}
+.tool-page .summary h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.tool-page .summary p{color:rgba(255,255,255,.75);font-size:15px}
+.tool-page .split{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tool-page .split div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px}
+.tool-page .split h3{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:6px}
+.tool-page .split ul{list-style:none;font-size:13.5px;color:rgba(255,255,255,.85)}
+.tool-page .split li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tool-page .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}
+.tool-page .bar h2{font-size:20px;color:var(--navy);letter-spacing:-.02em}
+.tool-page .bar .actions{display:flex;gap:8px}
+.tool-page .grid{display:grid;gap:14px}
+.tool-page .item{display:grid;grid-template-columns:112px 1fr;gap:20px;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:16px;transition:box-shadow .25s}
+.tool-page .item:hover{box-shadow:0 8px 24px rgba(10,23,48,.08)}
+.tool-page .item img{width:112px;height:112px;object-fit:cover;border-radius:12px;background:var(--border-soft)}
+.tool-page .item-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:6px}
+.tool-page .name{font-weight:700;color:var(--navy);word-break:break-all;font-size:15px}
+.tool-page .badge{font-size:12px;font-weight:700;padding:4px 11px;border-radius:50px;white-space:nowrap}
+.tool-page .b-ok{background:var(--green-soft);color:var(--green)}
+.tool-page .b-warn{background:var(--orange-soft);color:var(--orange-deep)}
+.tool-page .b-bad{background:var(--red-soft);color:var(--red)}
+.tool-page .advice{font-size:14.5px;color:var(--text)}
+.tool-page .signals{list-style:none;margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.tool-page .signals li{font-size:12.5px;background:var(--cream);border:1px solid var(--border-soft);border-radius:8px;padding:4px 10px;color:var(--muted)}
+.tool-page .signals b{color:var(--navy);font-weight:600}
+.tool-page .remove{margin-left:auto;background:none;border:0;color:var(--muted);cursor:pointer;font:600 13px var(--font);padding:2px 6px;border-radius:6px}
+.tool-page .remove:hover{color:var(--red);background:var(--red-soft)}
+.tool-page .info{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.tool-page .faq{margin-top:40px}
+.tool-page .faq h2{font-size:24px;color:var(--navy);letter-spacing:-.025em;margin-bottom:14px}
+.tool-page .faq h2 em{font-style:normal;color:var(--orange)}
+.tool-page details{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+.tool-page summary{cursor:pointer;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:12px}
+.tool-page summary::-webkit-details-marker{display:none}
+.tool-page summary::after{content:'+';color:var(--orange);font-weight:800;font-size:18px;line-height:1}
+.tool-page details[open] summary::after{content:'–'}
+.tool-page details p{margin-top:10px;font-size:14.5px;color:var(--muted)}
+.tool-page .lead{margin-top:28px;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:28px;display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:center;box-shadow:0 12px 32px rgba(10,23,48,.06);border-left:5px solid var(--orange)}
+.tool-page .lead-kicker{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-deep)}
+.tool-page .lead h2{font-size:24px;color:var(--navy);letter-spacing:-.025em;line-height:1.15;margin:6px 0 8px}
+.tool-page .lead p{font-size:15px;color:var(--muted)}
+.tool-page .lead-points{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tool-page .lead-points li{font-size:13px;font-weight:600;color:var(--navy);background:var(--cream);border-radius:50px;padding:5px 12px}
+.tool-page .lead-points li::before{content:'✓ ';color:var(--orange)}
+.tool-page .lead-btns{display:flex;flex-direction:column;gap:10px}
+.tool-page .lead-btns .btn{justify-content:center;text-decoration:none}
+.tool-page .btn-orange-solid{background:var(--orange);color:var(--ink)}
+.tool-page .btn-orange-solid:hover{background:var(--orange-deep);color:var(--white);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,149,58,.35)}
+.tool-page .btn-wa{background:var(--navy);color:var(--white)}
+.tool-page .btn-wa:hover{background:var(--navy-light);transform:translateY(-2px)}
+.tool-page .lead-note{font-size:12.5px;color:var(--muted);text-align:center}
+.tool-page .band .btn{text-decoration:none}
+@media (max-width:820px){
+  .tool-page .lead{grid-template-columns:1fr}
+}
+.tool-page .other svg{flex:none}
+@media (max-width:820px){
+  .tool-page .hero-inner{grid-template-columns:1fr;gap:32px;padding:40px 20px}
+  .tool-page .info{grid-template-columns:1fr}
+  .tool-page .split{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .tool-page .item{grid-template-columns:72px 1fr;gap:14px}
+  .tool-page .item img{width:72px;height:72px}
+  .tool-page .summary{grid-template-columns:1fr;padding:22px}
+  .tool-page .bar{flex-direction:column;align-items:flex-start}
+}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "MrHostly AI Label Checker", "url": "https://mrhostly.nl/tools/ai-label-checker/", "description": "Gratis tool die in de browser controleert of Meta een AI info-label op je Instagram- of Facebook-post zet, en adviseert AI-beelden en echte foto's te splitsen.", "applicationCategory": "BusinessApplication", "operatingSystem": "Alle (in de browser)", "browserRequirements": "Vereist JavaScript", "inLanguage": "nl-NL", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "provider": {"@type": "Organization", "name": "Mr Hostly", "url": "https://mrhostly.nl/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Waar kijkt de checker naar?", "acceptedAnswer": {"@type": "Answer", "text": "Naar de metadata die Meta ook uitleest: Content Credentials (C2PA) van onder meer Adobe, OpenAI, Google en Microsoft, het IPTC-veld dat aangeeft of een beeld AI-gemaakt of AI-bewerkt is, en sporen van AI-tools in EXIF, XMP en PNG-tekstvelden."}}, {"@type": "Question", "name": "Kan ik het AI-label op Instagram weghalen?", "acceptedAnswer": {"@type": "Answer", "text": "Een label dat klopt, hoort erop. Wat je wél kunt voorkomen: dat je echte foto's onterecht meegelabeld worden. Eén AI-beeld labelt namelijk de hele post. Splits je post dus: je echte foto's in de ene post, AI-beelden in een eigen post. Komt een echte foto toch oranje uit? Bewerk hem dan opnieuw zonder AI-functies."}}, {"@type": "Question", "name": "Is \"geen AI-signalen\" een garantie?", "acceptedAnswer": {"@type": "Answer", "text": "Nee. Sommige AI-tools zetten ook een onzichtbaar watermerk in de pixels zelf, en dat kan geen browser-tool uitlezen. Een AI-beeld kan dus groen uitkomen en toch gelabeld worden. Gebruik de uitslag als indicatie."}}, {"@type": "Question", "name": "Mijn echte foto komt oranje uit. Hoe kan dat?", "acceptedAnswer": {"@type": "Answer", "text": "Dan is hij bewerkt met een AI-functie: de AI-gum op je telefoon (Samsung, Google, Apple), generative fill in Photoshop of een AI-effect in Canva. Bewerk je de foto zonder die functies, dan blijft hij schoon."}}, {"@type": "Question", "name": "Worden mijn foto's ergens opgeslagen?", "acceptedAnswer": {"@type": "Answer", "text": "Nee. De check gebeurt volledig in je eigen browser. Je beelden verlaten je apparaat niet."}}, {"@type": "Question", "name": "Wie maakt deze tool?", "acceptedAnswer": {"@type": "Answer", "text": "MrHostly uit Eindhoven. Wij bouwen websites, reserveringen, bestellingen, AI-chatbots en automatiseringen voor horeca en leisure. Deze checker is gratis, zonder account."}}]}</script>
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand"><span class="mr">Mr</span><span class="hostly">Hostly</span></a>
+    <ul class="nav-links">
+      <li><a href="/online-aanwezigheid">Online aanwezigheid</a></li>
+      <li><a href="/ai-automatisering">AI &amp; automatisering</a></li>
+      <li><a href="/maatwerk">Maatwerk</a></li>
+      <li><a href="/over-ons">Over ons</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/tools/">Gratis tools</a></li>
+      <li><a href="/contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <a class="nav-tel" href="https://wa.me/31641806311" target="_blank" rel="noopener" aria-label="WhatsApp ons"><span data-icon="message-circle"></span></a>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Home</a>
+    <a href="/online-aanwezigheid">Online aanwezigheid</a>
+    <a href="/ai-automatisering">AI &amp; automatisering</a>
+    <a href="/maatwerk">Maatwerk</a>
+    <a href="/over-ons">Over ons</a>
+    <a href="/blog">Blog</a>
+    <a href="/tools/">Gratis tools</a>
+    <a href="/contact" class="mob-cta">Contact</a>
+  </div>
+</nav>
+
+<div class="tool-page">
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">Gratis tool voor horeca &amp; leisure</span>
+      <h1>Weet vóór je post of Meta er een <em>AI-label</em> op plakt.</h1>
+      <p>Sleep de beelden van je post erin. Je ziet direct welke foto's AI-sporen bevatten en of je <strong>hele post</strong> een "AI info"-label krijgt. Zo houd je je echte foto's schoon.</p>
+      <ul class="trust">
+        <li>Niets wordt geüpload</li>
+        <li>Instagram &amp; Facebook</li>
+        <li>Binnen een seconde</li>
+      </ul>
+    </div>
+    <label id="drop">
+      <div class="drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <strong>Sleep je postbeelden hierheen</strong>
+      <span>JPG, PNG, WebP of HEIC · meerdere tegelijk = één post</span><br>
+      <span class="btn btn-orange">Kies afbeeldingen</span>
+      <input id="file" type="file" accept="image/*,.heic,.heif" multiple hidden>
+    </label>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="results">
+    <div class="summary" id="summary">
+      <div class="dot" id="sumDot"></div>
+      <div>
+        <h2 id="sumTitle"></h2>
+        <p id="sumText"></p>
+        <div class="split" id="split" hidden>
+          <div><h3>Post 1 · echte foto's</h3><ul id="splitClean"></ul></div>
+          <div><h3>Post 2 · AI-beelden</h3><ul id="splitAI"></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="bar">
+      <h2 id="count"></h2>
+      <div class="actions">
+        <label class="btn btn-outline" for="file">+ Beeld toevoegen</label>
+        <button class="btn btn-outline" id="clear" type="button">Nieuwe post</button>
+      </div>
+    </div>
+    <div class="grid" id="list"></div>
+
+    <div class="lead" id="lead">
+      <div>
+        <span class="lead-kicker">Van MrHostly</span>
+        <h2 id="leadTitle">Geen gedoe meer met je socials?</h2>
+        <p id="leadText">Wij zetten je posts, website en online reserveringen zo neer dat ze voor je werken. Gebouwd door iemand die de zaak van binnen kent.</p>
+        <ul class="lead-points"><li>Gratis kennismaking</li><li>Vaste prijs vooraf</li><li>Uit Eindhoven</li></ul>
+      </div>
+      <div class="lead-btns">
+        <a class="btn btn-orange-solid" href="/contact">Plan een gratis kennismaking</a>
+        <a class="btn btn-wa" id="waBtn" href="https://wa.me/31641806311" target="_blank" rel="noopener">WhatsApp ons</a>
+        <span class="lead-note">Of app ons: 06 41 80 63 11</span>
+      </div>
+    </div>
+
+    <form class="tool-mail" id="toolMail" action="https://formspree.io/f/mljdnopg" method="POST" novalidate>
+      <h3>Uitslag in je mailbox?</h3>
+      <p>Laat je gegevens achter, dan sturen we je de uitslag van deze post. Je beelden zelf versturen we niet.</p>
+      <input type="hidden" name="_subject" value="Uitslag AI Label Checker via mrhostly.nl">
+      <input type="hidden" name="tool" value="AI Label Checker">
+      <div class="hp" aria-hidden="true"><label for="tm-gotcha">Laat leeg</label><input type="text" id="tm-gotcha" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+      <div class="tool-mail-row">
+        <div><label for="tm-naam">Naam</label><input type="text" id="tm-naam" name="naam" autocomplete="name" placeholder="Je naam"></div>
+        <div><label for="tm-zaak">Zaak</label><input type="text" id="tm-zaak" name="zaak" autocomplete="organization" placeholder="Naam van je zaak"></div>
+        <div><label for="tm-email">E-mail</label><input type="email" id="tm-email" name="email" autocomplete="email" placeholder="jij@jouwzaak.nl" required></div>
+        <button class="btn tool-mail-send" type="submit">Stuur me de uitslag</button>
+      </div>
+      <p class="tool-mail-note">We gebruiken je gegevens alleen om je de uitslag te sturen en eventueel te reageren. Geen nieuwsbrief.</p>
+      <p class="tool-mail-status" id="toolMailStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section class="info">
+    <div class="card"><div class="num">1</div><h3>Check je post</h3><p>Sleep alle beelden die je samen wilt posten erin, net zoals in een carrousel.</p></div>
+    <div class="card"><div class="num">2</div><h3>Splits AI en echt</h3><p>Eén AI-beeld labelt de hele post. Zet AI-posters dus in een eigen post.</p></div>
+    <div class="card"><div class="num">3</div><h3>Check je bewerkingen</h3><p>Oranje bij een echte foto? Dan zit er een AI-bewerking in, zoals de AI-gum of generative fill.</p></div>
+  </section>
+
+  <section class="faq">
+    <h2>Hoe werkt <em>de checker</em>?</h2>
+    <details><summary>Waar kijkt de checker naar?</summary>
+      <p>Naar de metadata die Meta ook uitleest: Content Credentials (C2PA) van onder meer Adobe, OpenAI, Google en Microsoft, het IPTC-veld dat aangeeft of een beeld AI-gemaakt of AI-bewerkt is, en sporen van AI-tools in EXIF, XMP en PNG-tekstvelden.</p></details>
+    <details><summary>Kan ik het AI-label op Instagram weghalen?</summary>
+      <p>Een label dat klopt, hoort erop. Wat je wél kunt voorkomen: dat je echte foto's onterecht meegelabeld worden. Eén AI-beeld labelt namelijk de hele post. Splits je post dus: je echte foto's in de ene post, AI-beelden in een eigen post. Komt een echte foto toch oranje uit? Bewerk hem dan opnieuw zonder AI-functies.</p></details>
+    <details><summary>Is "geen AI-signalen" een garantie?</summary>
+      <p>Nee. Sommige AI-tools zetten ook een onzichtbaar watermerk in de pixels zelf, en dat kan geen browser-tool uitlezen. Een AI-beeld kan dus groen uitkomen en toch gelabeld worden. Gebruik de uitslag als indicatie.</p></details>
+    <details><summary>Mijn echte foto komt oranje uit. Hoe kan dat?</summary>
+      <p>Dan is hij bewerkt met een AI-functie: de AI-gum op je telefoon (Samsung, Google, Apple), generative fill in Photoshop of een AI-effect in Canva. Bewerk je de foto zonder die functies, dan blijft hij schoon.</p></details>
+    <details><summary>Worden mijn foto's ergens opgeslagen?</summary>
+      <p>Nee. De check gebeurt volledig in je eigen browser. Je beelden verlaten je apparaat niet.</p></details>
+    <details><summary>Wie maakt deze tool?</summary>
+      <p>MrHostly uit Eindhoven. Wij bouwen websites, reserveringen, bestellingen, AI-chatbots en automatiseringen voor horeca en leisure. Deze checker is gratis, zonder account.</p></details>
+  </section>
+
+  <section class="band">
+    <div>
+      <h2>Liever bezig met je gasten dan met <em>je socials</em>?</h2>
+      <p>Wij regelen je website, reserveringen en online zichtbaarheid. Vaste prijs vooraf, geen gedoe.</p>
+    </div>
+    <a class="btn btn-orange-solid" href="/contact">Plan een gratis kennismaking →</a>
+  </section>
+
+  <a class="other" href="/tools/noshow-calculator/">
+    <svg width="40" height="40" viewBox="0 0 800 800" aria-hidden="true"><rect width="800" height="800" rx="160" fill="#0F2044"/><path fill="#E8953A" d="M238 199h84v402h-84zM479 199h84v402h-84zM238 372h325v74H238z"/></svg>
+    <div><b>Ook gratis: de No-show Calculator</b><br><span>Reken uit wat lege tafels je zaak per jaar kosten.</span></div>
+    <span class="arrow">→</span>
+  </a>
+</main>
+
+</div>
+
+<footer class="main-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span class="mr">Mr</span><span class="hostly">Hostly</span></div>
+        <p>Slimme digitale oplossingen voor horeca &amp; leisure. Vanuit Eindhoven, voor heel Nederland.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Diensten</h4>
+        <ul>
+          <li><a href="/online-aanwezigheid">Online aanwezigheid</a></li>
+          <li><a href="/ai-automatisering">AI &amp; automatisering</a></li>
+          <li><a href="/maatwerk">Maatwerk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Bedrijf</h4>
+        <ul>
+          <li><a href="/over-ons">Over ons</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/tools/">Gratis tools</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>Eindhoven, NL</li>
+          <li><a href="mailto:info@mrhostly.nl">info@mrhostly.nl</a></li>
+          <li><a href="/contact">Contactformulier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Mr Hostly · KvK · BTW</span>
+      <div class="footer-social">
+        <a aria-label="LinkedIn">in</a>
+        <a aria-label="Instagram">ig</a>
+        <a aria-label="Facebook">fb</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Metadata uit het bestand halen (alleen headers, niet de beelddata) ── */
+const latin1 = u8 => { let s=""; for(let i=0;i<u8.length;i+=0x8000) s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000)); return s; };
+
+function metadataText(buf){
+  const u8 = new Uint8Array(buf), dv = new DataView(buf), parts = [];
+  // JPEG: alle APPn/COM-segmenten tot de start of scan
+  if(u8[0]===0xFF && u8[1]===0xD8){
+    let p=2;
+    while(p+4<=u8.length && u8[p]===0xFF){
+      const m=u8[p+1]; if(m===0xDA||m===0xD9) break;
+      if(m===0xFF){p++;continue}
+      const len=dv.getUint16(p+2);
+      if((m>=0xE0&&m<=0xEF)||m===0xFE) parts.push(u8.subarray(p+4,p+2+len));
+      p+=2+len;
+    }
+    return latin1(concat(parts));
+  }
+  // PNG: alle chunks behalve beelddata
+  if(u8[0]===0x89 && u8[1]===0x50 && u8[2]===0x4E && u8[3]===0x47){
+    let p=8;
+    while(p+8<=u8.length){
+      const len=dv.getUint32(p), type=latin1(u8.subarray(p+4,p+8));
+      if(type!=="IDAT") parts.push(u8.subarray(p+4,Math.min(p+8+len,u8.length)));
+      if(type==="IEND") break; p+=12+len;
+    }
+    return latin1(concat(parts));
+  }
+  // WebP: alle RIFF-chunks behalve VP8/VP8L/ALPH
+  if(latin1(u8.subarray(0,4))==="RIFF" && latin1(u8.subarray(8,12))==="WEBP"){
+    let p=12;
+    while(p+8<=u8.length){
+      const type=latin1(u8.subarray(p,p+4)), len=dv.getUint32(p+4,true);
+      if(!/^(VP8 |VP8L|ALPH|ANMF)$/.test(type)) parts.push(u8.subarray(p,Math.min(p+8+len,u8.length)));
+      p+=8+len+(len&1);
+    }
+    return latin1(concat(parts));
+  }
+  // HEIC/AVIF/overig: begin en eind van het bestand
+  const H=512*1024;
+  return latin1(u8.subarray(0,H)) + (u8.length>H ? latin1(u8.subarray(Math.max(H,u8.length-H))) : "");
+}
+function concat(arr){ const n=arr.reduce((a,b)=>a+b.length,0), out=new Uint8Array(n); let o=0; for(const a of arr){out.set(a,o);o+=a.length} return out; }
+
+/* ── Analyse ── */
+const AI_TOOLS = [
+  [/adobe firefly|\bfirefly\b/i,"Adobe Firefly",2],[/dall[-·\s]?e/i,"DALL·E",2],[/\bopenai\b/i,"OpenAI",2],[/chatgpt/i,"ChatGPT",2],
+  [/midjourney/i,"Midjourney",2],[/stable diffusion|stability\.ai|stabilityai/i,"Stable Diffusion",2],[/comfyui/i,"ComfyUI",2],
+  [/novelai/i,"NovelAI",2],[/\bimagen\b/i,"Google Imagen",2],[/\bgemini\b/i,"Google Gemini",2],[/synthid/i,"Google SynthID",2],
+  [/bing image creator/i,"Bing Image Creator",2],[/microsoft designer/i,"Microsoft Designer",2],[/meta ai|imagine with meta/i,"Meta AI",2],
+  [/ideogram/i,"Ideogram",2],[/leonardo\.ai|leonardo ai/i,"Leonardo.ai",2],[/black forest labs|\bflux\.?1?\b/i,"Flux",2],[/\bgrok\b|\bxai\b/i,"Grok",2],
+  [/runway(ml)?/i,"Runway",2],[/magic media/i,"Canva Magic Media",2],[/dream studio|dreamstudio/i,"DreamStudio",2],
+  [/generative fill/i,"Photoshop Generative Fill",1],[/generative expand/i,"Photoshop Generative Expand",1],[/canva ai|magic edit/i,"Canva AI-bewerking",1],
+  [/galaxy ai|generative edit/i,"Samsung AI-bewerking",1],[/magic editor|magic eraser/i,"Google AI-bewerking",1],[/clean ?up/i,"Apple Clean Up",1]
+];
+const EDIT_TOOLS = [[/photoshop/i,"Photoshop"],[/lightroom/i,"Lightroom"],[/\bcanva\b/i,"Canva"],[/snapseed/i,"Snapseed"],[/\bgimp\b/i,"GIMP"],[/affinity/i,"Affinity"],[/pixelmator/i,"Pixelmator"],[/picsart/i,"Picsart"]];
+
+function analyse(t){
+  const sig=[]; let level=0;
+  const c2pa = /c2pa/i.test(t) && (/jumb|jumd|caBX/.test(t) || /c2pa\.(claim|actions|manifest|assertions|hash)/i.test(t));
+  if(c2pa){ sig.push(["Content Credentials","aanwezig"]); level=Math.max(level,1); }
+  if(/compositeWithTrainedAlgorithmicMedia/i.test(t)){ sig.push(["Bron","echte foto + AI-bewerking"]); level=Math.max(level,1); }
+  else if(/trainedAlgorithmicMedia/i.test(t)){ sig.push(["Bron","volledig AI-gemaakt"]); level=2; }
+  if(/compositeSynthetic/i.test(t)){ sig.push(["Bron","synthetische compositie"]); level=Math.max(level,1); }
+  if(/digitalCapture/i.test(t) && level===0) sig.push(["Bron","camera-opname"]);
+  if(/c2pa\.created/i.test(t) && /trainedAlgorithmicMedia/i.test(t)) level=2;
+
+  const tools=new Map();
+  for(const [re,label,w] of AI_TOOLS) if(re.test(t)) tools.set(label,w);
+  if(/parameters\x00[\s\S]{0,4000}Steps:\s*\d+[\s\S]{0,300}Sampler:/.test(t)) tools.set("Stable Diffusion-instellingen",2);
+  if(/"class_type"\s*:/.test(t) && /"inputs"\s*:/.test(t)) tools.set("ComfyUI-workflow",2);
+  for(const [label,w] of tools) level=Math.max(level,w);
+  if(tools.size) sig.push(["AI-tool",[...tools.keys()].join(", ")]);
+
+  const edits=EDIT_TOOLS.filter(([re])=>re.test(t)).map(([,l])=>l);
+  if(edits.length) sig.push(["Bewerkt met",edits.join(", ")]);
+  return {level,sig};
+}
+
+/* ── UI ── */
+const BADGE=[["b-ok","Geen AI-signalen"],["b-warn","Mogelijk label"],["b-bad","Krijgt AI-label"]];
+const ADVICE=[
+  "Geen AI-sporen in de metadata. Deze kan in je post met echte foto's.",
+  "Dit lijkt een echte foto met een AI-bewerking. Meta kan dit labelen. Bewerk hem opnieuw zonder AI-functies of zet hem apart.",
+  "Herkenbaar als AI-beeld. Zet dit in een eigen post, los van je echte foto's."
+];
+const items=[]; let uid=0;
+const $=id=>document.getElementById(id);
+
+async function handle(files){
+  for(const f of files){
+    if(!(f.type.startsWith("image/")||/\.(heic|heif|avif|webp)$/i.test(f.name))) continue;
+    try{
+      const r=analyse(metadataText(await f.arrayBuffer()));
+      items.push({id:++uid,file:f,url:URL.createObjectURL(f),...r});
+    }catch(e){ items.push({id:++uid,file:f,url:URL.createObjectURL(f),level:0,sig:[["Let op","bestand kon niet volledig gelezen worden"]]}); }
+  }
+  render();
+}
+
+function render(){
+  const list=$("list"); list.innerHTML="";
+  $("results").style.display=items.length?"block":"none";
+  if(!items.length) return;
+  for(const it of items){
+    const el=document.createElement("article"); el.className="item";
+    const img=document.createElement("img"); img.src=it.url; img.alt="";
+    const body=document.createElement("div");
+    const head=document.createElement("div"); head.className="item-head";
+    const name=document.createElement("span"); name.className="name"; name.textContent=it.file.name;
+    const badge=document.createElement("span"); badge.className="badge "+BADGE[it.level][0]; badge.textContent=BADGE[it.level][1];
+    const rm=document.createElement("button"); rm.className="remove"; rm.type="button"; rm.textContent="Verwijder";
+    rm.onclick=()=>{ const i=items.indexOf(it); URL.revokeObjectURL(it.url); items.splice(i,1); render(); };
+    head.append(name,badge,rm);
+    const adv=document.createElement("p"); adv.className="advice"; adv.textContent=ADVICE[it.level];
+    body.append(head,adv);
+    if(it.sig.length){
+      const ul=document.createElement("ul"); ul.className="signals";
+      for(const [k,v] of it.sig){ const li=document.createElement("li"); const b=document.createElement("b"); b.textContent=k+": "; li.append(b,v); ul.append(li); }
+      body.append(ul);
+    }
+    el.append(img,body); list.append(el);
+  }
+  const n=items.length, max=Math.max(...items.map(i=>i.level));
+  const ai=items.filter(i=>i.level===2), clean=items.filter(i=>i.level===0), warn=items.filter(i=>i.level===1);
+  $("count").textContent = n===1 ? "1 beeld in deze post" : n+" beelden in deze post";
+  const s=$("summary"), split=$("split");
+  split.hidden=true;
+  let cls,dot,title,text;
+  if(max===2 && (clean.length||warn.length)){
+    cls="bad"; dot="!"; title="Je hele post krijgt een AI-label";
+    text=`${ai.length} AI-beeld${ai.length>1?"en trekken":" trekt"} ${clean.length+warn.length} andere foto${clean.length+warn.length>1?"'s":""} mee. Splits ze in twee posts:`;
+    split.hidden=false;
+    fill("splitClean",[...clean,...warn]); fill("splitAI",ai);
+  } else if(max===2){
+    cls="bad"; dot="AI"; title="Deze post krijgt een AI-label";
+    text="Alle beelden zijn herkenbaar als AI. Dat label klopt. Zet hier geen echte foto's bij, anders worden die ook gelabeld.";
+  } else if(max===1){
+    cls="warn"; dot="?"; title="Deze post kan een label krijgen";
+    text=`${warn.length} beeld${warn.length>1?"en bevatten":" bevat"} een AI-bewerking of Content Credentials. Kijk welke bewerking dat was.`;
+  } else {
+    cls="ok"; dot="✓"; title="Geen AI-signalen in deze post";
+    text="Op basis van de metadata verwacht je geen label. Onzichtbare watermerken in de pixels kan deze check niet zien.";
+  }
+  const LEAD={
+    bad:["Je posts splitsen is stap één. Je online zichtbaarheid is stap twee.","Wij zorgen dat je website, Google-profiel en reserveringen net zo strak staan als je posts. Dan komen gasten ook echt binnen."],
+    warn:["Twijfel over je beelden? Wij kijken gratis mee.","Stuur ons je post via WhatsApp, dan zeggen we wat er gelabeld wordt en waarom. En als we toch bezig zijn, kijken we naar je website."],
+    ok:["Je post is schoon. Is je website dat ook?","Mooie posts leveren pas iets op als je website en reserveringen meedoen. Wij bouwen ze voor horeca en leisure, met een vaste prijs vooraf."]
+  }[cls];
+  $("leadTitle").textContent=LEAD[0]; $("leadText").textContent=LEAD[1];
+  const waMsg = cls==="ok" ? "Hoi MrHostly, ik kom via de AI Label Checker en wil graag kennismaken."
+    : `Hoi MrHostly, ik kom via de AI Label Checker. Mijn post kreeg de uitslag: "${title}". Kunnen jullie meekijken?`;
+  $("waBtn").href="https://wa.me/31641806311?text="+encodeURIComponent(waMsg);
+  s.className="summary "+cls; $("sumDot").textContent=dot; $("sumTitle").textContent=title; $("sumText").textContent=text;
+}
+function fill(id,arr){ const ul=$(id); ul.innerHTML=""; for(const it of arr){ const li=document.createElement("li"); li.textContent=it.file.name; ul.append(li); } }
+
+const drop=$("drop"), input=$("file");
+input.addEventListener("change",e=>{ handle([...e.target.files]); input.value=""; });
+["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
+drop.addEventListener("drop",e=>handle([...e.dataTransfer.files]));
+document.addEventListener("dragover",e=>e.preventDefault());
+document.addEventListener("drop",e=>{ e.preventDefault(); if(!drop.contains(e.target)) handle([...e.dataTransfer.files]); });
+$("clear").addEventListener("click",()=>{ items.forEach(i=>URL.revokeObjectURL(i.url)); items.length=0; render(); window.scrollTo({top:0,behavior:"smooth"}); });
+</script>
+<script>
+window.toolMailData=()=>({
+  uitslag: document.getElementById("sumTitle").textContent,
+  aantal_beelden: items.length,
+  krijgt_ai_label: items.filter(i=>i.level===2).length,
+  mogelijk_label: items.filter(i=>i.level===1).length,
+  geen_ai_signalen: items.filter(i=>i.level===0).length
+});
+/* ── Uitslag per mail: optioneel formulier (Formspree). Raakt de tool-logica niet. ── */
+(function(){
+  const form=document.getElementById("toolMail"); if(!form) return;
+  const status=document.getElementById("toolMailStatus"), btn=form.querySelector("button[type=submit]");
+  const setHidden=(name,value)=>{ let el=form.querySelector('input[type=hidden][name="'+name+'"]');
+    if(!el){ el=document.createElement("input"); el.type="hidden"; el.name=name; form.appendChild(el); } el.value=value; };
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const email=form.querySelector("#tm-email");
+    if(!email.value.trim()||!email.checkValidity()){ status.className="tool-mail-status err"; status.textContent="Vul een geldig e-mailadres in."; email.focus(); return; }
+    const data=window.toolMailData?window.toolMailData():{};
+    for(const k in data) setHidden(k,data[k]);
+    btn.disabled=true; const label=btn.textContent; btn.textContent="Versturen…"; status.textContent="";
+    try{
+      const res=await fetch(form.action,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});
+      if(res.ok){ status.className="tool-mail-status ok"; status.textContent="Gelukt! We sturen je de uitslag zo snel mogelijk."; form.reset(); }
+      else{ status.className="tool-mail-status err"; status.textContent="Versturen lukte niet. Probeer het later opnieuw of app ons."; }
+    }catch(err){ status.className="tool-mail-status err"; status.textContent="Geen verbinding. Probeer het later opnieuw of app ons."; }
+    finally{ btn.disabled=false; btn.textContent=label; }
+  });
+})();
+</script>
+<script defer src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.min.js"></script>
+<script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+<script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script defer src="/js/icons.js"></script>
+<script defer src="/js/main.js"></script>
+<script defer src="/js/pages.js"></script>
+</body>
+</html>

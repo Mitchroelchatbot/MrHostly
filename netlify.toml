@@ -129,6 +129,21 @@
   status = 301
   force = true
 [[redirects]]
+  from = "/tools/index.html"
+  to = "/tools/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/tools/ai-label-checker/index.html"
+  to = "/tools/ai-label-checker/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/tools/noshow-calculator/index.html"
+  to = "/tools/noshow-calculator/"
+  status = 301
+  force = true
+[[redirects]]
   from = "/contact.html"
   to = "/contact"
   status = 301

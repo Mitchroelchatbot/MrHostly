@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>No-shows horeca berekenen: wat kosten lege tafels? — Mr Hostly</title>
+<meta name="description" content="No-shows in de horeca berekenen: vul je eigen cijfers in en zie wat lege tafels je restaurant per jaar kosten, en wat je terugwint. Gratis rekentool.">
+<link rel="canonical" href="https://mrhostly.nl/tools/noshow-calculator/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="Mr Hostly">
+<meta property="og:title" content="Gratis No-show Calculator voor horeca">
+<meta property="og:description" content="Reken uit wat no-shows je restaurant per jaar kosten, en wat je terugwint met herinneringen en een garantie.">
+<meta property="og:url" content="https://mrhostly.nl/tools/noshow-calculator/">
+<meta property="og:image" content="https://mrhostly.nl/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gratis No-show Calculator voor horeca">
+<meta name="twitter:description" content="Reken uit wat no-shows je restaurant per jaar kosten, en wat je terugwint met herinneringen en een garantie.">
+<meta name="twitter:image" content="https://mrhostly.nl/images/og-default.jpg">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-96x96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0F2044">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/tools.css">
+<style>
+.tool-page .hero-inner{max-width:1100px;margin:0 auto;padding:52px 24px 44px}
+.tool-page .eyebrow{display:inline-flex;font-size:13px;font-weight:600;color:var(--orange-deep);background:var(--orange-soft);padding:6px 14px;border-radius:50px;margin-bottom:18px}
+.tool-page h1{font-size:clamp(32px,4.4vw,50px);font-weight:700;line-height:1.05;letter-spacing:-.038em;color:var(--navy);margin-bottom:16px;max-width:760px}
+.tool-page .hero p{font-size:17px;color:var(--muted);max-width:620px}
+.tool-page .wrap{max-width:1100px;margin:0 auto;padding:36px 24px 64px}
+.tool-page .calc{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.tool-page .panel{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:28px}
+.tool-page .panel h2{font-size:19px;color:var(--navy);letter-spacing:-.02em;margin-bottom:4px}
+.tool-page .panel .hint{font-size:14px;color:var(--muted);margin-bottom:20px}
+.tool-page .field{margin-bottom:22px}
+.tool-page .field-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.tool-page .field label{font-weight:600;color:var(--navy);font-size:15px}
+.tool-page .field small{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+.tool-page .val{display:flex;align-items:center;gap:4px;background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:4px 10px;font-weight:700;color:var(--navy)}
+.tool-page .val input{width:64px;border:0;background:transparent;font:700 15px var(--font);color:var(--navy);text-align:right;outline:none;-moz-appearance:textfield}
+.tool-page .val input::-webkit-outer-spin-button,.tool-page .val input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.tool-page .val span{font-size:14px;color:var(--muted);font-weight:600}
+.tool-page input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:linear-gradient(to right,var(--orange) var(--p,50%),var(--border) var(--p,50%));outline:none}
+.tool-page input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--white);border:3px solid var(--navy);cursor:pointer;box-shadow:0 2px 8px rgba(10,23,48,.2)}
+.tool-page input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--white);border:3px solid var(--navy);cursor:pointer}
+.tool-page .adv-toggle{background:none;border:0;font:600 14px var(--font);color:var(--orange-deep);cursor:pointer;padding:0;margin:4px 0 0}
+.tool-page .adv{display:none;border-top:1px solid var(--border-soft);margin-top:18px;padding-top:20px}
+.tool-page .adv.open{display:block}
+.tool-page .result{position:sticky;top:88px}
+.tool-page .loss{background:var(--navy);color:var(--white);border-radius:20px;padding:28px;position:relative;overflow:hidden}
+.tool-page .loss::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--orange)}
+.tool-page .loss .lbl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+.tool-page .big{font-size:clamp(40px,5.4vw,58px);font-weight:800;letter-spacing:-.04em;line-height:1.05;margin:8px 0 6px}
+.tool-page .loss p{color:rgba(255,255,255,.72);font-size:15px}
+.tool-page .loss p b{color:var(--white)}
+.tool-page .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.tool-page .mini div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px}
+.tool-page .mini span{display:block;font-size:12px;color:rgba(255,255,255,.6)}
+.tool-page .mini b{font-size:17px;letter-spacing:-.02em}
+.tool-page .fix{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:24px 28px;margin-top:16px}
+.tool-page .fix h3{font-size:17px;color:var(--navy);letter-spacing:-.02em;margin-bottom:14px}
+.tool-page .bars{display:grid;gap:12px}
+.tool-page .bar-row{display:grid;grid-template-columns:110px 1fr 96px;gap:12px;align-items:center;font-size:14px}
+.tool-page .bar-row .name{color:var(--muted);font-weight:600}
+.tool-page .track{height:14px;background:var(--cream);border-radius:8px;overflow:hidden}
+.tool-page .fill{height:100%;border-radius:8px;transition:width .4s ease}
+.tool-page .fill.now{background:var(--navy)}
+.tool-page .fill.after{background:var(--orange)}
+.tool-page .bar-row .amt{text-align:right;font-weight:700;color:var(--navy)}
+.tool-page .gain{margin-top:18px;background:var(--green-soft);border-radius:14px;padding:14px 16px;color:var(--green);font-size:15px}
+.tool-page .gain b{font-size:20px;letter-spacing:-.02em;display:block}
+.tool-page .assume{font-size:12.5px;color:var(--muted);margin-top:12px}
+.tool-page .actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.tool-page .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:10px;font:600 15px var(--font);border:0;cursor:pointer;transition:all .25s ease;text-decoration:none;white-space:nowrap}
+.tool-page .btn-orange{background:var(--orange);color:var(--ink);flex:1}
+.tool-page .btn-navy{background:var(--navy);color:var(--white)}
+.tool-page .btn-navy:hover{background:var(--navy-light);transform:translateY(-2px)}
+.tool-page .btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.tool-page .copied{font-size:13px;color:var(--green);font-weight:600;align-self:center}
+.tool-page .how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.tool-page .section-title{font-size:26px;color:var(--navy);letter-spacing:-.03em;margin-top:52px}
+.tool-page .section-title em{font-style:normal;color:var(--orange)}
+.tool-page .band .btns{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:900px){
+  .tool-page .calc{grid-template-columns:1fr}
+  .tool-page .result{position:static}
+  .tool-page .how{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .tool-page .panel,.tool-page .loss,.tool-page .fix{padding:22px}
+  .tool-page .mini{grid-template-columns:1fr}
+  .tool-page .bar-row{grid-template-columns:84px 1fr 84px}
+}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "MrHostly No-show Calculator", "url": "https://mrhostly.nl/tools/noshow-calculator/", "description": "Gratis rekentool die uitrekent wat no-shows een horecazaak per jaar kosten aan omzet en marge, en wat herinneringen, een garantie en een wachtlijst terugwinnen.", "applicationCategory": "BusinessApplication", "operatingSystem": "Alle (in de browser)", "browserRequirements": "Vereist JavaScript", "inLanguage": "nl-NL", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "provider": {"@type": "Organization", "name": "Mr Hostly", "url": "https://mrhostly.nl/"}}</script>
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand"><span class="mr">Mr</span><span class="hostly">Hostly</span></a>
+    <ul class="nav-links">
+      <li><a href="/online-aanwezigheid">Online aanwezigheid</a></li>
+      <li><a href="/ai-automatisering">AI &amp; automatisering</a></li>
+      <li><a href="/maatwerk">Maatwerk</a></li>
+      <li><a href="/over-ons">Over ons</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/tools/">Gratis tools</a></li>
+      <li><a href="/contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <a class="nav-tel" href="https://wa.me/31641806311" target="_blank" rel="noopener" aria-label="WhatsApp ons"><span data-icon="message-circle"></span></a>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Home</a>
+    <a href="/online-aanwezigheid">Online aanwezigheid</a>
+    <a href="/ai-automatisering">AI &amp; automatisering</a>
+    <a href="/maatwerk">Maatwerk</a>
+    <a href="/over-ons">Over ons</a>
+    <a href="/blog">Blog</a>
+    <a href="/tools/">Gratis tools</a>
+    <a href="/contact" class="mob-cta">Contact</a>
+  </div>
+</nav>
+
+<div class="tool-page">
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Gratis rekentool voor horeca</span>
+    <h1>Wat kosten <em>lege tafels</em> je eigenlijk per jaar?</h1>
+    <p>Gasten die reserveren en niet komen, kosten meer dan je denkt. Vul je eigen cijfers in en zie direct wat no-shows je per jaar kosten, en wat je terugwint met herinneringen en een garantie bij reserveren.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="calc">
+    <div class="panel">
+      <h2>Jouw zaak</h2>
+      <p class="hint">Sleep of typ. Ruwe schattingen zijn prima.</p>
+
+      <div class="field" data-key="gasten">
+        <div class="field-top"><label for="gasten">Gereserveerde gasten per week</label><div class="val"><input type="number" min="0" max="2000" step="5"><span>gasten</span></div></div>
+        <input type="range" id="gasten" min="10" max="1000" step="5" value="150">
+      </div>
+      <div class="field" data-key="noshow">
+        <div class="field-top"><label for="noshow">Daarvan komt niet opdagen</label><div class="val"><input type="number" min="0" max="50" step="0.5"><span>%</span></div></div>
+        <input type="range" id="noshow" min="0" max="30" step="0.5" value="8">
+        <small>Tel ook late annuleringen mee, op de dag zelf.</small>
+      </div>
+      <div class="field" data-key="besteding">
+        <div class="field-top"><label for="besteding">Gemiddelde besteding per gast</label><div class="val"><span>€</span><input type="number" min="0" max="500" step="1"></div></div>
+        <input type="range" id="besteding" min="5" max="200" step="1" value="45">
+      </div>
+      <div class="field" data-key="opvul">
+        <div class="field-top"><label for="opvul">Lege plekken die je alsnog vult</label><div class="val"><input type="number" min="0" max="100" step="5"><span>%</span></div></div>
+        <input type="range" id="opvul" min="0" max="100" step="5" value="20">
+        <small>Met walk-ins of de wachtlijst.</small>
+      </div>
+
+      <button class="adv-toggle" id="advToggle" type="button">+ Meer instellingen</button>
+      <div class="adv" id="adv">
+        <div class="field" data-key="weken">
+          <div class="field-top"><label for="weken">Weken open per jaar</label><div class="val"><input type="number" min="1" max="52" step="1"><span>wk</span></div></div>
+          <input type="range" id="weken" min="20" max="52" step="1" value="48">
+        </div>
+        <div class="field" data-key="inkoop">
+          <div class="field-top"><label for="inkoop">Inkoopkosten (food &amp; drink cost)</label><div class="val"><input type="number" min="0" max="80" step="1"><span>%</span></div></div>
+          <input type="range" id="inkoop" min="0" max="60" step="1" value="30">
+          <small>Die kosten bespaar je bij een no-show deels. Personeel en huur betaal je wel gewoon.</small>
+        </div>
+        <div class="field" data-key="reductie">
+          <div class="field-top"><label for="reductie">Verwachte daling no-shows na maatregelen</label><div class="val"><input type="number" min="0" max="100" step="5"><span>%</span></div></div>
+          <input type="range" id="reductie" min="0" max="90" step="5" value="50">
+          <small>Aanname. Hoeveel het scheelt, verschilt per zaak. Zet hem gerust lager.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="result">
+      <div class="loss">
+        <span class="lbl">No-shows kosten je per jaar</span>
+        <div class="big" id="jaarOmzet">€ 0</div>
+        <p>aan gemiste omzet. Daarvan is <b id="jaarMarge">€ 0</b> pure marge die je misloopt.</p>
+        <div class="mini">
+          <div><span>Per week</span><b id="week">€ 0</b></div>
+          <div><span>Per maand</span><b id="maand">€ 0</b></div>
+          <div><span>Lege stoelen/jaar</span><b id="stoelen">0</b></div>
+        </div>
+      </div>
+
+      <div class="fix">
+        <h3>Met herinneringen, garantie en wachtlijst</h3>
+        <div class="bars">
+          <div class="bar-row"><span class="name">Nu</span><div class="track"><div class="fill now" id="barNow"></div></div><span class="amt" id="amtNow">€ 0</span></div>
+          <div class="bar-row"><span class="name">Na maatregelen</span><div class="track"><div class="fill after" id="barAfter"></div></div><span class="amt" id="amtAfter">€ 0</span></div>
+        </div>
+        <div class="gain">Je wint per jaar terug<b id="terug">€ 0</b></div>
+        <p class="assume" id="assume"></p>
+        <div class="actions">
+          <a class="btn btn-orange" id="waBtn" href="https://wa.me/31641806311" target="_blank" rel="noopener">Bespreek dit gratis met MrHostly</a>
+          <button class="btn btn-outline" id="copyBtn" type="button">Kopieer uitslag</button>
+          <span class="copied" id="copied" hidden>Gekopieerd ✓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <form class="tool-mail" id="toolMail" action="https://formspree.io/f/mljdnopg" method="POST" novalidate>
+      <h3>Je berekening in je mailbox?</h3>
+      <p>Laat je gegevens achter, dan sturen we je deze berekening, met tips om no-shows bij jouw zaak terug te dringen.</p>
+      <input type="hidden" name="_subject" value="Uitslag No-show Calculator via mrhostly.nl">
+      <input type="hidden" name="tool" value="No-show Calculator">
+      <div class="hp" aria-hidden="true"><label for="tm-gotcha">Laat leeg</label><input type="text" id="tm-gotcha" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+      <div class="tool-mail-row">
+        <div><label for="tm-naam">Naam</label><input type="text" id="tm-naam" name="naam" autocomplete="name" placeholder="Je naam"></div>
+        <div><label for="tm-zaak">Zaak</label><input type="text" id="tm-zaak" name="zaak" autocomplete="organization" placeholder="Naam van je zaak"></div>
+        <div><label for="tm-email">E-mail</label><input type="email" id="tm-email" name="email" autocomplete="email" placeholder="jij@jouwzaak.nl" required></div>
+        <button class="btn tool-mail-send" type="submit">Stuur me de uitslag</button>
+      </div>
+      <p class="tool-mail-note">We gebruiken je gegevens alleen om je de uitslag te sturen en eventueel te reageren. Geen nieuwsbrief.</p>
+      <p class="tool-mail-status" id="toolMailStatus" role="status" aria-live="polite"></p>
+    </form>
+
+  <h2 class="section-title">Zo pak je <em>no-shows</em> aan</h2>
+  <section class="how" style="margin-top:18px">
+    <div class="card"><div class="num">1</div><h3>Automatische herinnering</h3><p>Een WhatsApp of sms op de dag zelf, met één knop om te bevestigen of te annuleren. Vergeten gasten melden zich dan af.</p></div>
+    <div class="card"><div class="num">2</div><h3>Garantie bij reserveren</h3><p>Een kleine aanbetaling of creditcardgarantie voor grotere groepen en drukke avonden. Wie betaalt, komt.</p></div>
+    <div class="card"><div class="num">3</div><h3>Slimme wachtlijst</h3><p>Valt er toch iemand af, dan krijgt de volgende op de lijst automatisch een berichtje. Zo blijft de tafel niet leeg.</p></div>
+  </section>
+
+  <section class="band">
+    <div>
+      <h2>Wij bouwen je reserveringen <em>zonder no-shows</em>.</h2>
+      <p>Eigen reserveringssysteem met herinneringen, garantie en wachtlijst, zonder commissie per gast. Vaste prijs vooraf.</p>
+    </div>
+    <div class="btns">
+      <a class="btn btn-orange" href="/contact">Plan een gratis kennismaking →</a>
+    </div>
+  </section>
+
+  <a class="other" href="/tools/ai-label-checker/">
+    <svg width="40" height="40" viewBox="0 0 800 800" aria-hidden="true"><rect width="800" height="800" rx="160" fill="#0F2044"/><path fill="#E8953A" d="M238 199h84v402h-84zM479 199h84v402h-84zM238 372h325v74H238z"/></svg>
+    <div><b>Ook gratis: de AI Label Checker</b><br><span>Check of Meta een AI-label op je Instagram-post plakt, nog vóór je post.</span></div>
+    <span class="arrow">→</span>
+  </a>
+</main>
+
+</div>
+
+<footer class="main-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span class="mr">Mr</span><span class="hostly">Hostly</span></div>
+        <p>Slimme digitale oplossingen voor horeca &amp; leisure. Vanuit Eindhoven, voor heel Nederland.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Diensten</h4>
+        <ul>
+          <li><a href="/online-aanwezigheid">Online aanwezigheid</a></li>
+          <li><a href="/ai-automatisering">AI &amp; automatisering</a></li>
+          <li><a href="/maatwerk">Maatwerk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Bedrijf</h4>
+        <ul>
+          <li><a href="/over-ons">Over ons</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/tools/">Gratis tools</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>Eindhoven, NL</li>
+          <li><a href="mailto:info@mrhostly.nl">info@mrhostly.nl</a></li>
+          <li><a href="/contact">Contactformulier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Mr Hostly · KvK · BTW</span>
+      <div class="footer-social">
+        <a aria-label="LinkedIn">in</a>
+        <a aria-label="Instagram">ig</a>
+        <a aria-label="Facebook">fb</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const eur=n=>new Intl.NumberFormat("nl-NL",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(Math.round(n));
+const num=n=>new Intl.NumberFormat("nl-NL",{maximumFractionDigits:0}).format(Math.round(n));
+const v={};
+
+document.querySelectorAll(".field").forEach(f=>{
+  const range=f.querySelector("input[type=range]"), box=f.querySelector(".val input"), key=f.dataset.key;
+  const paint=()=>{ const p=(Math.min(Math.max(+range.value,+range.min),+range.max)-range.min)/(range.max-range.min)*100; range.style.setProperty("--p",p+"%"); };
+  const set=(val,from)=>{
+    val=Math.max(+box.min, Math.min(+box.max, isNaN(val)?0:val));
+    v[key]=val;
+    if(from!=="box") box.value=val;
+    if(from!=="range") range.value=val;
+    paint(); calc();
+  };
+  range.addEventListener("input",()=>set(+range.value,"range"));
+  box.addEventListener("input",()=>{ if(box.value!=="") set(+box.value,"box"); });
+  box.addEventListener("blur",()=>{ box.value=v[key]; });
+  v[key]=+range.value; box.value=range.value; paint();
+});
+
+let last={};
+function calc(){
+  if(Object.keys(v).length<7) return;
+  const leeg = v.gasten*(v.noshow/100)*(1-v.opvul/100);   // lege stoelen per week
+  const week = leeg*v.besteding;
+  const jaar = week*v.weken;
+  const marge = jaar*(1-v.inkoop/100);
+  const after = jaar*(1-v.reductie/100);
+  const terug = jaar-after;
+  last={jaar,marge,terug,stoelen:leeg*v.weken};
+
+  $("jaarOmzet").textContent=eur(jaar);
+  $("jaarMarge").textContent=eur(marge);
+  $("week").textContent=eur(week);
+  $("maand").textContent=eur(jaar/12);
+  $("stoelen").textContent=num(leeg*v.weken);
+  $("amtNow").textContent=eur(jaar);
+  $("amtAfter").textContent=eur(after);
+  $("barNow").style.width = jaar>0 ? "100%" : "0";
+  $("barAfter").style.width = jaar>0 ? (after/jaar*100)+"%" : "0";
+  $("terug").textContent=eur(terug)+" omzet";
+  $("assume").textContent=`Uitgaande van ${v.reductie}% minder no-shows en ${v.weken} weken open per jaar. Dit is een indicatie op basis van jouw invoer, geen garantie.`;
+
+  const msg=`Hoi MrHostly, ik kom via de No-show Calculator. Volgens de berekening kosten no-shows mij ongeveer ${eur(jaar)} omzet per jaar (${num(v.gasten)} gereserveerde gasten per week, ${v.noshow}% no-show). Ik wil graag bespreken hoe ik dat kan terugdringen.`;
+  $("waBtn").href="https://wa.me/31641806311?text="+encodeURIComponent(msg);
+}
+
+$("advToggle").addEventListener("click",()=>{
+  const open=$("adv").classList.toggle("open");
+  $("advToggle").textContent=open?"– Minder instellingen":"+ Meer instellingen";
+});
+
+$("copyBtn").addEventListener("click",async()=>{
+  const t=`No-shows kosten mijn zaak ongeveer ${eur(last.jaar)} omzet per jaar (${num(last.stoelen)} lege stoelen). Met herinneringen, garantie en wachtlijst win ik naar schatting ${eur(last.terug)} terug.\nBerekend met de MrHostly No-show Calculator.`;
+  try{ await navigator.clipboard.writeText(t); $("copied").hidden=false; setTimeout(()=>$("copied").hidden=true,2000); }
+  catch(e){ $("copied").textContent="Kopiëren lukt hier niet"; $("copied").hidden=false; }
+});
+
+calc();
+</script>
+<script>
+window.toolMailData=()=>({
+  gasten_per_week: v.gasten, noshow_pct: v.noshow, besteding_per_gast: v.besteding, alsnog_gevuld_pct: v.opvul,
+  weken_open: v.weken, inkoop_pct: v.inkoop, verwachte_daling_pct: v.reductie,
+  omzetverlies_per_jaar: Math.round(last.jaar), margeverlies_per_jaar: Math.round(last.marge),
+  terug_te_winnen_per_jaar: Math.round(last.terug), lege_stoelen_per_jaar: Math.round(last.stoelen)
+});
+/* ── Uitslag per mail: optioneel formulier (Formspree). Raakt de tool-logica niet. ── */
+(function(){
+  const form=document.getElementById("toolMail"); if(!form) return;
+  const status=document.getElementById("toolMailStatus"), btn=form.querySelector("button[type=submit]");
+  const setHidden=(name,value)=>{ let el=form.querySelector('input[type=hidden][name="'+name+'"]');
+    if(!el){ el=document.createElement("input"); el.type="hidden"; el.name=name; form.appendChild(el); } el.value=value; };
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const email=form.querySelector("#tm-email");
+    if(!email.value.trim()||!email.checkValidity()){ status.className="tool-mail-status err"; status.textContent="Vul een geldig e-mailadres in."; email.focus(); return; }
+    const data=window.toolMailData?window.toolMailData():{};
+    for(const k in data) setHidden(k,data[k]);
+    btn.disabled=true; const label=btn.textContent; btn.textContent="Versturen…"; status.textContent="";
+    try{
+      const res=await fetch(form.action,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});
+      if(res.ok){ status.className="tool-mail-status ok"; status.textContent="Gelukt! We sturen je de uitslag zo snel mogelijk."; form.reset(); }
+      else{ status.className="tool-mail-status err"; status.textContent="Versturen lukte niet. Probeer het later opnieuw of app ons."; }
+    }catch(err){ status.className="tool-mail-status err"; status.textContent="Geen verbinding. Probeer het later opnieuw of app ons."; }
+    finally{ btn.disabled=false; btn.textContent=label; }
+  });
+})();
+</script>
+<script defer src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.min.js"></script>
+<script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+<script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script defer src="/js/icons.js"></script>
+<script defer src="/js/main.js"></script>
+<script defer src="/js/pages.js"></script>
+</body>
+</html>

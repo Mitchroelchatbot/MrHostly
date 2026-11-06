@@ -47,7 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(a => {
     // De Contact-knop (nav-cta/mob-cta) blijft altijd zijn knop-stijl houden
     if (a.classList.contains('nav-cta') || a.classList.contains('mob-cta')) return;
-    const href = (a.getAttribute('href') || '').split('/').pop().replace(/\.html$/, '');
+    const raw = a.getAttribute('href') || '';
+    // Sectie-links (eindigen op '/', zoals /tools/) zijn actief op alle pagina's eronder
+    if (raw.length > 1 && raw.endsWith('/') && location.pathname.startsWith(raw)) { a.classList.add('active'); return; }
+    const href = raw.split('/').pop().replace(/\.html$/, '');
     if (href && href === current) a.classList.add('active');
   });
 
