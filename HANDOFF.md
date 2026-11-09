@@ -55,6 +55,7 @@ mrhostly.netlify.app en mrhostly.nl. Eigenaar en gezicht: **Mitch**.
 | `/contact` | Formspree-formulier (`js/contact.js`) + WhatsApp |
 | `/blog` + `/blog-<slug>` | 11 artikelen (zie Blog) |
 | `/tools/`, `/tools/ai-label-checker/`, `/tools/noshow-calculator/` | Gratis tools (zie Tools) |
+| `/intake/` | Website-intake voor nieuwe klanten (losse pagina, `noindex`, niet in de nav). Verstuurt via een eigen Formspree-formulier: `https://formspree.io/f/xrppngzo` |
 | `/template` | Sjabloonpagina, nog publiek bereikbaar (eventueel verbergen) |
 
 - **Schone URL's**: `netlify.toml` stuurt elke `/pagina.html` met een 301 door naar `/pagina`.

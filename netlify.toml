@@ -148,6 +148,11 @@
   to = "/contact"
   status = 301
   force = true
+[[redirects]]
+  from = "/intake/index.html"
+  to = "/intake/"
+  status = 301
+  force = true
 
 # Beveiligings- en cache-headers (optioneel, nette defaults)
 [[headers]]

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Vertel ons over je nieuwe website. Met deze intake kan Mr Hostly direct aan je ontwerp beginnen.">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-96x96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0F2044">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Website-intake — Mr Hostly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one calm column of numbered steps, a sticky progress rail, and a "browser window" hero that frames the client's future site. */
+:root{
+  --bg:#F8F7F4; --surface:#FFFFFF; --ink:#0F2044; --muted:#6B7280; --line:#E5E7EB;
+  --accent:#0F2044; --accent-ink:#FFFFFF; --accent-soft:#EBF1FA; --warn:#B4442C;
+  --hl:#E8953A; --hl-text:#C87A1E;
+  --display:"Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --body:"Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:10px; color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:760px;margin:0 auto}
+a{color:var(--accent)}
+.btn.primary:hover{background:#1C3564}
+.chip[aria-pressed="true"]:hover{border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header.top{display:flex;align-items:center;justify-content:space-between;padding-block:24px}
+.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em}
+.brand{color:var(--ink);text-decoration:none}.brand span{color:var(--hl)}
+.time{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* Hero: a browser window being drafted */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:28px}
+.chrome{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.url{flex:1;min-width:0;font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--bg);border-radius:6px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.url b{color:var(--ink);font-weight:500}
+.hero-body{padding:clamp(24px,5vw,44px)}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,6vw,46px);line-height:1.05;letter-spacing:-.025em;margin:0 0 14px;text-wrap:balance}
+.hero p{margin:0;color:var(--muted);max-width:56ch}
+
+/* Progress */
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;margin-bottom:8px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--hl);transition:width .3s}
+.plabel{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+
+/* Sections */
+section.step{padding-block:28px;border-top:1px solid var(--line);display:grid;gap:18px}
+.step-head{display:flex;gap:14px;align-items:baseline}
+.num{font-family:var(--mono);font-size:13px;color:var(--hl-text);min-width:2.2em}
+.step h2{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.step .lead{margin:4px 0 0;color:var(--muted);font-size:15px}
+.fields{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.field{display:grid;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+label.q{font-weight:600;font-size:15px}
+.req{color:var(--warn)}
+.hint{font-size:13px;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],input[type=url],textarea{
+  width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+textarea{min-height:92px;resize:vertical}
+input:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+.invalid{border-color:var(--warn)!important}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+.colors{display:flex;flex-wrap:wrap;gap:12px}
+.swatch{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 10px 6px 6px}
+.swatch input[type=color]{width:32px;height:32px;border:none;padding:0;background:none;cursor:pointer}
+.swatch input[type=text]{width:6.5em;border:none;padding:4px;font-family:var(--mono);font-size:13px;background:transparent}
+.swatch input[type=text]:focus{box-shadow:none}
+
+.insp{display:grid;gap:10px}
+.insp-row{display:grid;grid-template-columns:2.2em 1fr 1.3fr;gap:8px;align-items:center}
+.insp-row .n{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+.actions{border-top:1px solid var(--line);padding-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{font:inherit;font-weight:600;font-size:16px;border-radius:var(--r);padding:12px 22px;cursor:pointer;border:1px solid var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.saved{font-size:13px;color:var(--muted)}
+.error{color:var(--warn);font-size:14px;flex-basis:100%}
+
+/* Done screen */
+.done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,5vw,40px);display:grid;gap:16px}
+.done h2{font-family:var(--display);font-size:30px;margin:0;letter-spacing:-.02em}
+.done p{margin:0;color:var(--muted)}
+.summary{font-family:var(--mono);font-size:13px;white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:14px;max-height:340px;overflow:auto}
+.mail{font-family:var(--mono);user-select:all;color:var(--ink)}
+
+@media (max-width:560px){
+  .fields{grid-template-columns:1fr}
+  .insp-row{grid-template-columns:1.6em 1fr}
+  .insp-row input:last-child{grid-column:2}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/">Mr<span>Hostly</span></a>
+    <div class="time">± 15 minuten</div>
+  </header>
+
+  <div id="formView">
+    <div class="hero">
+      <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">https://<b id="urlName">jouwbedrijf</b>.nl</div></div>
+      <div class="hero-body">
+        <h1>Vertel ons over je nieuwe website</h1>
+        <p>Met deze vragen kunnen we direct aan je ontwerp beginnen. Weet je iets nog niet? Sla het over, dan bespreken we het samen. Je antwoorden blijven bewaard in deze browser tot je verstuurt.</p>
+      </div>
+    </div>
+
+    <div class="progress" aria-hidden="true">
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="plabel"><span id="pText">0 van 0 vragen beantwoord</span><span id="pPct">0%</span></div>
+    </div>
+
+    <form id="intake" novalidate></form>
+  </div>
+
+  <div id="doneView" hidden></div>
+</div>
+
+<script>
+/* ===== Instellingen: pas aan voor je eigen site ===== */
+const CONFIG = {
+  // Formspree-endpoint van je formulier, bijv. "https://formspree.io/f/abcdwxyz".
+  // Inzendingen gaan naar het e-mailadres dat in Formspree aan dit formulier hangt. Leeg = antwoorden tonen om te kopiëren.
+  formspreeEndpoint: "https://formspree.io/f/xrppngzo",
+  contactEmail: "info@mrhostly.nl"
+};
+
+const SECTIONS = [
+  {t:"Contactgegevens", fields:[
+    {id:"bedrijfsnaam", q:"Bedrijfsnaam", type:"text", req:true},
+    {id:"naam", q:"Je naam", type:"text", req:true},
+    {id:"email", q:"E-mailadres", type:"email", req:true},
+    {id:"telefoon", q:"Telefoonnummer", type:"tel"},
+    {id:"plaats", q:"Vestigingsplaats", type:"text"},
+    {id:"beslissers", q:"Wie beslist mee over de website?", type:"text"}
+  ]},
+  {t:"Over je bedrijf", fields:[
+    {id:"wat", q:"Wat doet je bedrijf?", hint:"In twee of drie zinnen.", type:"textarea", full:true},
+    {id:"diensten", q:"Welke producten of diensten bied je aan?", type:"textarea", full:true},
+    {id:"klanten", q:"Wie zijn je klanten?", hint:"Zakelijk of particulier, leeftijd, regio.", type:"textarea"},
+    {id:"uniek", q:"Wat maakt jou anders dan je concurrenten?", type:"textarea"},
+    {id:"concurrenten", q:"Wie zijn je belangrijkste concurrenten?", hint:"Websites mogen ook.", type:"text"},
+    {id:"drie", q:"Je bedrijf in drie woorden", type:"text"}
+  ]},
+  {t:"Doel van de website", lead:"Wat moet de site vooral opleveren?", fields:[
+    {id:"doelen", type:"chips", full:true, opts:["Meer aanvragen","Afspraken of reserveringen","Online verkopen","Informeren en vertrouwen","Portfolio laten zien","Personeel werven"]},
+    {id:"eersteActie", q:"Wat moet een bezoeker als eerste doen?", hint:"Bijvoorbeeld bellen, een offerte aanvragen of een afspraak maken.", type:"text", full:true},
+    {id:"geslaagd", q:"Wanneer is de website voor jou geslaagd?", type:"textarea", full:true}
+  ]},
+  {t:"Pagina's", lead:"Kies de pagina's die je op je site wilt.", fields:[
+    {id:"paginas", type:"chips", full:true, opts:["Home","Over ons","Diensten","Portfolio","Prijzen","Reviews","Team","Blog of nieuws","Veelgestelde vragen","Vacatures","Contact","Privacy en voorwaarden"]},
+    {id:"paginasExtra", q:"Andere pagina's", type:"text"},
+    {id:"talen", q:"In welke talen?", type:"text"}
+  ]},
+  {t:"Uitstraling", lead:"Welke sfeer past bij je bedrijf? Kies er maximaal drie.", fields:[
+    {id:"sfeer", type:"chips", max:3, full:true, opts:["Strak en minimalistisch","Warm en persoonlijk","Zakelijk","Speels en kleurrijk","Luxe","Stoer","Modern","Natuurlijk en rustig"]},
+    {id:"kleuren", q:"Huisstijlkleuren", hint:"Kies je kleuren of typ de kleurcode. Geen vaste kleuren? Laat het staan.", type:"colors", full:true},
+    {id:"logo", q:"Heb je een logo?", hint:"Stuur het later mee, liefst als SVG of PNG.", type:"text"},
+    {id:"nietWillen", q:"Wat wil je absoluut niet?", type:"text"}
+  ]},
+  {t:"Voorbeelden en inspiratie", lead:"Noem websites die je mooi vindt, ook buiten je eigen branche. Vertel vooral wat je eraan aanspreekt.", fields:[
+    {id:"inspiratie", type:"inspiration", full:true},
+    {id:"nietMooi", q:"Welke websites vind je juist niet mooi, en waarom?", type:"textarea", full:true}
+  ]},
+  {t:"Teksten en beeld", fields:[
+    {id:"teksten", q:"Wie schrijft de teksten?", type:"chips", single:true, opts:["Ik lever ze aan","Mr Hostly schrijft ze","Samen"]},
+    {id:"fotos", q:"Heb je eigen foto's?", type:"chips", single:true, opts:["Ja","Deels","Nee, stockfoto's is prima","Nee, ik wil een fotograaf"]},
+    {id:"reviews", q:"Heb je reviews die we mogen gebruiken?", type:"text"},
+    {id:"social", q:"Social media-kanalen", hint:"Plak de links.", type:"text"}
+  ]},
+  {t:"Functionaliteiten", lead:"Wat moet de website kunnen?", fields:[
+    {id:"functies", type:"chips", full:true, opts:["Contactformulier","Offerteaanvraag","Online afspraken","Webshop","Nieuwsbrief","Google Maps","WhatsApp-knop","Social media-koppeling","Klantomgeving","Zelf teksten aanpassen"]},
+    {id:"software", q:"Software die gekoppeld moet worden", hint:"Boekhouding, agenda, CRM.", type:"text", full:true}
+  ]},
+  {t:"Domein en huidige site", fields:[
+    {id:"domein", q:"Domeinnaam", hint:"Heb je er al een? Bijvoorbeeld jouwbedrijf.nl", type:"text"},
+    {id:"huidigeSite", q:"Huidige website", type:"url"},
+    {id:"huidigOordeel", q:"Wat bevalt je wel en niet aan je huidige site?", type:"textarea", full:true},
+    {id:"hosting", q:"Wil je dat wij hosting en onderhoud verzorgen?", type:"chips", single:true, opts:["Ja","Nee","Weet ik nog niet"]}
+  ]},
+  {t:"Planning en budget", fields:[
+    {id:"live", q:"Wanneer moet de site live staan?", type:"text"},
+    {id:"deadline", q:"Is er een harde deadline?", hint:"Opening, campagne, beurs.", type:"text"},
+    {id:"budget", q:"Budget", type:"chips", single:true, full:true, opts:["Tot € 1.000","€ 1.000 – 2.500","€ 2.500 – 5.000","Meer dan € 5.000","Weet ik nog niet"]}
+  ]},
+  {t:"Tot slot", fields:[
+    {id:"overig", q:"Is er nog iets dat we moeten weten?", type:"textarea", full:true},
+    {id:"gevonden", q:"Hoe heb je ons gevonden?", type:"text", full:true}
+  ]}
+];
+
+const STORE = "mrhostly-intake-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch(e) { state = {}; }
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch(e){} };
+const el = (tag, attrs={}, ...kids) => { const n=document.createElement(tag); for(const k in attrs){ if(k==="text") n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); } kids.forEach(c=>c&&n.append(c)); return n; };
+
+const form = document.getElementById("intake");
+
+SECTIONS.forEach((s, si) => {
+  const sec = el("section",{class:"step"});
+  const head = el("div",{class:"step-head"}, el("span",{class:"num",text:String(si+1).padStart(2,"0")}));
+  const ht = el("div",{}, el("h2",{text:s.t}));
+  if (s.lead) ht.append(el("p",{class:"lead",text:s.lead}));
+  head.append(ht); sec.append(head);
+  const grid = el("div",{class:"fields"});
+  s.fields.forEach(f => grid.append(renderField(f)));
+  sec.append(grid); form.append(sec);
+});
+
+const actions = el("div",{class:"actions"},
+  el("button",{type:"submit",class:"btn primary",id:"send",text:"Verstuur mijn antwoorden"}),
+  el("span",{class:"saved",id:"saved",text:""}),
+  el("div",{class:"error",id:"err",role:"alert"}));
+form.append(actions);
+
+function renderField(f){
+  const box = el("div",{class:"field"+(f.full?" full":"")});
+  if (f.q){ const l = el("label",{class:"q",for:"f-"+f.id,text:f.q}); if(f.req) l.append(el("span",{class:"req",text:" *"})); box.append(l); }
+  if (f.hint) box.append(el("span",{class:"hint",text:f.hint}));
+  if (["text","email","tel","url"].includes(f.type)){
+    const i = el("input",{type:f.type,id:"f-"+f.id,name:f.id});
+    if (f.type==="url") i.placeholder="https://";
+    i.value = state[f.id]||""; i.addEventListener("input",()=>{ state[f.id]=i.value; i.classList.remove("invalid"); changed(); });
+    box.append(i);
+  } else if (f.type==="textarea"){
+    const t = el("textarea",{id:"f-"+f.id,name:f.id}); t.value=state[f.id]||"";
+    t.addEventListener("input",()=>{ state[f.id]=t.value; changed(); }); box.append(t);
+  } else if (f.type==="chips"){
+    const wrap = el("div",{class:"chips",role:"group",id:"f-"+f.id});
+    let sel = Array.isArray(state[f.id]) ? state[f.id] : [];
+    f.opts.forEach(o=>{
+      const b = el("button",{type:"button",class:"chip","aria-pressed":String(sel.includes(o)),text:o});
+      b.addEventListener("click",()=>{
+        sel = Array.isArray(state[f.id]) ? state[f.id] : [];
+        if (sel.includes(o)) sel = sel.filter(x=>x!==o);
+        else if (f.single) sel = [o];
+        else if (f.max && sel.length>=f.max) return;
+        else sel = [...sel,o];
+        state[f.id]=sel;
+        wrap.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(sel.includes(c.textContent))));
+        changed();
+      });
+      wrap.append(b);
+    });
+    box.append(wrap);
+  } else if (f.type==="colors"){
+    const wrap = el("div",{class:"colors",id:"f-"+f.id});
+    const vals = state[f.id] || ["","",""];
+    ["Hoofdkleur","Tweede kleur","Accent"].forEach((name,i)=>{
+      const c = el("input",{type:"color",id:`f-${f.id}-${i}`,"aria-label":name+" kiezen"});
+      const t = el("input",{type:"text",id:`f-${f.id}-${i}-hex`,"aria-label":name+" kleurcode",placeholder:name});
+      if (vals[i]) { c.value=vals[i]; t.value=vals[i]; }
+      const set = v => { const arr = state[f.id]||["","",""]; arr[i]=v; state[f.id]=arr; changed(); };
+      c.addEventListener("input",()=>{ t.value=c.value.toUpperCase(); set(t.value); });
+      t.addEventListener("input",()=>{ const v=t.value.trim(); if(/^#?[0-9a-f]{6}$/i.test(v)){ c.value=v.startsWith("#")?v:"#"+v; } set(v); });
+      wrap.append(el("div",{class:"swatch"},c,t));
+    });
+    box.append(wrap);
+  } else if (f.type==="inspiration"){
+    const wrap = el("div",{class:"insp",id:"f-"+f.id});
+    const rows = state[f.id] || Array.from({length:4},()=>({url:"",why:""}));
+    rows.forEach((r,i)=>{
+      const u = el("input",{type:"url",id:`f-${f.id}-${i}-url`,placeholder:"https://voorbeeld.nl","aria-label":`Website ${i+1}`});
+      const w = el("input",{type:"text",id:`f-${f.id}-${i}-why`,placeholder:"Wat vind je er mooi aan?","aria-label":`Waarom website ${i+1}`});
+      u.value=r.url; w.value=r.why;
+      const upd=()=>{ const arr=state[f.id]||rows; arr[i]={url:u.value,why:w.value}; state[f.id]=arr; changed(); };
+      u.addEventListener("input",upd); w.addEventListener("input",upd);
+      wrap.append(el("div",{class:"insp-row"},el("span",{class:"n",text:String(i+1)}),u,w));
+    });
+    box.append(wrap);
+  }
+  return box;
+}
+
+const allFields = SECTIONS.flatMap(s=>s.fields);
+function answered(f){
+  const v = state[f.id];
+  if (Array.isArray(v)) return v.some(x => typeof x==="string" ? x.trim() : (x && (x.url||"").trim()));
+  return !!(v && String(v).trim());
+}
+let saveTimer;
+function changed(){
+  save(); updateProgress();
+  const s = document.getElementById("saved"); s.textContent="Opgeslagen in deze browser";
+  clearTimeout(saveTimer); saveTimer=setTimeout(()=>s.textContent="",2000);
+}
+function updateProgress(){
+  const n = allFields.filter(answered).length, tot = allFields.length, pct = Math.round(n/tot*100);
+  document.getElementById("barFill").style.width = pct+"%";
+  document.getElementById("pText").textContent = `${n} van ${tot} vragen beantwoord`;
+  document.getElementById("pPct").textContent = pct+"%";
+  const name = (state.domein||state.bedrijfsnaam||"").trim().toLowerCase().replace(/^https?:\/\//,"").replace(/\.nl$|\/.*$/,"").replace(/[^a-z0-9.-]+/g,"");
+  document.getElementById("urlName").textContent = name || "jouwbedrijf";
+}
+updateProgress();
+
+function summaryText(){
+  const lines = [];
+  SECTIONS.forEach((s,si)=>{
+    lines.push(`${si+1}. ${s.t.toUpperCase()}`);
+    s.fields.forEach(f=>{
+      if(!answered(f)) return;
+      const label = f.q || s.lead || f.id;
+      let v = state[f.id];
+      if (f.type==="inspiration") v = v.filter(r=>r.url.trim()).map((r,i)=>`\n   ${i+1}. ${r.url}${r.why? " — "+r.why:""}`).join("");
+      else if (f.type==="colors") v = v.filter(Boolean).join(", ");
+      else if (Array.isArray(v)) v = v.join(", ");
+      lines.push(`- ${label}: ${v}`);
+    });
+    lines.push("");
+  });
+  return lines.join("\n").trim();
+}
+
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+  const err = document.getElementById("err"); err.textContent="";
+  const missing = allFields.filter(f=>f.req && !answered(f));
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((state.email||"").trim());
+  missing.forEach(f=>document.getElementById("f-"+f.id).classList.add("invalid"));
+  if (state.email && !emailOk) document.getElementById("f-email").classList.add("invalid");
+  if (missing.length || !emailOk){
+    err.textContent = missing.length ? "Vul je bedrijfsnaam, naam en e-mailadres in, dan kunnen we contact met je opnemen." : "Controleer je e-mailadres, het lijkt niet compleet.";
+    (document.querySelector(".invalid")||form).scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  const text = summaryText();
+  let sent = false;
+  if (CONFIG.formspreeEndpoint){
+    const btn = document.getElementById("send"); btn.disabled=true; btn.textContent="Versturen…";
+    try{
+      const r = await fetch(CONFIG.formspreeEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({_subject:`Nieuwe website-intake: ${state.bedrijfsnaam}`, email:state.email, naam:state.naam, bedrijf:state.bedrijfsnaam, antwoorden:text})});
+      const j = await r.json().catch(()=>({}));
+      sent = r.ok && j.ok !== false;
+    }catch(_){ sent=false; }
+    btn.disabled=false; btn.textContent="Verstuur mijn antwoorden";
+  }
+  showDone(sent, text);
+});
+
+function showDone(sent, text){
+  const v = document.getElementById("doneView");
+  v.innerHTML="";
+  const box = el("div",{class:"done"});
+  if (sent){
+    box.append(el("h2",{text:"Bedankt, we hebben je antwoorden!"}),
+      el("p",{text:"We lezen alles door en nemen binnen twee werkdagen contact met je op om de volgende stappen te plannen."}));
+    try{ localStorage.removeItem(STORE); }catch(_){}
+  } else {
+    const p = el("p",{}); p.append("Kopieer je antwoorden en mail ze naar ", el("span",{class:"mail",text:CONFIG.contactEmail}), ". We nemen binnen twee werkdagen contact met je op.");
+    const pre = el("div",{class:"summary",id:"summary",text:text});
+    const copy = el("button",{type:"button",class:"btn primary",text:"Kopieer antwoorden"});
+    copy.addEventListener("click",()=>{
+      navigator.clipboard.writeText(text).then(()=>copy.textContent="Gekopieerd").catch(()=>{
+        const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent="Geselecteerd, kopieer met Ctrl+C";
+      });
+    });
+    const back = el("button",{type:"button",class:"btn ghost",text:"Terug naar de vragen"});
+    back.addEventListener("click",()=>{ v.hidden=true; document.getElementById("formView").hidden=false; });
+    box.append(el("h2",{text:"Bijna klaar"}), p, pre, el("div",{class:"actions"},copy,back));
+  }
+  v.append(box);
+  document.getElementById("formView").hidden = true; v.hidden=false;
+  window.scrollTo({top:0});
+}
+</script>
+
+</body>
+</html>
