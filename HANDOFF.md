@@ -39,9 +39,9 @@ mrhostly.netlify.app en mrhostly.nl. Eigenaar en gezicht: **Mitch**.
 
 ## Bedrijfsgegevens
 - E-mail: info@mrhostly.nl · KvK **42068995** (staat in de footer en in het schema op de homepage).
-- **Btw-id: nog niet geplaatst.** Mitch stuurde `nl005470895l`; dat is onvolledig
-  (formaat is `NL` + 9 cijfers + `B` + 2 cijfers). Eerst laten bevestigen, dan in de footer
-  achter het KvK-nummer zetten: `© 2026 Mr Hostly · KvK 42068995 · btw NL…B..`.
+- Btw-id **NL005470895B91**: staat in de footer van alle pagina's (`btw&nbsp;NL…`, vaste spatie
+  zodat het niet afbreekt op 320 px) en als `vatID` in het schema op de homepage.
+  Het omzetbelastingnummer (bevat het BSN) hoort nergens op de site of in de repo.
 - Instagram: https://www.instagram.com/mr.hostly/ (enige social in de footer; LinkedIn en
   Facebook bewust weggehaald).
 - Formspree-formulier: `https://formspree.io/f/mljdnopg` (contactpagina en de tools).
@@ -110,15 +110,14 @@ mrhostly.netlify.app en mrhostly.nl. Eigenaar en gezicht: **Mitch**.
 - Controleer altijd op horizontale overflow bij **375 en 320 px** breed.
 
 ## Open punten
-1. **Btw-id** bevestigen en in de footer zetten (zie Bedrijfsgegevens).
-2. **Foto van Mitch** voor Over ons: `images/mitch.jpg` (staand, min. 800×1000). Nu staat er
+1. **Foto van Mitch** voor Over ons: `images/mitch.jpg` (staand, min. 800×1000). Nu staat er
    een placeholder (`[NEEDS INPUT]` in `over-ons.html`).
-3. **Hero-foto**: Mitch stuurde ooit een nieuwe hero-foto die niet als bestand aankwam; opnieuw vragen.
-4. **VakTechLink**-blok linkt naar `https://www.vaktechlink.nl` (adres uit de Drive-bestanden,
+2. **Hero-foto**: Mitch stuurde ooit een nieuwe hero-foto die niet als bestand aankwam; opnieuw vragen.
+3. **VakTechLink**-blok linkt naar `https://www.vaktechlink.nl` (adres uit de Drive-bestanden,
    niet live gecontroleerd). Laten bevestigen dat dat klopt.
-5. Geen `sitemap.xml` en `robots.txt`; aangeboden, nog geen antwoord.
-6. `/template` is publiek bereikbaar; eventueel verwijderen of afschermen.
-7. Tip voor Mitch: in Google Search Console `https://mrhostly.nl/` laten herindexeren
+4. Geen `sitemap.xml` en `robots.txt`; aangeboden, nog geen antwoord.
+5. `/template` is publiek bereikbaar; eventueel verwijderen of afschermen.
+6. Tip voor Mitch: in Google Search Console `https://mrhostly.nl/` laten herindexeren
    (oude titels en wereldbol-icoon staan nog in Google).
-8. Deze `HANDOFF.md` wordt door Netlify mee gepubliceerd (publish = repo-root). Zet er dus
+7. Deze `HANDOFF.md` wordt door Netlify mee gepubliceerd (publish = repo-root). Zet er dus
    geen gevoelige gegevens in.
