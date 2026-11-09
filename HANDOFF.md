@@ -1,77 +1,123 @@
-# Mr Hostly — Handoff / sessie-context
+# Mr Hostly — Handoff voor een nieuwe Claude Code-sessie
 
-> Doel van dit bestand: de context van de vorige Claude Code-sessie meenemen naar
-> een nieuwe sessie. Lees dit eerst (`lees HANDOFF.md`) voordat je verdergaat.
+> Lees dit eerst. Bijgewerkt op 9 november 2026, na commit `4de03d9`.
+> Dit bestand vervangt de oude handoff (die ging nog over Vercel, oude kleuren en oude fonts).
 
-## Project
-- **Statische site** (geen build/framework): `index.html` + `css/style.css` + `css/home.css` + `js/` (`main.js`, `home.js`, `icons.js`).
-- Iconen via Lucide (CDN, gepind op `1.17.0`) + eigen `icons.js` die `data-icon` omzet naar SVG.
-- Deploy via Vercel (`vercel.json`, `cleanUrls`).
-- **Branch:** `claude/gracious-goodall-NZXci` — alle werk staat hier + in **PR #1**.
+## In één alinea
+Mr Hostly (Eindhoven) is een digitale technologiepartner voor **horeca & leisure**:
+websites, SEO & GEO, AI-chatbots, automatiseringen en maatwerk. De site is **statische
+HTML/CSS/JS zonder build-stap**, gehost op **Netlify** (deploy vanaf `main`), te zien op
+mrhostly.netlify.app en mrhostly.nl. Eigenaar en gezicht: **Mitch**.
 
-## Huisstijl (tokens in `css/style.css` :root)
-- Navy `#1B2D5E` (`--navy`), navy-deep `#142348`, oranje `#E8A030` (`--orange`), oranje-deep `#C8851A`.
-- Cream `#FAF7F0`, off-white `#F9F8F4`, wit, muted `#6B7280`.
-- Fonts: **Geist** (titels, `--font-display`), **Inter Tight** (body, `--font-body`).
+## Repo, branches en livegang
+- Repo: `Mitchroelchatbot/MrHostly`. Werkbranch: `claude/amazing-mendel-gGYDm`.
+- Netlify publiceert de repo-root (`netlify.toml`: `publish = "."`, geen build).
+  `vercel.json` is een overblijfsel, Vercel wordt niet meer gebruikt.
+- Werkwijze die tot nu toe is gebruikt: committen op de werkbranch, pushen, en daarna
+  `main` fast-forwarden zodat Netlify live zet:
+  ```
+  git push origin claude/amazing-mendel-gGYDm
+  git fetch origin main && git checkout main && git reset --hard origin/main \
+    && git merge --ff-only claude/amazing-mendel-gGYDm && git push origin main
+  git checkout claude/amazing-mendel-gGYDm
+  ```
+- **Vraag bij twijfel eerst of iets live mag.** Bij de tools-opdracht gold expliciet:
+  "commit en deploy niet zonder het eerst te vragen". Daarna zei Mitch steeds
+  "commit en zet live".
+- De Netlify-connector moet opnieuw geautoriseerd worden (claude.ai → connectors).
+  Zonder die koppeling kun je de deploy-status niet controleren; de live site is vanuit
+  de cloudomgeving ook niet bereikbaar met curl.
 
-## Designrichting (BELANGRIJK — vastgesteld met de gebruiker)
-- **Warme stijl met afwisseling licht↔donker** (Linear/Stripe-gevoel), NIET volledig donker.
-  Een volledig donkere variant is geprobeerd en **bewust teruggedraaid** — te zwaar.
-- Huidige pagina-flow (geen twee donkere secties naast elkaar):
-  hero (licht/off-white) → tool (navy donker) → diensten (wit) → stats (cream) →
-  doelgroep (wit) → aanpak (cream) → over-ons (wit) → cta (oranje) → footer (navy).
-- Hero = licht: off-white achtergrond, navy titel/slogan, oranje accenten, subtiele glow-cirkels.
-- De lichte "floating" showcase-kaarten (`.sc-*`) en tool-mockups blijven bewust licht.
-- De `.cta-band` blijft fel oranje (enige warme climax vóór de footer).
+## Harde inhoudsregels (van Mitch)
+- **0641806311 / `https://wa.me/31641806311` is alleen voor WhatsApp**, niet om te bellen.
+  Schrijf dus nooit "bel ons" bij dat nummer.
+- Geen "25 jaar"-claim. **Roel** komt nergens voor. **Café Costa** wordt niet bij naam
+  genoemd (de case heet "een feestcafé in Eindhoven").
+- Geen verzonnen cijfers, reviews of claims. Mitch' verhaal staat alleen op **Over ons**.
+- Eén hoofd-CTA: **"Plan een gratis kennismaking"** (→ `/contact`), plus WhatsApp als tweede.
+- Teksten in het Nederlands, je-vorm, kort en direct.
 
-## Wat al gedaan is (chronologisch)
-1. **ui-ux-pro-max skill** geïnstalleerd in `.claude/skills/ui-ux-pro-max/` (zelfstandig, MIT).
-2. **Performance + a11y**: Lucide gepind + `defer` + preconnect; `:focus-visible` states;
-   `prefers-reduced-motion` gerespecteerd (CSS + JS-animaties geguard).
-3. **Chatbot layout-shift fix**: `.sc-chat-body` vaste `height: 192px` (mobiel ≤480px: 240px),
-   `justify-content: flex-end`, `overflow: hidden`. NIET terugdraaien.
-4. **Donkere conversie**: geprobeerd en **teruggedraaid** (revert) — zie hierboven.
-5. **Wow — hero live-demo**: `js/home.js` sectie 1 is een gechoreografeerde loop:
-   chat → "Geboekt! ✓" → reservering popt in kalender (`#heroCalSlot` dag 6) →
-   teller `#heroCalCount` 24→25 → `.sc-float-1` pulseert. ~8s loop, statische
-   eindstaat onder reduced-motion. CSS in "WOW"-blok onderaan `css/home.css`.
-6. **Tool polish**: vloeiendere stap-/context-overgangen (expo-out easing),
-   gloed-ring op geselecteerde optie, verfijnde resultaat-reveal.
-7. **Homepage polish-ronde 1** (commit `6fcafa9`):
-   - `scroll-padding-top` op `html` → ankerlinks (#tool/#diensten) verdwijnen niet meer onder de vaste nav.
-   - Nav-elevatie: `.main-nav.scrolled` krijgt schaduw bij scrollen (toggle in `js/main.js`).
-   - `font-variant-numeric: tabular-nums` op tellende cijfers → geen breedte-jitter tijdens count-up.
-   - Reduced-motion fix: `animateCount` in `js/home.js` zet meteen de eindwaarde bij `prefers-reduced-motion`.
-8. **Homepage polish-ronde 2** (commit `09374cf`):
-   - **Scroll-voortgangsbalk** (`.scroll-progress`, 3px oranje) bovenaan, opgebouwd in `js/main.js` → werkt op alle pagina's.
-     (Klassieke nav-scroll-spy kon niet: de nav linkt naar aparte pagina's, niet naar secties.)
-   - **Focus-management** in de keuzetool: `showStep()` zet focus (`preventScroll`) op de nieuwe vraag/het resultaat.
-   - **Hero-microcopy**: geruststellingsregel onder de knoppen ("✓ Gratis & vrijblijvend · resultaat in 1 minuut").
-     Koppen/knoplabels bewust NIET aangepast (merkstem) — openstaand of de gebruiker dat alsnog wil.
+## Bedrijfsgegevens
+- E-mail: info@mrhostly.nl · KvK **42068995** (staat in de footer en in het schema op de homepage).
+- **Btw-id: nog niet geplaatst.** Mitch stuurde `nl005470895l`; dat is onvolledig
+  (formaat is `NL` + 9 cijfers + `B` + 2 cijfers). Eerst laten bevestigen, dan in de footer
+  achter het KvK-nummer zetten: `© 2026 Mr Hostly · KvK 42068995 · btw NL…B..`.
+- Instagram: https://www.instagram.com/mr.hostly/ (enige social in de footer; LinkedIn en
+  Facebook bewust weggehaald).
+- Formspree-formulier: `https://formspree.io/f/mljdnopg` (contactpagina en de tools).
 
-## Bekende beperkingen van de web-sandbox
-- **Geen browser** om live te renderen; alles is statisch geverifieerd (JS-syntax, accolades, logica).
-  Visuele check doet de gebruiker op **mrhostly.nl** na deploy.
-- Lucide-CDN niet altijd bereikbaar in de sandbox (werkt wel op productie).
+## Opbouw van de site
+| Pad | Wat |
+|---|---|
+| `/` (`index.html`) | Homepage: foto-hero, 3 diensten, "wat we kunnen", stappen, case, stats, ROI-calculator, zelfbeheer, FAQ, CTA |
+| `/online-aanwezigheid`, `/ai-automatisering`, `/maatwerk` | De drie categoriepagina's |
+| `/over-ons` | Mitch' verhaal + case |
+| `/contact` | Formspree-formulier (`js/contact.js`) + WhatsApp |
+| `/blog` + `/blog-<slug>` | 11 artikelen (zie Blog) |
+| `/tools/`, `/tools/ai-label-checker/`, `/tools/noshow-calculator/` | Gratis tools (zie Tools) |
+| `/template` | Sjabloonpagina, nog publiek bereikbaar (eventueel verbergen) |
 
-## Magic MCP — STATUS: geconfigureerd, wacht op sessie-herstart
-- ✅ **Netwerk is nu open**: `magic.21st.dev` geeft een echt HTTP-antwoord (geen "Host not in allowlist" meer).
-- ✅ **Server geconfigureerd** op user scope in `/root/.claude.json` en **verbindt** (`claude mcp list` → magic ✓ Connected).
-  Toegevoegd met: `claude mcp add magic --scope user --env API_KEY="<key>" -- npx -y @21st-dev/magic@latest`
-- ⚠️ **Maar**: midden in een sessie toegevoegd → de `mcp__magic__*` tools laden pas bij **sessie-start**.
-  **Actie voor de nieuwe sessie:** Magic is dan automatisch geladen; check met ToolSearch `+magic` of de tools er zijn.
-- ⚠️ Magic levert **React + Tailwind**; deze site is vanilla → output met de hand porten.
-- Optioneel: `api.svgl.app` voor logo-search.
+- **Schone URL's**: `netlify.toml` stuurt elke `/pagina.html` met een 301 door naar `/pagina`.
+  Voeg bij een nieuwe pagina ook zo'n redirect toe. Interne links zijn root-relatief
+  (`/contact`); assets op rootpagina's relatief (`css/…`), in `/tools/` absoluut (`/css/…`).
+- **Nav en footer** staan als vaste HTML op elke pagina (geen includes). Wijzig je ze,
+  doe dat dan in álle `*.html` én `tools/**/index.html` (een Python-replace werkt goed).
+  Nav: Online aanwezigheid · AI & automatisering · Maatwerk · Over ons · Blog · Gratis tools · Contact.
+- **CSS**: `css/style.css` (tokens, nav, footer, knoppen), `css/home.css` (homepage, ook geladen
+  op subpagina's), `css/pages.css` (subpagina's, blog, artikel-layout), `css/tools.css` (tools).
+  Tokens: navy `#0F2044`, navy-deep `#0A1730`, oranje `#E8953A`, oranje-deep `#C87A1E`,
+  cream `#F8F7F4`; font Plus Jakarta Sans.
+- **JS**: `js/main.js` (nav/hamburger), `js/pages.js` (Lenis, GSAP-reveal, actieve navlink,
+  cursor-glow), `js/icons.js` (Lucide via `data-icon`), `js/home.js` (homepage).
+  Scriptvolgorde op subpagina's: lucide 1.17.0 → gsap 3.12.5 → ScrollTrigger → lenis 1.1.14
+  → icons.js → main.js → pages.js (allemaal `defer`, via unpkg).
+- **Favicons**: `favicon.ico/.svg`, `favicon-96x96.png`, `apple-touch-icon.png`,
+  `icon-192/512.png`, `site.webmanifest` (oranje H op navy). Links staan in elke `<head>`.
 
-## Openstaande TODO's / ideeën
-- [ ] Magic MCP echt inzetten (na herstart de `mcp__magic__*` tools gebruiken voor nieuwe componenten).
-- [ ] Hero koppen/knoplabels eventueel aanscherpen (merkstem — alleen op verzoek gebruiker).
-- [ ] **Ontbrekende pagina's** bouwen — nav/footer linken ernaar maar ze bestaan niet (404):
-      `websites.html`, `chatbots.html`, `reserveringen.html`, `over-ons.html`, `blog.html`, `contact.html`.
-- [ ] **SEO/social meta**: Open Graph/Twitter-tags, favicon, canonical, JSON-LD bedrijfsschema.
-- [ ] Eventueel hero-kalender timing/dagcel verder tunen.
+## Blog
+- 10 artikelen uit de Drive (map Mr Hostly/Instagram) + het oudere `blog-no-shows`.
+  Beelden: `images/blog/blog-<slug>.webp` (Instagram-posts met foto-achtergrond),
+  deelbeelden `images/blog/og-<slug>.jpg`. Elk artikel heeft bronnen + JSON-LD BlogPosting.
+- **Publicatiedatums**: kaarten in `blog.html` hebben `data-publish="YYYY-MM-DD"`. Een klein
+  script onderaan zet toekomstige artikelen onder "Binnenkort" (niet klikbaar). Planning
+  liep di/do van 29 sep t/m 29 okt 2026; inmiddels is alles verschenen.
 
-## Werkafspraken
-- Ontwikkel op branch `claude/gracious-goodall-NZXci`, commit + push per afgeronde stap.
-- Maak GEEN PR tenzij expliciet gevraagd (PR #1 bestaat al).
-- Communicatie met de gebruiker in het **Nederlands**.
+## Tools (lead magnets)
+- Bron: twee losse HTML-tools van Mitch (Drive-map `tools/`). Ingepast met site-nav en -footer;
+  tool-CSS gescoped onder `.tool-page`. **De tool-scripts zijn bewust ongewijzigd**
+  (`metadataText`, `analyse`, rekenformule). Uitzondering: in de checker is daarna het
+  **slepen** uitgebreid (hele mappen, melding als er niets bruikbaars binnenkomt).
+- Harde grenzen (van Mitch): **nooit** een functie toevoegen die metadata, C2PA of watermerken
+  verwijdert of opnieuw encodeert. Wijzig detectie of formule niet zonder de tests opnieuw te
+  draaien. Het label "Aanname" bij "50% minder no-shows" blijft staan tot er een echt klantcijfer is.
+- Tests die moeten slagen: JPG/PNG/WebP zonder metadata → "Geen AI-signalen"; XMP
+  `Iptc4xmpExt:DigitalSourceType` = `trainedAlgorithmicMedia` → "Krijgt AI-label",
+  `compositeWithTrainedAlgorithmicMedia` → "Mogelijk label"; calculator met standaard
+  150 / 8% / €45 / 20% / 48 weken → **€ 20.736** per jaar.
+- Onder beide uitslagen staat een optioneel formulier "Stuur me de uitslag" (Formspree,
+  uitslag in verborgen velden). Formspree mailt de bezoeker níét automatisch: Mitch stuurt
+  de uitslag zelf (of zet een autoresponder aan bij Formspree).
+- Er is **geen analytics** op de site; voeg geen trackingdienst toe zonder te vragen.
+
+## Testen (handig in de cloudomgeving)
+- Lokaal serveren: `python3 -m http.server 4430 --bind 127.0.0.1` in de repo; stoppen met
+  `pkill -f "http[.]server 44"` (dit patroon, anders sluit je je eigen shell af).
+- Screenshots: Playwright staat in `/opt/node22/lib/node_modules/playwright/index.mjs`,
+  Chromium in `/opt/pw-browsers/` (niet `playwright install` draaien). Google Fonts is niet
+  bereikbaar: haal het font met `npm pack @fontsource/plus-jakarta-sans` en route
+  `fonts.googleapis.com` naar de lokale woff2-bestanden.
+- Controleer altijd op horizontale overflow bij **375 en 320 px** breed.
+
+## Open punten
+1. **Btw-id** bevestigen en in de footer zetten (zie Bedrijfsgegevens).
+2. **Foto van Mitch** voor Over ons: `images/mitch.jpg` (staand, min. 800×1000). Nu staat er
+   een placeholder (`[NEEDS INPUT]` in `over-ons.html`).
+3. **Hero-foto**: Mitch stuurde ooit een nieuwe hero-foto die niet als bestand aankwam; opnieuw vragen.
+4. **VakTechLink**-blok linkt naar `https://www.vaktechlink.nl` (adres uit de Drive-bestanden,
+   niet live gecontroleerd). Laten bevestigen dat dat klopt.
+5. Geen `sitemap.xml` en `robots.txt`; aangeboden, nog geen antwoord.
+6. `/template` is publiek bereikbaar; eventueel verwijderen of afschermen.
+7. Tip voor Mitch: in Google Search Console `https://mrhostly.nl/` laten herindexeren
+   (oude titels en wereldbol-icoon staan nog in Google).
+8. Deze `HANDOFF.md` wordt door Netlify mee gepubliceerd (publish = repo-root). Zet er dus
+   geen gevoelige gegevens in.
