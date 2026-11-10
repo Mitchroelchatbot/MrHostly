@@ -102,6 +102,8 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 
 .done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,5vw,40px);display:grid;gap:16px}
 .done h2{font-family:var(--display);font-size:30px;margin:0;letter-spacing:-.02em}
 .done p{margin:0;color:var(--muted)}
+/* Spamval: onzichtbaar voor bezoekers, bots vullen hem in */
+.hp{position:absolute!important;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 .summary{font-family:var(--mono);font-size:13px;white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:14px;max-height:340px;overflow:auto}
 .mail{font-family:var(--mono);user-select:all;color:var(--ink)}
 
@@ -135,7 +137,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 
       <div class="plabel"><span id="pText">0 van 0 vragen beantwoord</span><span id="pPct">0%</span></div>
     </div>
 
-    <form id="intake" novalidate></form>
+    <form id="intake" novalidate><div class="hp" aria-hidden="true"><label for="f-gotcha">Laat dit veld leeg</label><input type="text" id="f-gotcha" name="_gotcha" tabindex="-1" autocomplete="off"></div></form>
   </div>
 
   <div id="doneView" hidden></div>
@@ -356,7 +358,7 @@ form.addEventListener("submit", async e=>{
     const btn = document.getElementById("send"); btn.disabled=true; btn.textContent="Versturen…";
     try{
       const r = await fetch(CONFIG.formspreeEndpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
-        body:JSON.stringify({_subject:`Nieuwe website-intake: ${state.bedrijfsnaam}`, email:state.email, naam:state.naam, bedrijf:state.bedrijfsnaam, antwoorden:text})});
+        body:JSON.stringify({_gotcha:document.getElementById("f-gotcha").value, _subject:`Nieuwe website-intake: ${state.bedrijfsnaam}`, email:state.email, naam:state.naam, bedrijf:state.bedrijfsnaam, antwoorden:text})});
       const j = await r.json().catch(()=>({}));
       sent = r.ok && j.ok !== false;
     }catch(_){ sent=false; }
